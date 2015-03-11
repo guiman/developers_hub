@@ -15,7 +15,10 @@ Octokit.middleware = stack
 
 class RecruiterApp < Sinatra::Base
   get '/' do
-    Recruiter.search.at("Portsmouth").and_at("Southampton").with_repos('>5').skills("Ruby,Javascript").all.slice(1..10).map(&:to_hash).to_json
+    @search = Recruiter.search(cached: true).at("Portsmouth").and_at("Southampton").and_at("Winchester").with_repos('>5').skills("Ruby,Javascript")
+    candidates = @search.all.slice(1..20)
+    @candidates = candidates.select { |candidate| candidate.hireable && (candidate.languages.keys.include?(:Ruby) || candidate.languages.keys.include?(:JavaScript)) }
+    erb :index
   end
 end
 
