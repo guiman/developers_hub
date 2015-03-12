@@ -1,6 +1,6 @@
 GIT
   remote: git@bitbucket.org:alvarola/recruiter.git
-  revision: f8a63ffde6e41c61fa803c22ac0f47c15aaeda2c
+  revision: 9988ee363c96c7148ec1a7ef89719069372b97d6
   specs:
     recruiter (0.0.1)
       octokit
