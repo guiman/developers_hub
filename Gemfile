@@ -7,6 +7,7 @@ gem 'sinatra', require: 'sinatra/base'
 gem 'faraday-http-cache'
 gem 'faraday_middleware'
 gem 'byebug'
+gem 'rake'
 
 
 group :test do
