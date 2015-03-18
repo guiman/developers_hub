@@ -1,4 +1,4 @@
-<h3>Current filter: <%= @search.filters %></h3>
+<h3>Who is around?</h3>
 <table class="table">
   <thead>
     <tr>
@@ -7,14 +7,13 @@
       <th>Location</th>
       <th>Available</th>
       <th>Skills</th>
-      <th>Owned repositories</th>
       <th>Github profile</th>
     </tr>
   </thead>
   <tbody>
     <% @candidates.each do |candidate| %>
       <tr>
-        <td><%= candidate.fullname %></td>
+        <td><%= candidate.name %></td>
         <% if candidate.email && !candidate.email.empty? %>
           <td><a href="mailto:<%= candidate.email %>"> Email Me!</a></td>
         <% else %>
@@ -40,7 +39,6 @@
             </tbody>
           </table>
         </td>
-        <td><%= candidate.owned_repositories_count %></td>
         <td><a href="http://github.com/<%= candidate.login %>"><%= candidate.login %></a></td>
       </tr>
     <% end %>
