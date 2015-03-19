@@ -21,7 +21,7 @@ $.get( "/map_data/<%= @lang %>", function( data ) {
         color: 'red',
         fillColor: '#f03',
         fillOpacity: 0.5
-      }).addTo(map).bindPopup(thing.language + ': ' + thing.language_count);
+      }).addTo(map).bindPopup(thing.language + ': ' + thing.language_count + "</br> <a href='/by_coordinates/" + thing.position[0] + "/" + thing.position[1] + "'>Listing</a>");
   }
 });
 

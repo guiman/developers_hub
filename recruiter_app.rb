@@ -27,6 +27,14 @@ class RecruiterApp < Sinatra::Base
     RecruiterExtensions::LanguageStatisticsByLocation.new(params.fetch("lang")).perform.to_json
   end
 
+  get '/by_coordinates/:lat/:lng' do
+    pair = "#{params.fetch("lat")},#{params.fetch("lng")}"
+
+    @candidates = RecruiterExtensions::IndexedUser.where(geolocation: pair).all
+
+    erb :index
+  end
+
   get '/generate_index' do
     search = Recruiter.search(search_strategy: Recruiter::CachedSearchStrategy)
       .at("Portsmouth")
