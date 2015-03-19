@@ -6,23 +6,23 @@ module RecruiterExtensions
       @lang = lang
     end
 
-    @@locations = {}
-
     def perform
       users = RecruiterExtensions::IndexedUser.all
-      users.group_by(&:geolocation)
-        .map do |k,v|
-          {
-            position: k.split(','),
-            language: @lang.capitalize,
-            language_count: v.select do |candidate|
-              candidate.languages.keys
-                .map(&:to_s)
-                .map(&:downcase)
-                .include?(@lang.downcase)
-            end.count
-          }
-        end.select { |each| each.fetch(:position).length == 2 }
+
+      users_with_language = (@lang == "no-lang") ? users : users.select do |candidate|
+        candidate.languages.keys
+        .map(&:to_s)
+        .map(&:downcase)
+        .include?(@lang.downcase)
+      end
+
+      users_with_language.group_by(&:geolocation).map do |k,v|
+        {
+          position: k.split(','),
+          language: @lang.capitalize,
+          language_count: v.count
+        }
+      end
     end
   end
 end

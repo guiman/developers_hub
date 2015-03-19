@@ -17,31 +17,31 @@ class RecruiterApp < Sinatra::Base
   end
 
   get '/map/:lang' do
-    @lang = params.fetch("lang")
+    @lang = params.fetch("lang", "no-lang")
     erb :map
   end
 
   get '/map_data/:lang' do
     content_type :json
 
-    RecruiterExtensions::LanguageStatisticsByLocation.new(params.fetch("lang")).perform.to_json
+    RecruiterExtensions::LanguageStatisticsByLocation.new(params.fetch("lang", "no-lang")).perform.to_json
   end
 
-  get '/by_coordinates/:lat/:lng' do
+  get '/by_coordinates/:lang/:lat/:lng' do
     pair = "#{params.fetch("lat")},#{params.fetch("lng")}"
+    lang = params.fetch("lang", "no-lang")
 
     @candidates = RecruiterExtensions::IndexedUser.where(geolocation: pair).all
-
+    @candidates = (lang == "no-lang") ? @candidates : @candidates.select do |candidate|
+        candidate.languages.keys.map(&:to_s).map(&:downcase).include?(lang)
+      end
     erb :index
   end
 
   get '/generate_index' do
     search = Recruiter.search(search_strategy: Recruiter::CachedSearchStrategy)
-      .at("Portsmouth")
-      .and_at("Southampton")
-      .and_at("Winchester")
-      .and_at("Hampshire")
-      .skills("Ruby,Javascript")
+      .at("Chichester, UK")
+      .and_at("Brighton, UK")
 
     RecruiterExtensions::GithubSearchIndexUpdater.new(search.all).perform
 
