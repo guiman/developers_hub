@@ -3,6 +3,7 @@ class CreateIndexedUserTable < ActiveRecord::Migration
     create_table :indexed_users do |t|
       t.string :email
       t.string :location
+      t.string :geolocation
       t.string :login
       t.string :name
       t.boolean :hireable

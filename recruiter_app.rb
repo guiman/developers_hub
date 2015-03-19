@@ -1,10 +1,30 @@
 require_relative 'initialize'
+require 'json'
+require 'geokit'
+
+Geokit::Geocoders::MapboxGeocoder.key = 'pk.eyJ1IjoiYWx2YXJvbGEiLCJhIjoicjkxUGpONCJ9.lYnv1rHrMRVzy5r5PM5ivg'
 
 class RecruiterApp < Sinatra::Base
+  configure do
+    set :server, :thin
+    set :bind, '0.0.0.0'
+  end
+
   get '/' do
     @candidates = RecruiterExtensions::IndexedUser.all
 
     erb :index
+  end
+
+  get '/map/:lang' do
+    @lang = params.fetch("lang")
+    erb :map
+  end
+
+  get '/map_data/:lang' do
+    content_type :json
+
+    RecruiterExtensions::LanguageStatisticsByLocation.new(params.fetch("lang")).perform.to_json
   end
 
   get '/generate_index' do
@@ -15,12 +35,7 @@ class RecruiterApp < Sinatra::Base
       .and_at("Hampshire")
       .skills("Ruby,Javascript")
 
-    candidates = search.all.select do |candidate|
-      languages = candidate.skills.top(3)
-      (candidate.location.include?("UK") || candidate.location.include?("southampton") ||candidate.location.include?("England")) && ((languages.include?(:Ruby) || languages.include?(:JavaScript)))
-    end
-
-    RecruiterExtensions::GithubSearchIndexUpdater.new(candidates).perform
+    RecruiterExtensions::GithubSearchIndexUpdater.new(search.all).perform
 
     redirect '/'
   end

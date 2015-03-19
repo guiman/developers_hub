@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 
 gem 'activerecord'
+gem 'thin'
+gem 'geokit'
 gem 'mysql2'
 gem 'recruiter', git: 'git@github.com:Alliants/recruiter.git'
 gem 'sinatra', require: 'sinatra/base'

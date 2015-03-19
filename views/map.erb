@@ -1,0 +1,31 @@
+<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<div id="map" style="height: 580px;"></div>
+<script>
+    var map = L.map('map').setView([50.9167536,-1.4004929], 8);
+
+    L.tileLayer('https://{s}.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={token}', {
+      maxZoom: 18,
+      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+        '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+        'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+      id: 'alvarola.lgfo6mch',
+      token: 'pk.eyJ1IjoiYWx2YXJvbGEiLCJhIjoicjkxUGpONCJ9.lYnv1rHrMRVzy5r5PM5ivg'
+    }).addTo(map);
+
+$.get( "/map_data/<%= @lang %>", function( data ) {
+  for (var i = 0; i < data.length; i++) {
+    var thing = data[i]
+    var coordinates = [parseFloat(thing.position[0]), parseFloat(thing.position[1])]
+      L.circle(coordinates, thing.language_count * 200, {
+        color: 'red',
+        fillColor: '#f03',
+        fillOpacity: 0.5
+      }).addTo(map).bindPopup(thing.language + ': ' + thing.language_count);
+  }
+});
+
+    var popup = L.popup();
+</script>
+
+

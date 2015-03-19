@@ -10,6 +10,7 @@ module RecruiterExtensions
           existing_indexed_candidate.update(name: candidate.name,
             hireable: candidate.hireable,
             location: candidate.location,
+            geolocation: ::Geokit::Geocoders::MapboxGeocoder.geocode(candidate.location).ll,
             email: candidate.email,
             languages: candidate.languages)
 
@@ -18,6 +19,7 @@ module RecruiterExtensions
             hireable: candidate.hireable,
             login: candidate.login,
             location: candidate.location,
+            geolocation: ::Geokit::Geocoders::MapboxGeocoder.geocode(candidate.location).ll,
             email: candidate.email,
             languages: candidate.languages)
         end
