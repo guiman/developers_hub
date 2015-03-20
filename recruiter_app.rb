@@ -11,7 +11,7 @@ class RecruiterApp < Sinatra::Base
   end
 
   get '/' do
-    @candidates = RecruiterExtensions::IndexedUser.all
+    @candidates = RecruiterExtensions::IndexedUser.order(:name).all
 
     erb :index
   end
@@ -31,21 +31,11 @@ class RecruiterApp < Sinatra::Base
     pair = "#{params.fetch("lat")},#{params.fetch("lng")}"
     lang = params.fetch("lang", "no-lang")
 
-    @candidates = RecruiterExtensions::IndexedUser.where(geolocation: pair).all
+    @candidates = RecruiterExtensions::IndexedUser.where(geolocation: pair).order(:name).all
     @candidates = (lang == "no-lang") ? @candidates : @candidates.select do |candidate|
         candidate.languages.keys.map(&:to_s).map(&:downcase).include?(lang)
       end
     erb :index
-  end
-
-  get '/generate_index' do
-    search = Recruiter.search(search_strategy: Recruiter::CachedSearchStrategy)
-      .at("Chichester, UK")
-      .and_at("Brighton, UK")
-
-    RecruiterExtensions::GithubSearchIndexUpdater.new(search.all).perform
-
-    redirect '/'
   end
 end
 

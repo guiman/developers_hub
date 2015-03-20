@@ -17,7 +17,7 @@ $.get( "/map_data/<%= @lang %>", function( data ) {
   for (var i = 0; i < data.length; i++) {
     var thing = data[i]
     var coordinates = [parseFloat(thing.position[0]), parseFloat(thing.position[1])]
-      L.circle(coordinates, thing.language_count * 200, {
+      L.circle(coordinates, thing.language_count * 50, {
         color: 'red',
         fillColor: '#f03',
         fillOpacity: 0.5
