@@ -1,6 +1,6 @@
 GIT
   remote: git@github.com:Alliants/recruiter.git
-  revision: bba7da32d5d506c384bcd83e172c74fc7d85231b
+  revision: 88f4e96bfef5dc149e71162b261c5208884b8b15
   specs:
     recruiter (0.0.1)
       octokit
