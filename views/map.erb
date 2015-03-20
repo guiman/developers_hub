@@ -1,5 +1,4 @@
 <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
 <div id="map" style="height: 580px;"></div>
 <script>
     var map = L.map('map').setView([50.9167536,-1.4004929], 6);
@@ -21,11 +20,11 @@ $.get( "/map_data/<%= @lang %>", function( data ) {
         color: 'red',
         fillColor: '#f03',
         fillOpacity: 0.5
-      }).addTo(map).bindPopup(thing.language + ': ' + thing.language_count + "</br> <a href='/by_coordinates/<%= @lang %>/" + thing.position[0] + "/" + thing.position[1] + "'>Listing</a>");
+      }).addTo(map).bindPopup(thing.language + ': ' + thing.language_count + "</br> <a href='/<%= @lang %>/" + thing.position[0] + "/" + thing.position[1] + "'>Listing</a>");
   }
 });
 
     var popup = L.popup();
 </script>
 
-
+<%= erb :users_data %>
