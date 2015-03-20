@@ -11,6 +11,8 @@ require 'active_record'
 require_relative 'database'
 require 'recruiter_extensions'
 
+Geokit::Geocoders::MapboxGeocoder.key = 'pk.eyJ1IjoiYWx2YXJvbGEiLCJhIjoicjkxUGpONCJ9.lYnv1rHrMRVzy5r5PM5ivg'
+
 # Setup Faraday to use cache and so Octokit becomes faster
 stack = Faraday::RackBuilder.new do |builder|
   builder.use Faraday::HttpCache, shared_cache: false, serializer: Marshal

@@ -12,8 +12,29 @@ task :migrate_down do
 end
 
 task :update_index do
-  search = Recruiter.search(search_strategy: Recruiter::CachedSearchStrategy)
-    .at("Cambridge, UK")
+  last_processed_countie = ''
 
-  RecruiterExtensions::GithubSearchIndexUpdater.new(search.all).perform
+  begin
+    File.open(File.join(__dir__, 'uk_counties.txt')).each_line do |countie|
+      countie = countie.gsub(/\n/,'')
+
+      last_processed_countie = countie
+      p "Now processing #{countie}"
+      search = Recruiter.search(search_strategy: Recruiter::CachedSearchStrategy)
+        .at("#{countie}, UK")
+
+      candidates = search.all
+      p "#{countie} users count: #{candidates.count}"
+      RecruiterExtensions::GithubSearchIndexUpdater.new(candidates).perform
+    end
+  rescue Exception
+    puts "Damn it! I stopped at #{last_processed_countie}"
+  end
+end
+
+task :fix_geolocations do
+  users_with_faulty_geolocation = RecruiterExtensions::IndexedUser.where(geolocation: ",")
+  users_with_faulty_geolocation.each do |user|
+    user.update(geolocation: ::Geokit::Geocoders::MapboxGeocoder.geocode(user.location).ll)
+  end
 end
