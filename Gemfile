@@ -11,6 +11,7 @@ gem 'faraday-http-cache'
 gem 'faraday_middleware'
 gem 'byebug'
 gem 'rake'
+gem 'unicorn'
 
 
 group :test do
