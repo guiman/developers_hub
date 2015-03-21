@@ -1,5 +1,5 @@
 GIT
-  remote: git@github.com:Alliants/recruiter.git
+  remote: git@github.com:guiman/recruiter.git
   revision: 88f4e96bfef5dc149e71162b261c5208884b8b15
   specs:
     recruiter (0.0.1)
