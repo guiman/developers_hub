@@ -1,0 +1,31 @@
+<h2><%= @user.name %></h2>
+
+<div class="row">
+  <div class="col-md-4">
+    <p> Location: <%= @user.location %> </p>
+    <% if @user.hireable %>
+      <p><mark>Available for hire!</mark></p>
+    <% end %>
+
+    <button type="button" class="btn btn-success">Contact Me</button>
+  </div>
+  <div class="col-md-4">
+    <table class="table table-condensed">
+      <thead>
+        <tr>
+          <th>Language</th>
+          <th>Projects</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @user.sorted_languages.each do |language, count| %>
+        <tr>
+          <td><%= language %></td>
+          <td><%= count %></td>
+        </td>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
