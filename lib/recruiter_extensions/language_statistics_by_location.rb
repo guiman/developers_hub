@@ -7,9 +7,9 @@ module RecruiterExtensions
     end
 
     def perform
-      users = RecruiterExtensions::IndexedUser.all
+      users = RecruiterExtensions::IndexedUser.all.where(hireable: true)
 
-      users_with_language = (@lang == "no-lang") ? users : users.select do |candidate|
+      users_with_language = (@lang == "all") ? users : users.select do |candidate|
         candidate.languages.keys
         .map(&:to_s)
         .map(&:downcase)
