@@ -6,7 +6,7 @@ require 'mina/rbenv'
 set :domain, '52.11.118.225'
 set :user, 'ubuntu'
 set :deploy_to, '/var/www/dev-hub.io'
-set :repository, 'git@github.com:guiman/developers_index.git'
+set :repository, 'git@github.com:Alliants/developers_index.git'
 set :app_path, "#{deploy_to}/#{current_path}"
 set :branch, 'master'
 set :identity_file, 'deploy.pem'

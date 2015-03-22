@@ -3,13 +3,13 @@ require_relative 'lib/migration_loader'
 
 task :migrate_up do
   migrations = MigrationLoader.migrations(File.join(__dir__, 'migrations', '*.rb'))
-  migrations = migrations.select { |pair| pair.first == "201503220918"  }
+  migrations = migrations.select { |pair| pair.first == "201503221749"  }
   migrations.map { |pair| pair.last }.each(&:up)
 end
 
 task :migrate_down do
   migrations = MigrationLoader.migrations(File.join(__dir__, 'migrations', '*.rb'))
-  migrations = migrations.select { |pair| pair.first == "201503220918"  }
+  migrations = migrations.select { |pair| pair.first == "201503221749"  }
   migrations.map { |pair| pair.last }.each(&:down)
 end
 
