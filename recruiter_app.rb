@@ -9,6 +9,20 @@ class RecruiterApp < Sinatra::Base
     erb :index
   end
 
+  get '/subscribe' do
+    erb :subscribe
+  end
+
+  post '/subscribe' do
+    email = params.fetch("email")
+
+    if RecruiterExtensions::Subscriber.create(email: email)
+      redirect '/'
+    else
+      erb :subscribe
+    end
+  end
+
   get '/user/:id' do
     begin
       @id = params.fetch("id")
