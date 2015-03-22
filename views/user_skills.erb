@@ -1,0 +1,5 @@
+<% if language && language != 'all' %>
+  <%= languages.select { |k,v| k.to_s.casecmp(language) == 0 }.values.first %> projects
+<% else %>
+  <%= languages.keys.count %> languages
+<% end %>
