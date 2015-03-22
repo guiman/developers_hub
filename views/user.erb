@@ -2,6 +2,7 @@
 
 <div class="row">
   <div class="col-md-4">
+    <img class="img-responsive img-rounded" src="<%= @user.gravatar_url %>"/>
     <p> Location: <%= @user.location %> </p>
     <% if @user.hireable %>
       <p><mark>Available for hire!</mark></p>
