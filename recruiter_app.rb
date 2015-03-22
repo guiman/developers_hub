@@ -4,16 +4,27 @@ require 'geokit'
 
 class RecruiterApp < Sinatra::Base
   get '/' do
-    @candidates = RecruiterExtensions::IndexedUser.where(hireable: true).order(:name).all
+    @candidates = RecruiterExtensions::FilterIndexedUsers.new.all
 
     erb :index
+  end
+
+  get '/user/:id' do
+    begin
+      @id = params.fetch("id")
+      @user = RecruiterExtensions::IndexedUser.find(@id)
+      erb :user
+    rescue ActiveRecord::RecordNotFound
+      redirect '/'
+    end
   end
 
   # JSON map data for particular languages
   get '/map_data/:lang' do
     content_type :json
 
-    RecruiterExtensions::LanguageStatisticsByLocation.new(params.fetch("lang", "all")).perform.to_json
+    RecruiterExtensions::LanguageStatisticsByLocation.new(
+      params.fetch("lang", "all")).perform.to_json
   end
 
   ### Filters

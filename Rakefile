@@ -3,12 +3,24 @@ require_relative 'lib/migration_loader'
 
 task :migrate_up do
   migrations = MigrationLoader.migrations(File.join(__dir__, 'migrations', '*.rb'))
+  migrations = migrations.select { |pair| pair.first == "201503220918"  }
   migrations.map { |pair| pair.last }.each(&:up)
 end
 
 task :migrate_down do
   migrations = MigrationLoader.migrations(File.join(__dir__, 'migrations', '*.rb'))
+  migrations = migrations.select { |pair| pair.first == "201503220918"  }
   migrations.map { |pair| pair.last }.each(&:down)
+end
+
+task :add_gravatars do
+  RecruiterExtensions::IndexedUser.where(gravatar_url: nil).each do |user|
+    client = Octokit::Client.new(:access_token => ENV["GITHUB_ACCESS_TOKEN"])
+    gh_user = client.user(user.login)
+    gravatar_url = gh_user.avatar_url
+
+    user.update(gravatar_url: gravatar_url)
+  end
 end
 
 task :update_index do
