@@ -3,6 +3,7 @@
     <tr>
       <th>Profile</th>
       <th>Location</th>
+      <th>Skills</th>
     </tr>
   </thead>
   <tbody>
@@ -10,6 +11,7 @@
       <tr>
         <td><a href="/user/<%= candidate.id %>"><%= candidate.name %></a></td>
         <td><%= candidate.location %></td>
+        <td><%= erb :user_skills, locals: { languages: candidate.sorted_languages, language: @language } %></td>
       </tr>
     <% end %>
   </tbody>
