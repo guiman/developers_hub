@@ -3,6 +3,10 @@ require 'json'
 require 'geokit'
 
 class RecruiterApp < Sinatra::Base
+  configure do
+    set :public_folder, File.dirname(__FILE__) + '/static'
+  end
+
   get '/' do
     @candidates = RecruiterExtensions::FilterIndexedUsers.new.all
 
