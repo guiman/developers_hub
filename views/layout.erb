@@ -54,6 +54,15 @@
           <form action="/subscribe" method="get" class="navbar-form navbar-right">
             <button type="submit" class="btn btn-success">Subscribe for news</button>
           </form>
+          <% if login? %>
+            <form action="/logout" method="get" class="navbar-form navbar-right">
+              <button type="submit" class="btn btn-danger">Logout</button>
+            </form>
+          <% else %>
+            <form action="/auth/github" method="get" class="navbar-form navbar-right">
+              <button type="submit" class="btn btn-success">Sign in with Github</button>
+            </form>
+          <% end %>
         </div><!--/.nav-collapse -->
       </div>
     </nav>

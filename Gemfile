@@ -11,7 +11,11 @@ gem 'faraday_middleware'
 gem 'byebug'
 gem 'rake'
 gem 'unicorn'
+gem 'omniauth-github'
 
+group :development do
+  gem 'better_errors'
+end
 
 group :test do
   gem 'rspec'

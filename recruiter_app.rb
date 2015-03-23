@@ -5,6 +5,23 @@ require 'geokit'
 class RecruiterApp < Sinatra::Base
   configure do
     set :public_folder, File.dirname(__FILE__) + '/static'
+    use BetterErrors::Middleware
+    use DeveloperProfileApp
+    BetterErrors.application_root = File.expand_path('..', __FILE__)
+  end
+
+  helpers do
+    def login?
+      if session[:user_id].nil?
+        return false
+      else
+        return true
+      end
+    end
+
+    def user
+      return RecruiterExtensions::DeveloperUser.find(session[:user_id])
+    end
   end
 
   get '/' do
@@ -24,6 +41,16 @@ class RecruiterApp < Sinatra::Base
       redirect '/'
     else
       erb :subscribe
+    end
+  end
+
+  get '/user/:id' do
+    begin
+      @id = params.fetch("id")
+      @user = RecruiterExtensions::IndexedUser.find(@id)
+      erb :user
+    rescue ActiveRecord::RecordNotFound
+      redirect '/'
     end
   end
 
