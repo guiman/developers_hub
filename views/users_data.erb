@@ -9,7 +9,11 @@
   <tbody>
     <% @candidates.each do |candidate| %>
       <tr>
-        <td><a href="/user/<%= candidate.id %>"><%= candidate.name %></a></td>
+        <td>
+          <a href="/user/<%= candidate.id %>">
+            <%= "#{candidate.sorted_languages.keys.first.to_s} developer #{candidate.id}" %>
+          </a>
+        </td>
         <td><%= candidate.location %></td>
         <td><%= erb :user_skills, locals: { languages: candidate.sorted_languages, language: @language } %></td>
       </tr>
