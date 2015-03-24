@@ -1,0 +1,13 @@
+<p class="lead text-center" style="margin-top: 10em">
+  We are building a lot new features to help making this index better<br/>
+  Subscribe for news and updates on the project!<br/>
+</p>
+
+<div style="margin: 0 auto; width:40%;">
+  <%= form_for(@user) do |f| %>
+    <div class="form-group text-center">
+      <%= f.email_field "email", class: "form-control text-center", placeholder: "Email to subscribe" %>
+      <%= f.submit "Subscribe", class: "btn btn-default" %>
+    </div>
+  <% end %>
+</div>

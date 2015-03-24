@@ -1,1 +1,5 @@
+/.bundle
+/log/*
+!/log/.keep
+/tmp
 rubish_i_dont_want_to_stage

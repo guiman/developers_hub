@@ -1,0 +1,23 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Profile</th>
+      <th>Location</th>
+      <th>Skills</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% candidates.each do |candidate| %>
+      <tr>
+        <td>
+          <%= link_to candidate.obfuscated_name, developer_profile_path(candidate.secure_reference) %>
+          <a href="/user/<%= candidate.id %>">
+            <%=  %>
+          </a>
+        </td>
+        <td><%= candidate.location %></td>
+        <td><%= render partial: "developers/user_skills", locals: { languages: candidate.sorted_languages, language: language } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
