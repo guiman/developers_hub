@@ -35,8 +35,9 @@ var Component = React.createClass({
               this.state.candidates.slice(start, end).map(function(candidate) {
                 return (
                   <tr>
-                    <td><a href="/user/{candidate.id}">{candidate.name}</a></td>
+                    <td><a href={"/user/" + candidate.id}>{candidate.name}</a></td>
                     <td>{ candidate.location }</td>
+                    <td>{ Object.keys(candidate.languages).length } languages</td>
                   </tr>
                 );
               })
