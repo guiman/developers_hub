@@ -6,9 +6,12 @@ $:.unshift(extension_lib) unless $:.include?(extension_lib)
 
 require 'recruiter'
 require 'recruiter/cached_search_strategy'
+require 'omniauth'
+require 'better_errors'
 
 require 'active_record'
 require_relative 'database'
+require_relative 'developer_profile/app'
 require 'recruiter_extensions'
 
 Geokit::Geocoders::MapboxGeocoder.key = 'pk.eyJ1IjoiYWx2YXJvbGEiLCJhIjoicjkxUGpONCJ9.lYnv1rHrMRVzy5r5PM5ivg'
