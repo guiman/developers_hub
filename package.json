@@ -1,0 +1,30 @@
+{
+  "name": "dev-hub",
+  "version": "0.0.1",
+  "devDependencies": {
+    "gulp": "3.8.10",
+    "gulp-run": "1.6.5",
+    "gulp-concat": "2.4.3",
+    "browserify": "3.44.2",
+    "vinyl-source-stream": "1.0.0",
+    "vinyl-buffer": "1.0.0",
+    "reactify": "0.17.1"
+  },
+  "paths": {
+    "less": "assets/less/*.less",
+    "js": "./app/**/*.js",
+    "jsx": "./app/**/*.jsx",
+    "app": "./app/app.js",
+    "html": "*.html"
+  },
+  "dest": {
+    "style": "style.css",
+    "app": "app.js",
+    "dist": "dist"
+  },
+  "dependencies": {
+    "envify": "^3.4.0",
+    "jquery": "^2.1.3",
+    "react": "^0.13.1"
+  }
+}

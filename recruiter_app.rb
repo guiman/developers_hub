@@ -9,6 +9,12 @@ class RecruiterApp < Sinatra::Base
     erb :index
   end
 
+  get '/candidates' do
+    content_type :json
+
+    RecruiterExtensions::FilterIndexedUsers.new.all.to_json
+  end
+
   get '/subscribe' do
     erb :subscribe
   end
