@@ -1,3 +1,4 @@
-require_relative 'recruiter_app'
+# This file is used by Rack-based servers to start the application.
 
-run RecruiterApp
+require ::File.expand_path('../config/environment', __FILE__)
+run Rails.application

@@ -6,7 +6,7 @@ module RecruiterExtensions
 
     def perform
       @candidates.each do |candidate|
-        if existing_indexed_candidate = Developer.find_by_github_login(candidate.github_login)
+        if existing_indexed_candidate = RecruiterExtensions::IndexedUser.find_by_login(candidate.login)
           existing_indexed_candidate.update(name: candidate.name,
             hireable: candidate.hireable,
             location: candidate.location,
@@ -15,9 +15,9 @@ module RecruiterExtensions
             languages: candidate.languages)
 
         else
-          Developer.create(name: candidate.name,
+          RecruiterExtensions::IndexedUser.create(name: candidate.name,
             hireable: candidate.hireable,
-            github_login: candidate.github_login,
+            login: candidate.login,
             location: candidate.location,
             geolocation: ::Geokit::Geocoders::MapboxGeocoder.geocode(candidate.location).ll,
             email: candidate.email,

@@ -1,0 +1,19 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  pool: 5
+  username: root
+  password:
+
+development:
+  <<: *default
+  database: developers_hub_development
+
+test:
+  <<: *default
+  database: developers_hub_test
+
+production:
+  <<: *default
+  database: <%= ENV['DATABASE_NAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>

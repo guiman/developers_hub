@@ -1,18 +1,27 @@
 source 'https://rubygems.org'
 
-gem 'activerecord'
-gem 'thin'
-gem 'geokit'
-gem 'mysql2'
-gem 'recruiter', git: 'git@github.com:guiman/recruiter.git'
-gem 'sinatra', require: 'sinatra/base'
+gem 'coffee-rails', '~> 4.1.0'
 gem 'faraday-http-cache'
 gem 'faraday_middleware'
-gem 'byebug'
-gem 'rake'
+gem 'geokit'
+gem 'jbuilder', '~> 2.0'
+gem 'jquery-rails'
+gem 'mysql2'
+gem 'rails', '4.2.1'
+gem 'recruiter', git: 'git@github.com:guiman/recruiter.git'
+gem 'sass-rails', '~> 5.0'
+gem 'sdoc', '~> 0.4.0', group: :doc
+gem 'turbolinks'
+gem 'uglifier', '>= 1.3.0'
+
+# Use ActiveModel has_secure_password
+# gem 'bcrypt', '~> 3.1.7'
+
 gem 'unicorn'
 
-
-group :test do
-  gem 'rspec'
+group :development, :test do
+  gem 'byebug'
+  gem 'web-console', '~> 2.0'
+  gem 'rspec-rails'
 end
+
