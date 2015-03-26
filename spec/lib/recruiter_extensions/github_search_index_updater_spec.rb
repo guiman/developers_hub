@@ -1,15 +1,16 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe RecruiterExtensions::GithubSearchIndexUpdater do
 
   it "updates users that already exist" do
-    Developer.create(github_login: "test", hireable: false)
+    Developer.create(login: "test", hireable: false)
 
-    candidate = double(github_login: "test",
+    candidate = double(login: "test",
       name: "name",
       hireable: true,
       location: "Southampton",
       email: "my@email.com",
+      avatar_url: "/my/avatar/url",
       languages: {})
 
     candidates = [ candidate ]
@@ -21,11 +22,12 @@ describe RecruiterExtensions::GithubSearchIndexUpdater do
   end
 
   it "adds users to the index" do
-    candidate = double(github_login: "test",
+    candidate = double(login: "test",
       name: "name",
       hireable: false,
       location: "Southampton",
       email: "my@email.com",
+      avatar_url: "/my/avatar/url",
       languages: {})
 
     candidates = [ candidate ]

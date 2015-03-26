@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150325143326) do
+ActiveRecord::Schema.define(version: 20150325215457) do
 
   create_table "developers", force: :cascade do |t|
     t.string  "email",            limit: 255
@@ -23,6 +23,8 @@ ActiveRecord::Schema.define(version: 20150325143326) do
     t.text    "languages",        limit: 65535
     t.string  "gravatar_url",     limit: 255
     t.string  "secure_reference", limit: 255,   null: false
+    t.string  "uid",              limit: 255
+    t.string  "token",            limit: 255
   end
 
   create_table "indexed_users", force: :cascade do |t|

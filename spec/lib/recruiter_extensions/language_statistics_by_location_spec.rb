@@ -8,27 +8,27 @@ describe RecruiterExtensions::LanguageStatisticsByLocation do
     allow(Geokit::Geocoders::MapboxGeocoder).to receive(:geocode).with("Southampton, Hampshire, UK").and_return(southampton_coords)
     allow(Geokit::Geocoders::MapboxGeocoder).to receive(:geocode).with("Portsmouth, UK").and_return(portsmouth_coords)
 
-    Developer.create(github_login: "user1",
+    Developer.create(login: "user1",
       hireable: true,
       location: "Southampton, Hampshire, UK",
       geolocation: southampton_coords,
       languages: { Ruby: 3 })
-    Developer.create(github_login: "user2",
+    Developer.create(login: "user2",
       hireable: true,
       location: "Portsmouth, UK",
       geolocation: portsmouth_coords,
       languages: { Ruby: 3 } )
-    Developer.create(github_login: "user3",
+    Developer.create(login: "user3",
       hireable: true,
       location: "Portsmouth, UK",
       geolocation: portsmouth_coords,
       languages: { Ruby: 3 } )
-    Developer.create(github_login: "user4",
+    Developer.create(login: "user4",
       hireable: true,
       location: "Portsmouth, UK",
       geolocation: portsmouth_coords,
       languages: { Ruby: 3 } )
-    Developer.create(github_login: "user5",
+    Developer.create(login: "user5",
       hireable: false,
       location: "Portsmouth, UK",
       geolocation: portsmouth_coords,

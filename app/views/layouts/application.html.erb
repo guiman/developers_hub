@@ -54,9 +54,18 @@
             <li><a href="/lang/ruby">Ruby Developers</a></li>
             <li><a href="/lang/javascript">Javascript Developers</a></li>
           </ul>
-          <form action="/subscribers/new" method="get" class="navbar-form navbar-right">
-            <button type="submit" class="btn btn-success">Subscribe for news</button>
-          </form>
+          <% if session[:developer_id] %>
+            <form action="/sessions/logout" method="get" class="navbar-form navbar-right">
+              <button type="submit" class="btn btn-danger">Logout</button>
+            </form>
+          <% else %>
+            <form action="/subscribers/new" method="get" class="navbar-form navbar-right">
+              <button type="submit" class="btn btn-success">Subscribe for news</button>
+            </form>
+            <form action="/auth/github" method="get" class="navbar-form navbar-right">
+              <button type="submit" class="btn btn-success">Developer sign in with Github</button>
+            </form>
+        <% end %>
         </div><!--/.nav-collapse -->
       </div>
     </nav>

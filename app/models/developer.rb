@@ -2,6 +2,13 @@ class Developer < ActiveRecord::Base
   serialize :languages
   before_create :set_secure_reference
 
+  def self.create_from_auth_hash(auth)
+    user = self.create(uid: auth.uid,
+                       token: auth.credentials.token,
+                       login: auth.extra.raw_info.login)
+    user
+  end
+
   def obfuscated_name
     adjectives = ["ninja", "guru", "evangelist", "pope", "samurai", "prophet", "hacker"]
     "#{sorted_languages.keys.first.to_s} #{adjectives.sample}"
@@ -12,7 +19,7 @@ class Developer < ActiveRecord::Base
   end
 
   def ==(another_object)
-    github_login == another_object.github_login
+    login == another_object.login
   end
 
   def set_secure_reference
