@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'coffee-rails', '~> 4.1.0'
+gem 'dragonfly', '~> 1.0.0'
 gem 'faraday-http-cache'
 gem 'faraday_middleware'
 gem 'geokit'

@@ -55,6 +55,9 @@
             <li><a href="/lang/javascript">Javascript Developers</a></li>
           </ul>
           <% if session[:developer_id] %>
+            <form action="<%= developer_profile_path(current_user.secure_reference)%>" method="get" class="navbar-form navbar-right">
+              <button type="submit" class="btn btn-success">Profile</button>
+            </form>
             <form action="/sessions/logout" method="get" class="navbar-form navbar-right">
               <button type="submit" class="btn btn-danger">Logout</button>
             </form>

@@ -25,6 +25,10 @@ class DevelopersController < ApplicationController
   def show
     @user = Developer.find_by_secure_reference(params[:secure_reference])
     redirect_to root_path unless @user.hireable || @user.id == session[:developer_id]
+
+    if session[:developer_id] == @user.id
+      render 'profile'
+    end
   end
 
 

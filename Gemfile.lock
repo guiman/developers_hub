@@ -61,6 +61,10 @@ GEM
     columnize (0.9.0)
     debug_inspector (0.0.2)
     diff-lcs (1.2.5)
+    dragonfly (1.0.7)
+      addressable (~> 2.3)
+      multi_json (~> 1.0)
+      rack
     erubis (2.7.0)
     execjs (2.4.0)
     faraday (0.9.1)
@@ -213,6 +217,7 @@ PLATFORMS
 DEPENDENCIES
   byebug
   coffee-rails (~> 4.1.0)
+  dragonfly (~> 1.0.0)
   faraday-http-cache
   faraday_middleware
   geokit
