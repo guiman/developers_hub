@@ -24,16 +24,7 @@ class DeveloperProfilePresenter
     @subject.hireable? || @subject == @viewer
   end
 
-  def location
-    @subject.location
-  end
-
-  def hireable
-    @subject.hireable
-  end
-
-
-  def sorted_languages
-    @subject.sorted_languages
+  def method_missing(method, *args, &block)
+    @subject.public_send(method)
   end
 end

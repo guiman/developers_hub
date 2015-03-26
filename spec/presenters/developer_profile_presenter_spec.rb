@@ -18,7 +18,6 @@ describe DeveloperProfilePresenter do
     end
   end
 
-
   context "user is not owner" do
     it "shows blurred gravatar urls" do
       dev = Developer.create(login: "test")

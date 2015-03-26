@@ -10,7 +10,7 @@
     <% candidates.each do |candidate| %>
       <tr>
         <td>
-          <%= link_to candidate.obfuscated_name, developer_profile_path(candidate.secure_reference) %>
+          <%= link_to candidate.name , developer_profile_path(candidate.secure_reference) %>
           <a href="/user/<%= candidate.id %>">
             <%=  %>
           </a>
