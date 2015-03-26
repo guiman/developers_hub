@@ -1,1 +1,3 @@
-<%= render partial: "shared/users_data", locals: { candidates: @candidates, language: @language } %>
+<%= react_component('DevelopersList',
+  { candidates: @candidates, pageSize: 15, styles: { button: 'btn btn-default' } },
+  {prerender: true}) %>
