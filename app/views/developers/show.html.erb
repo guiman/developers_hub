@@ -1,20 +1,16 @@
-<h2><%= @user.obfuscated_name %></h2>
+<h2><%= @developer.name %></h2>
 
 <div class="row">
   <div class="col-md-4">
-    <% if session[:developer_id] == @user.id %>
-      <%= image_tag @user.gravatar_url, class: "img-responsive img-rounded" %>
-    <% else %>
-      <%= image_tag @user.blurred_gravatar_url, class: "img-responsive img-rounded" %>
-    <% end %>
-    <p> Location: <%= @user.location %> </p>
-    <% if @user.hireable %>
+    <%= image_tag @developer.avatar, class: "img-responsive img-rounded" %>
+    <p> Location: <%= @developer.location %> </p>
+    <% if @developer.hireable %>
       <p><mark>Available for hire!</mark></p>
     <% end %>
 
     <a href="/subscribers/new" class="btn btn-success">Contact Me</a>
   </div>
   <div class="col-md-4">
-    <%= render partial: 'shared/languages_chart', locals: { user: @user } %>
+    <%= render partial: 'shared/languages_chart', locals: { user: @developer } %>
   </div>
 </div>
