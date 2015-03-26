@@ -24,6 +24,14 @@ class DevelopersController < ApplicationController
 
   def show
     @user = Developer.find_by_secure_reference(params[:secure_reference])
-    redirect_to root_path unless @user.hireable
+    redirect_to root_path unless @user.hireable || @user.id == session[:developer_id]
+  end
+
+
+  def create
+    developer = RecruiterExtensions::BuildDeveloperProfile.new(request.env['omniauth.auth']).perform
+    session[:developer_id] = developer.id
+
+    redirect_to developer_profile_path(developer.secure_reference)
   end
 end
