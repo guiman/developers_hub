@@ -1,12 +1,8 @@
-<h2><%= @user.obfuscated_name %></h2>
+<h2><%= @user.name %></h2>
 
 <div class="row">
   <div class="col-md-4">
-    <% if session[:developer_id] == @user.id %>
-      <%= image_tag @user.gravatar_url, class: "img-responsive img-rounded" %>
-    <% else %>
-      <%= image_tag @user.blurred_gravatar_url, class: "img-responsive img-rounded" %>
-    <% end %>
+    <%= image_tag @user.gravatar_url, class: "img-responsive img-rounded" %>
     <p> Location: <%= @user.location %> </p>
     <% if @user.hireable %>
       <p><mark>Available for hire!</mark></p>

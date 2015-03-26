@@ -25,4 +25,10 @@ class Developer < ActiveRecord::Base
   def set_secure_reference
     self.secure_reference = SecureRandom.hex(10)
   end
+
+
+  def blurred_gravatar_url
+    image = Dragonfly.app.fetch_url(self.gravatar_url)
+    image.convert('-blur 15x15').url
+  end
 end
