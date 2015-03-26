@@ -11,22 +11,7 @@
     <a href="/subscribers/new" class="btn btn-success">Contact Me</a>
   </div>
   <div class="col-md-4">
-    <table class="table table-condensed">
-      <thead>
-        <tr>
-          <th>Language</th>
-          <th>Projects</th>
-        </tr>
-      </thead>
-      <tbody>
-      <% @user.sorted_languages.each do |language, count| %>
-        <tr>
-          <td><%= language %></td>
-          <td><%= count %></td>
-        </td>
-      <% end %>
-      </tbody>
-    </table>
+    <%= render partial: 'shared/languages_chart', locals: { user: @user } %>
   </div>
 </div>
 

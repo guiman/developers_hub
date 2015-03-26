@@ -1,0 +1,33 @@
+<div id="chart"></div>
+<script type="text/javascript">
+  $(function() {
+    var data = [<%= user.sorted_languages.map { |(lang, count)| "['#{lang}', #{count}]" }.join(', ').html_safe %>];
+    c3.generate({
+      data: {
+        columns: data,
+        selection: { enabled: false },
+        type : 'donut'
+      },
+      donut: {
+        title: "Projects by language",
+        label: {
+          show: false
+        }
+      },
+      legend: {
+        item: {
+          onclick: function(d, i) { return; }
+        }
+      },
+      tooltip: {
+        contents: function(d, defaultTitleFormat, defaultValueFormat, color) {
+          var style = 'background-color: white;' +
+            'overflow: hidden; position: relative; display: inline;' +
+            'padding: 5px; border: 1px solid black; opacity: 0.9;' +
+            'white-space: nowrap;';
+          return "<div style='" + style + "'>" + d["0"].name + ": " + d["0"].value + "</div>";
+        }
+      }
+    });
+  });
+</script>
