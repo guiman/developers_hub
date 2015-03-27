@@ -1,6 +1,6 @@
 class DevelopersController < ApplicationController
   def index
-    candidates = RecruiterExtensions::FilterDevelopers.new.all
+    candidates = current_user.developer_listings
 
     @candidates = candidates.map { |candidate|  DeveloperListingPresenter.new(
       subject: candidate, viewer: current_user.developer) }
@@ -13,8 +13,8 @@ class DevelopersController < ApplicationController
     lng = params["lng"]
     @geolocation = (lat && lng) ? "#{lat},#{lng}" : 'all'
 
-    candidates = RecruiterExtensions::FilterDevelopers.new(
-      language: @language, geolocation: @geolocation, location: @location).all
+    candidates = current_user.developer_listings(language: @language,
+      geolocation: @geolocation, location: @location)
 
     @candidates = candidates.map { |candidate|  DeveloperListingPresenter.new(
       subject: candidate, viewer: current_user.developer) }
