@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe DeveloperProfilePresenter do
-  context "user is owner" do
+  context "user is the same developer" do
     it "shows gravatar urls" do
       dev = Developer.create
       presenter = described_class.new(subject: dev, viewer: dev)
@@ -18,7 +18,7 @@ describe DeveloperProfilePresenter do
     end
   end
 
-  context "user is not owner" do
+  context "user is another developer" do
     it "shows blurred gravatar urls" do
       dev = Developer.create(login: "test")
       dev_2 = Developer.create(login: "test_2")
@@ -36,4 +36,19 @@ describe DeveloperProfilePresenter do
     end
   end
 
+  context "user null developer" do
+    it "shows blurred gravatar urls" do
+      dev = Developer.create(login: "test")
+      presenter = described_class.new(subject: dev, viewer: NullDeveloper.new)
+      expect(dev).to receive(:blurred_gravatar_url)
+      presenter.avatar
+    end
+
+    it "shows obfuscated name" do
+      dev = Developer.create(login: "test")
+      presenter = described_class.new(subject: dev, viewer: NullDeveloper.new)
+      expect(dev).to receive(:obfuscated_name)
+      presenter.name
+    end
+  end
 end
