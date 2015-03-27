@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150325215457) do
+ActiveRecord::Schema.define(version: 20150327211329) do
+
+  create_table "dev_recruiters", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "uid",        limit: 255,                     null: false
+    t.string   "avatar_url", limit: 255
+    t.string   "token",      limit: 255
+    t.string   "email",      limit: 255
+    t.string   "location",   limit: 255, default: "unknown"
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+  end
 
   create_table "developers", force: :cascade do |t|
     t.string  "email",            limit: 255

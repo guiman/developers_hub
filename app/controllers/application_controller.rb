@@ -6,6 +6,6 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def current_user
-    DeveloperUser.from_session(session[:developer_id])
+    CurrentUser.from_session(developer_id: session[:developer_id], recruiter_id: session[:recruiter_id])
   end
 end

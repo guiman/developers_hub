@@ -34,7 +34,6 @@ class DevelopersController < ApplicationController
     redirect_to root_path unless @developer.can_be_displayed?
   end
 
-
   def create
     developer = RecruiterExtensions::BuildDeveloperProfile.new(request.env['omniauth.auth']).perform
     session[:developer_id] = developer.id

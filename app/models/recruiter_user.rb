@@ -1,16 +1,14 @@
-class DeveloperUser
-  attr_reader :developer
-
-  def initialize(developer)
-    @developer = developer
-  end
-
-  def secure_reference
-    @developer.secure_reference
+class RecruiterUser
+  def initialize(recruiter)
+    @recruiter = recruiter
   end
 
   def logged_in?
-    !@developer.instance_of? NullDeveloper
+    true
+  end
+
+  def developer
+    nil
   end
 
   def developer_listings(language: 'all', location: 'all', geolocation: 'all')
