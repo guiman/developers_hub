@@ -13,6 +13,10 @@ class DevelopersController < ApplicationController
     lng = params["lng"]
     @geolocation = (lat && lng) ? "#{lat},#{lng}" : 'all'
 
+    # Only for map rendering purposes
+    @current_lat = lat || 50.9167536
+    @current_lng = lng || -1.4004929
+
     @map_data = RecruiterExtensions::LanguageStatisticsByLocation.new(
       @language).perform
 
