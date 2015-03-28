@@ -13,19 +13,14 @@ class DevelopersController < ApplicationController
     lng = params["lng"]
     @geolocation = (lat && lng) ? "#{lat},#{lng}" : 'all'
 
+    @map_data = RecruiterExtensions::LanguageStatisticsByLocation.new(
+      @language).perform
+
     candidates = current_user.developer_listings(language: @language,
       geolocation: @geolocation, location: @location)
 
     @candidates = candidates.map { |candidate|  DeveloperListingPresenter.new(
       subject: candidate, viewer: current_user.developer) }
-  end
-
-
-  def map_data
-    data = RecruiterExtensions::LanguageStatisticsByLocation.new(
-      params.fetch("lang", "all")).perform
-
-    render json: data
   end
 
   def show
