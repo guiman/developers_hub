@@ -1,7 +1,7 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_API_KEY'] %>"></script>
 <div id="map" style="height: 580px;"></div>
 <script>
-  function initialize() {
+  function initializeMap() {
     var current_lat = <%= @current_lat %>;
     var current_lng = <%= @current_lng %>;
     var mapOptions = {
@@ -11,32 +11,32 @@
     };
     var map = new google.maps.Map(document.getElementById('map'),
         mapOptions);
-    $(function() {
-      var data = <%= @map_data.to_json.html_safe %>
-      for(i = 0; i < data.length; i++) {
-        var info = data[i];
-        var content = 'Devs found: ' + info.language_count + '<br /><a target="_blank" href="/map/' + info.position[0] + '/' + info.position[1] + '/<%= @language %>">Listing</a>';
-        var position = new google.maps.LatLng(info.position[0], info.position[1]);
-        var infoWindow = new google.maps.InfoWindow({
-          disableAutoPan : true
-        });
 
-        var marker = new google.maps.Marker({
-          map: map,
-          position: position
-        });
+    var data = <%= @map_data.to_json.html_safe %>
+    for(i = 0; i < data.length; i++) {
+      var info = data[i];
+      var content = 'Devs found: ' + info.language_count + '<br /><a target="_blank" href="/map/' + info.position[0] + '/' + info.position[1] + '/<%= @language %>">Listing</a>';
+      var position = new google.maps.LatLng(info.position[0], info.position[1]);
+      var infoWindow = new google.maps.InfoWindow({
+        disableAutoPan : true
+      });
 
-        google.maps.event.addListener(marker,'click', (function(marker,content,infoWindow){
-            return function(e) {
-                infoWindow.setContent(content);
-                infoWindow.setPosition(e.latLng);
-                infoWindow.open(map,marker);
-            };
-        })(marker,content,infoWindow));
-      }
-    });
+      var marker = new google.maps.Marker({
+        map: map,
+        position: position
+      });
+
+      google.maps.event.addListener(marker,'click', (function(marker,content,infoWindow){
+          return function(e) {
+              infoWindow.setContent(content);
+              infoWindow.setPosition(e.latLng);
+              infoWindow.open(map,marker);
+          };
+      })(marker,content,infoWindow));
+    }
   }
-  google.maps.event.addDomListener(window, 'load', initialize);
+
+  window.onload = initializeMap;
 
 </script>
 
