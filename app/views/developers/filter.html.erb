@@ -1,7 +1,6 @@
-<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_API_KEY'] %>"></script>
 <div id="map" style="height: 580px;"></div>
 <script>
-  function initializeMap() {
+  function initialize() {
     var current_lat = <%= @current_lat %>;
     var current_lng = <%= @current_lng %>;
     var mapOptions = {
@@ -36,8 +35,15 @@
     }
   }
 
-  window.onload = initializeMap;
+  function loadScript() {
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp' +
+        '&key=<%= ENV['GOOGLE_API_KEY'] %>&callback=initialize';
+    document.body.appendChild(script);
+  }
 
+  window.onload = loadScript;
 </script>
 
 
