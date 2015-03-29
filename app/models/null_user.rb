@@ -1,20 +1,14 @@
-class DeveloperUser
-  attr_reader :developer
-
-  def initialize(developer)
-    @developer = developer
-  end
-
-  def secure_reference
-    @developer.secure_reference
-  end
-
+class NullUser
   def logged_in?
-    true
+    false
   end
 
-  def can_see_developer?(other_developer)
-    @developer == other_developer
+  def can_see_developer?(developer)
+    false
+  end
+
+  def method_missing(*args, &block)
+    self
   end
 
   def developer_listings(language: 'all', location: 'all', geolocation: 'all')

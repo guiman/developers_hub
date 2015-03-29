@@ -1,20 +1,16 @@
-class DeveloperUser
-  attr_reader :developer
+class RecruiterUser
+  attr_reader :recruiter
 
-  def initialize(developer)
-    @developer = developer
+  def initialize(recruiter)
+    @recruiter = recruiter
   end
 
-  def secure_reference
-    @developer.secure_reference
+  def can_see_developer?(other_developer)
+    false
   end
 
   def logged_in?
     true
-  end
-
-  def can_see_developer?(other_developer)
-    @developer == other_developer
   end
 
   def developer_listings(language: 'all', location: 'all', geolocation: 'all')

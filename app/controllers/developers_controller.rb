@@ -3,7 +3,7 @@ class DevelopersController < ApplicationController
     candidates = current_user.developer_listings
 
     @candidates = candidates.map { |candidate|  DeveloperListingPresenter.new(
-      subject: candidate, viewer: current_user.developer) }
+      subject: candidate, viewer: current_user.user) }
   end
 
   def filter
@@ -24,16 +24,15 @@ class DevelopersController < ApplicationController
       geolocation: @geolocation, location: @location)
 
     @candidates = candidates.map { |candidate|  DeveloperListingPresenter.new(
-      subject: candidate, viewer: current_user.developer) }
+      subject: candidate, viewer: current_user.user) }
   end
 
   def show
     @developer = DeveloperProfilePresenter.new(
       subject: Developer.find_by_secure_reference(params[:secure_reference]),
-      viewer: current_user.developer)
+      viewer: current_user.user)
     redirect_to root_path unless @developer.can_be_displayed?
   end
-
 
   def create
     developer = RecruiterExtensions::BuildDeveloperProfile.new(request.env['omniauth.auth']).perform

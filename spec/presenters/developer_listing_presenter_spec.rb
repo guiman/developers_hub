@@ -23,7 +23,7 @@ describe DeveloperListingPresenter do
   context "user null developer" do
     it "shows obfuscated_name" do
       dev = Developer.create
-      presenter = described_class.new(subject: dev, viewer: NullDeveloper.new)
+      presenter = described_class.new(subject: dev, viewer: NullUser.new)
       expect(dev).to receive(:obfuscated_name)
       presenter.name
     end
