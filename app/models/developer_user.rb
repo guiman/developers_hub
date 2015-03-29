@@ -10,7 +10,11 @@ class DeveloperUser
   end
 
   def logged_in?
-    !@developer.instance_of? NullDeveloper
+    true
+  end
+
+  def can_see_developer?(other_developer)
+    @developer == other_developer
   end
 
   def developer_listings(language: 'all', location: 'all', geolocation: 'all')

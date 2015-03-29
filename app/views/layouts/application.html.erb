@@ -56,13 +56,14 @@
             <li><a href="/lang/javascript">Javascript Developers</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <% if current_user.logged_in? && !current_user.developer.nil? %>
-              <li><%= link_to "Profile", developer_profile_path(current_user.secure_reference) %></li>
-              <li><%= link_to "Logout", "/sessions/logout" %></li>
-            <% elsif current_user.logged_in? && current_user.developer.nil? %>
+            <% if current_user.logged_in? %>
+              <% if current_user.is_a_developer? %>
+                <li><%= link_to "Profile", developer_profile_path(current_user.secure_reference) %></li>
+              <% end %>
+
               <li><%= link_to "Logout", "/sessions/logout" %></li>
             <% else %>
-              <li><%= link_to "Recruiters SignIn Linkedin", "/auth/linkedin" %></li>
+              <li><%= link_to "Recruiter SignIn Linkedin", "/auth/linkedin" %></li>
               <li><%= link_to "Developer SignIn Github", "/auth/github" %></li>
             <% end %>
           </ul>

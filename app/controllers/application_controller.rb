@@ -5,7 +5,16 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user
 
+  before_action :prevent_multi_profiles
+
   def current_user
     CurrentUser.from_session(developer_id: session[:developer_id], recruiter_id: session[:recruiter_id])
+  end
+
+  private
+
+  # This should never ever happen!
+  def prevent_multi_profiles
+    redirect_to "/sessions/logout" if session[:developer_id] && session[:recruiter_id]
   end
 end

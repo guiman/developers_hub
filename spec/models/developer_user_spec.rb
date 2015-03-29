@@ -1,6 +1,26 @@
 require 'rails_helper'
 
 describe DeveloperUser do
+  describe "#logged_in?" do
+    it "returns true" do
+      expect(described_class.new(nil).logged_in?).to eq(true)
+    end
+  end
+
+  describe "#can_see_developer?" do
+    it "return true when is the same developer" do
+      dev = Developer.create(login: "test1", hireable: true)
+      Developer.create(login: "test2", hireable: true)
+      expect(described_class.new(dev).can_see_developer?(dev)).to eq(true)
+    end
+
+    it "return false for other developers" do
+      dev = Developer.create(login: "test1", hireable: true)
+      dev_2 = Developer.create(login: "test2", hireable: true)
+      expect(described_class.new(dev).can_see_developer?(dev_2)).to eq(false)
+    end
+  end
+
   describe "#developer_listings" do
     it "shows all hireable developers" do
       dev = Developer.create(login: "test1", hireable: true)
