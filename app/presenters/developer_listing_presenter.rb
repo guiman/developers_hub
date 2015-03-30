@@ -11,4 +11,9 @@ class DeveloperListingPresenter
   def method_missing(method, *args, &block)
     @subject.public_send(method)
   end
+
+  def self.cast(candidates, viewer:)
+    candidates.map { |candidate|  DeveloperListingPresenter.new(
+      subject: candidate, viewer: viewer.user) }
+  end
 end
