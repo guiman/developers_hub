@@ -7,7 +7,7 @@
     </tr>
   </thead>
   <tbody>
-    <% candidates.each do |candidate| %>
+    <% DeveloperListingPresenter.cast(candidates, viewer: current_user).each do |candidate| %>
       <tr>
         <td>
           <%= link_to candidate.name , developer_profile_path(candidate.secure_reference) %>
@@ -19,5 +19,6 @@
         <td><%= render partial: "developers/user_skills", locals: { languages: candidate.sorted_languages, language: language } %></td>
       </tr>
     <% end %>
+    <%= will_paginate candidates %>
   </tbody>
 </table>

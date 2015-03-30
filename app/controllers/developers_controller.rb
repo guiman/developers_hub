@@ -1,9 +1,6 @@
 class DevelopersController < ApplicationController
   def index
-    candidates = current_user.developer_listings
-
-    @candidates = candidates.map { |candidate|  DeveloperListingPresenter.new(
-      subject: candidate, viewer: current_user.user) }
+    @candidates = current_user.developer_listings.paginate(page: params[:page], per_page: 20)
   end
 
   def filter
@@ -20,11 +17,8 @@ class DevelopersController < ApplicationController
     @map_data = RecruiterExtensions::LanguageStatisticsByLocation.new(
       @language).perform
 
-    candidates = current_user.developer_listings(language: @language,
-      geolocation: @geolocation, location: @location)
-
-    @candidates = candidates.map { |candidate|  DeveloperListingPresenter.new(
-      subject: candidate, viewer: current_user.user) }
+    @candidates = current_user.developer_listings(language: @language,
+      geolocation: @geolocation, location: @location).paginate(page: params[:page], per_page: 20)
   end
 
   def show
