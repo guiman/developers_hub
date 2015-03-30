@@ -25,6 +25,15 @@ ActiveRecord::Schema.define(version: 20150409173327) do
     t.boolean  "beta_user",  limit: 1,   default: false,     null: false
   end
 
+  create_table "developer_skills", force: :cascade do |t|
+    t.integer "developer_id", limit: 4
+    t.integer "skill_id",     limit: 4
+    t.integer "strength",     limit: 4
+  end
+
+  add_index "developer_skills", ["developer_id"], name: "index_developer_skills_on_developer_id", using: :btree
+  add_index "developer_skills", ["skill_id"], name: "index_developer_skills_on_skill_id", using: :btree
+
   create_table "developers", force: :cascade do |t|
     t.string  "email",            limit: 255
     t.string  "location",         limit: 255
@@ -61,10 +70,19 @@ ActiveRecord::Schema.define(version: 20150409173327) do
   add_index "offers", ["dev_recruiter_id"], name: "index_offers_on_dev_recruiter_id", using: :btree
   add_index "offers", ["developer_id"], name: "index_offers_on_developer_id", using: :btree
 
+  create_table "skills", force: :cascade do |t|
+    t.string "name", limit: 255, null: false
+  end
+
+  add_index "skills", ["name"], name: "index_skills_on_name", unique: true, using: :btree
+
   create_table "subscribers", force: :cascade do |t|
     t.string "email", limit: 255
   end
 
   add_foreign_key "offers", "dev_recruiters"
   add_foreign_key "offers", "developers"
+
+  add_foreign_key "developer_skills", "developers"
+  add_foreign_key "developer_skills", "skills"
 end

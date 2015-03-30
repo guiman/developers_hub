@@ -12,7 +12,7 @@ module RecruiterExtensions
       candidates = @developers
       candidates = (@geolocation == "all") ? candidates : candidates.where(geolocation: @geolocation)
       candidates = (@location == "all") ? candidates : candidates.where("location LIKE ?", "%#{@location}%").all
-      candidates = (@language == "all") ? candidates : candidates.where("languages LIKE ?", "%#{@language}%").all
+      candidates = (@language == "all") ? candidates : candidates.includes(:skills).where(skills: { name: @language })
     end
   end
 end

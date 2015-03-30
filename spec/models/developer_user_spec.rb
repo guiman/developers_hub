@@ -33,11 +33,19 @@ describe DeveloperUser do
     end
 
     it "can filter by language" do
-      dev = Developer.create(login: "test1", hireable: true, languages: { R: 3 })
-      Developer.create(login: "test2", hireable: true, languages: { C: 3 })
-      Developer.create(login: "test3", hireable: true, languages: { Java: 3 })
-      Developer.create(login: "test4", hireable: true, languages: { Ruby: 3 })
-      Developer.create(login: "test5", hireable: false, languages: { Ruby: 3 })
+      skills = [ Skill.create(name: "C"), Skill.create(name: "Java"), Skill.create(name: "Ruby"), Skill.create(name: "R")]
+
+      dev = Developer.create(login: "test1", hireable: true)
+      DeveloperSkill.create(developer: dev, skill: skills[3], strength: 3)
+
+      DeveloperSkill.create(developer: Developer.create(login: "test2", hireable: true),
+                            skill: skills[0], strength: 3)
+      DeveloperSkill.create(developer: Developer.create(login: "test3", hireable: true),
+                            skill: skills[1], strength: 3)
+      DeveloperSkill.create(developer: Developer.create(login: "test4", hireable: true),
+                            skill: skills[2], strength: 3)
+      DeveloperSkill.create(developer: Developer.create(login: "test5", hireable: false),
+                            skill: skills[1], strength: 3)
 
       developer_user = described_class.new(dev.id)
       expect(developer_user.developer_listings(language: 'ruby').count).to eq(1)

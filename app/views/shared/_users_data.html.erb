@@ -16,7 +16,7 @@
           </a>
         </td>
         <td><%= candidate.location %></td>
-        <td><%= render partial: "developers/user_skills", locals: { languages: candidate.sorted_languages, language: language } %></td>
+        <td><%= render partial: "developers/user_skills", locals: { candidate: candidate, language: language } %></td>
       </tr>
     <% end %>
   </tbody>

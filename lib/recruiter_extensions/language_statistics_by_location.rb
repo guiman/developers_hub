@@ -10,7 +10,8 @@ module RecruiterExtensions
       users = Developer.where(hireable: true)
 
       users_with_language = (@lang == "all") ? users : users.select do |candidate|
-        candidate.languages.keys
+        candidate.skills
+        .map(&:name)
         .map(&:to_s)
         .map(&:downcase)
         .include?(@lang.downcase)
