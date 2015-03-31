@@ -13,6 +13,14 @@ class DeveloperUser
     true
   end
 
+  def is_a_developer?
+    true
+  end
+
+  def is_a_recruiter?
+    false
+  end
+
   def can_see_developer?(other_developer)
     @developer == other_developer
   end

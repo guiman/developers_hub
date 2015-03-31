@@ -7,6 +7,15 @@ class NullUser
     false
   end
 
+
+  def is_a_developer?
+    false
+  end
+
+  def is_a_recruiter?
+    false
+  end
+
   def method_missing(*args, &block)
     self
   end

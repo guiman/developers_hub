@@ -19,4 +19,8 @@ class RecruiterProfilePresenter
   def avatar
     @recruiter.avatar_url
   end
+
+  def can_see_instructions?
+    @viewer.is_a_recruiter? && @viewer.recruiter == @recruiter
+  end
 end

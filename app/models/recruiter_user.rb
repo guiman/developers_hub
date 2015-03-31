@@ -13,9 +13,20 @@ class RecruiterUser
     true
   end
 
-
   def id
     @recruiter.id
+  end
+
+  def is_a_recruiter?
+    true
+  end
+
+  def is_a_developer?
+    false
+  end
+
+  def ==(recruiter)
+    @recruiter == recruiter
   end
 
   def developer_listings(language: 'all', location: 'all', geolocation: 'all')

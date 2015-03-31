@@ -5,6 +5,8 @@
     <%= image_tag @recruiter.avatar, class: "img-responsive img-rounded" %>
     <p>Location: <%= @recruiter.location %></p>
   </div>
+
+  <% if @recruiter.can_see_instructions? %>
   <div class="col-md-5">
     <h3>Let's find some developers</h3>
     <p>
@@ -21,4 +23,5 @@
       </ul>
     </p>
   </div>
+  <% end %>
 </div>

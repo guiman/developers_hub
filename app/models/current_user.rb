@@ -18,11 +18,11 @@ class CurrentUser
   end
 
   def is_a_developer?
-    @user.instance_of? DeveloperUser
+    @user.is_a_developer?
   end
 
   def is_a_recruiter?
-    @user.instance_of? RecruiterUser
+    @user.is_a_recruiter?
   end
 
   def method_missing(name, *args, &block)
