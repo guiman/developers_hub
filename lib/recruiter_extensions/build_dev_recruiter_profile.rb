@@ -13,7 +13,7 @@ module RecruiterExtensions
           email: @auth_data.info.email,
           uid: @auth_data.uid,
           token: @auth_data.credentials.token,
-          avatar_url: @auth_data.info.image,
+          avatar_url: @auth_data.extra.raw_info.pictureUrls.values.last.first,
           location: @auth_data.info.location)
       end
 

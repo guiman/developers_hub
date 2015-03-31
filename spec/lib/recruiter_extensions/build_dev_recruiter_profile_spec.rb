@@ -24,6 +24,7 @@ describe RecruiterExtensions::BuildDevRecruiterProfile do
                    image: "/url/image.png",
                    email: "email@example.com"),
       uid: "123",
+      extra: double(raw_info: double(pictureUrls: double(values: [['picture_a/url', 'picture_b/url']]))),
       credentials: double("credentials", token: "1234"))
 
     described_class.new(auth).perform

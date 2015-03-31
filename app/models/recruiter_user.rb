@@ -13,6 +13,11 @@ class RecruiterUser
     true
   end
 
+
+  def id
+    @recruiter.id
+  end
+
   def developer_listings(language: 'all', location: 'all', geolocation: 'all')
     developers = Developer.where(hireable: true).order(:name)
     RecruiterExtensions::FilterDevelopers.new(developers: developers,

@@ -59,6 +59,8 @@
             <% if current_user.logged_in? %>
               <% if current_user.is_a_developer? %>
                 <li><%= link_to "Profile", developer_profile_path(current_user.secure_reference) %></li>
+              <% elsif current_user.is_a_recruiter? %>
+                <li><%= link_to "Profile", recruiter_profile_path(current_user.id) %></li>
               <% end %>
 
               <li><%= link_to "Logout", "/sessions/logout" %></li>

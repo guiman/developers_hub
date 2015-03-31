@@ -1,0 +1,2 @@
+describe RecruiterProfilePresenter do
+end

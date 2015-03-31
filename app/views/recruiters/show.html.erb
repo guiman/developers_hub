@@ -1,0 +1,24 @@
+<h2><%= @recruiter.name %></h2>
+
+<div class="row">
+  <div class="col-md-4">
+    <%= image_tag @recruiter.avatar, class: "img-responsive img-rounded" %>
+    <p>Location: <%= @recruiter.location %></p>
+  </div>
+  <div class="col-md-5">
+    <h3>Let's find some developers</h3>
+    <p>
+      By language:</br>
+      <ul>
+        <li><a href="/lang/ruby">/lang/ruby</a><br/></li>
+        <li><a href="/lang/javascript">/lang/javascript</a><br/></li>
+      </ul>
+
+      By location:</br>
+      <ul>
+        <li><a href="/location/hampshire">/location/hampshire</a><br/></li>
+        <li><a href="/location/bath">/location/bath</a><br/></li>
+      </ul>
+    </p>
+  </div>
+</div>
