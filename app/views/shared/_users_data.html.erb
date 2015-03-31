@@ -19,6 +19,7 @@
         <td><%= render partial: "developers/user_skills", locals: { languages: candidate.sorted_languages, language: language } %></td>
       </tr>
     <% end %>
-    <%= will_paginate candidates %>
   </tbody>
 </table>
+
+<%= will_paginate candidates, renderer: BootstrapPagination::Rails %>
