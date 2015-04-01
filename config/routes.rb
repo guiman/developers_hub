@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get '/location/:location' => "developers#filter"
   get '/map/:lat/:lng/:language' => "developers#filter", as: "map_filter", :constraints => {:lat => /\-*\d+.\d+/ , :lng => /\-*\d+.\d+/ , :range => /\d+/}
   get '/developer/:secure_reference' => "developers#show", as: "developer_profile"
+  post '/developer/:secure_reference/contact' => "developers#contact", as: "developer_contact"
   get '/recruiter/:id' => "recruiters#show", as: "recruiter_profile"
   match "/auth/github/callback" => "developers#create", via: [:get, :post]
   match "/auth/linkedin/callback" => "recruiters#create", via: [:get, :post]

@@ -34,4 +34,14 @@ class DevelopersController < ApplicationController
 
     redirect_to developer_profile_path(developer.secure_reference)
   end
+
+  def contact
+    developer = DeveloperProfilePresenter.new(
+      subject: Developer.find_by_secure_reference(params[:secure_reference]),
+      viewer: current_user.user)
+
+    current_user.contact_developer(developer)
+
+    redirect_to root_path
+  end
 end

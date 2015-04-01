@@ -8,7 +8,17 @@
       <p><mark>Available for hire!</mark></p>
     <% end %>
 
-    <a href="/subscribers/new" class="btn btn-success">Contact Me</a>
+    <% if current_user.is_a_recruiter? && current_user.can_see_developer?(@developer) %>
+      <%= form_for(@developer.developer, as: :developer_contact, url: developer_contact_url(@developer.developer.secure_reference), method: :post) do %>
+        <div class="form-group">
+          <label for="body-input">Message</label>
+          <textarea  class="form-control" rows="3" id="body-input" name="body"></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Contact Me</button>
+      <% end %>
+    <% else %>
+      <a href="/subscribers/new" class="btn btn-success">Contact Me</a>
+    <% end %>
   </div>
   <div class="col-md-4">
     <%= render partial: 'shared/languages_chart', locals: { user: @developer } %>
