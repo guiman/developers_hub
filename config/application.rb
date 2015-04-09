@@ -24,7 +24,10 @@ module DevelopersHub
     config.active_record.raise_in_transactional_callbacks = true
 
     config.autoload_paths += Dir["#{config.root}/lib/recruiter_extensions/**/"]
-
+    config.react.jsx_transform_options = {
+      harmony: true,
+      strip_types: true, # for removing Flow type annotations
+    }
     require_relative '../lib/recruiter_extensions'
   end
 end

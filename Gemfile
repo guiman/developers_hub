@@ -11,6 +11,7 @@ gem 'mysql2'
 gem 'omniauth-github'
 gem 'omniauth-linkedin'
 gem 'rails', '4.2.1'
+gem 'react-rails', github: 'reactjs/react-rails'
 gem 'recruiter', git: 'git@github.com:guiman/recruiter.git'
 gem 'sass-rails', '~> 5.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
