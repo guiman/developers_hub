@@ -38,7 +38,7 @@ describe CurrentUser do
   describe "#contact_developer" do
     context "user is a beta recruiter" do
       it "creates an offer" do
-        developer = Developer.create(login: "dev")
+        developer = Developer.create(login: "dev", email: "my@email.com")
         recruiter = DevRecruiter.create(uid: "rec", beta_user: true)
         recruiter_user = RecruiterUser.new(recruiter)
         current_user = described_class.new(recruiter_user)

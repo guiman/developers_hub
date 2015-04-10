@@ -25,7 +25,10 @@ class DeveloperProfilePresenter
   def can_be_displayed?
     @developer.hireable? || @viewer.can_see_developer?(@developer)
   end
-  alias_method :can_be_contacted?, :can_be_displayed?
+
+  def can_be_contacted?
+    can_be_displayed? && @developer.email_is_valid?
+  end
 
   def method_missing(method, *args, &block)
     @developer.public_send(method)

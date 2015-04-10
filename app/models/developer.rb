@@ -30,4 +30,8 @@ class Developer < ActiveRecord::Base
     image = Dragonfly.app.fetch_url(self.gravatar_url)
     image.convert('-blur 15x15').url
   end
+
+  def email_is_valid?
+    !email.nil? && email =~ /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
+  end
 end
