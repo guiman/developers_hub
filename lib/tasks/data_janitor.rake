@@ -19,4 +19,35 @@ namespace :data_janitor do
       copied_developer.delete
     end
   end
+
+  desc "Fix geolocations"
+  task fix_missing_geolocations: :environment do
+    Geokit::Geocoders::MapboxGeocoder.key = 'pk.eyJ1IjoiYWx2YXJvbGEiLCJhIjoicjkxUGpONCJ9.lYnv1rHrMRVzy5r5PM5ivg'
+    users_with_faulty_geolocation = Developer.where(geolocation: ",")
+    users_with_faulty_geolocation.each do |user|
+      user.update(geolocation: ::Geokit::Geocoders::MapboxGeocoder.geocode(user.location.gsub(/\;/, ' ')).ll)
+    end
+  end
+
+  desc "migrate users from github"
+  task :migrate_from_github, [:search_term] => :environment do |t, args|
+    require 'logger'
+    require 'recruiter'
+    require 'recruiter/cached_search_strategy'
+
+    logger = Logger.new(Rails.root.join('log', 'migrator.log'))
+    logger.level = Logger::DEBUG
+
+    search_term = args[:search_term].to_s
+
+    logger.info("Now processing #{search_term}")
+    search = Recruiter.search(search_strategy: Recruiter::CachedSearchStrategy)
+    .at(search_term)
+
+    candidates = search.all
+
+    logger.info("#{search_term} users count: #{candidates.count}")
+    RecruiterExtensions::GithubSearchIndexUpdater.new(candidates).perform
+  end
+
 end
