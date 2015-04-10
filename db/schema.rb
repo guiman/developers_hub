@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150327211329) do
+ActiveRecord::Schema.define(version: 20150409173327) do
 
   create_table "dev_recruiters", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20150327211329) do
     t.string   "location",   limit: 255, default: "unknown"
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
+    t.boolean  "beta_user",  limit: 1,   default: false,     null: false
   end
 
   create_table "developers", force: :cascade do |t|
@@ -49,8 +50,21 @@ ActiveRecord::Schema.define(version: 20150327211329) do
     t.string  "gravatar_url", limit: 255
   end
 
+  create_table "offers", force: :cascade do |t|
+    t.integer  "developer_id",     limit: 4
+    t.integer  "dev_recruiter_id", limit: 4
+    t.string   "status",           limit: 255, default: "pending", null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+  end
+
+  add_index "offers", ["dev_recruiter_id"], name: "index_offers_on_dev_recruiter_id", using: :btree
+  add_index "offers", ["developer_id"], name: "index_offers_on_developer_id", using: :btree
+
   create_table "subscribers", force: :cascade do |t|
     t.string "email", limit: 255
   end
 
+  add_foreign_key "offers", "dev_recruiters"
+  add_foreign_key "offers", "developers"
 end

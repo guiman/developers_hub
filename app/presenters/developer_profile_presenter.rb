@@ -1,4 +1,6 @@
 class DeveloperProfilePresenter
+  attr_reader :developer, :viewer
+
   def initialize(subject: , viewer: )
     @developer = subject
     @viewer = viewer
@@ -23,6 +25,7 @@ class DeveloperProfilePresenter
   def can_be_displayed?
     @developer.hireable? || @viewer.can_see_developer?(@developer)
   end
+  alias_method :can_be_contacted?, :can_be_displayed?
 
   def method_missing(method, *args, &block)
     @developer.public_send(method)
