@@ -40,7 +40,7 @@ class DevelopersController < ApplicationController
       subject: Developer.find_by_secure_reference(params[:secure_reference]),
       viewer: current_user.user)
 
-    current_user.contact_developer(developer)
+    current_user.contact_developer(developer, message: params.fetch(:body))
 
     redirect_to root_path
   end
