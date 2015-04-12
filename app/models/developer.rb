@@ -1,6 +1,6 @@
 class Developer < ActiveRecord::Base
   serialize :languages
-  has_many :developer_skills, -> { order(strength: :desc) }
+  has_many :developer_skills
   has_many :skills, through: :developer_skills
 
   before_create :set_secure_reference
