@@ -1,5 +1,5 @@
 class DeveloperSkill < ActiveRecord::Base
-  belongs_to :developer
+  belongs_to :developer, counter_cache: true
   belongs_to :skill
 
   validates :developer, presence: true

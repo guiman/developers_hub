@@ -6,6 +6,7 @@ describe RecruiterExtensions::FilterDevelopers do
     js = Skill.create(name: "JavaScript")
 
     user = Developer.create(hireable: true, geolocation: "1,2")
+    DeveloperSkill.create(developer: user, skill: ruby, strength: 3)
     DeveloperSkill.create(developer: Developer.create(hireable: true, location: "Portsmouth, UK"),
                           skill: ruby, strength: 3)
     DeveloperSkill.create(developer: Developer.create(hireable: true, location: "Portsmouth, UK"),
@@ -54,6 +55,8 @@ describe RecruiterExtensions::FilterDevelopers do
 
   it "can filter by location" do
     user = Developer.create(hireable: true, location: "Southampton, UK")
+    ruby = Skill.create(name: "Ruby")
+    DeveloperSkill.create(developer: user, skill: ruby, strength: 3)
     Developer.create(hireable: true, location: "Portsmouth, UK")
 
     filter = described_class.new(location: "southampton")
@@ -62,7 +65,9 @@ describe RecruiterExtensions::FilterDevelopers do
   end
 
   it "returns all hireable users when no location is provided" do
-    Developer.create(hireable: true, location: "Southampton, UK")
+    user = Developer.create(hireable: true, location: "Southampton, UK")
+    ruby = Skill.create(name: "Ruby")
+    DeveloperSkill.create(developer: user, skill: ruby, strength: 3)
 
     filter = described_class.new
     expect(filter.all).not_to be_empty

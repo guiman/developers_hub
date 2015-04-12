@@ -23,6 +23,6 @@ class NullUser
   def developer_listings(language: 'all', location: 'all', geolocation: 'all')
     developers = Developer.where(hireable: true)
     RecruiterExtensions::FilterDevelopers.new(developers: developers,
-      language: language, location: location, geolocation: geolocation).sorted_by_skills
+      language: language, location: location, geolocation: geolocation).all
   end
 end

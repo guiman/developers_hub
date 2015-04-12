@@ -9,7 +9,10 @@ describe NullUser do
 
   describe "#developer_listings" do
     it "returns a list of hireable developers" do
-      Developer.create(hireable: true)
+      developer = Developer.create(hireable: true)
+      DeveloperSkill.create(developer: developer, skill: Skill.create(name: "test"))
+      Developer.create(hireable: false)
+
       Developer.create(hireable: false)
       listing = described_class.new.developer_listings
       expect(listing).to be_a(ActiveRecord::Relation)

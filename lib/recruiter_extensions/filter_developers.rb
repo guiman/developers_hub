@@ -11,21 +11,16 @@ module RecruiterExtensions
     def all
       candidates = @developers
       candidates = (@geolocation == "all") ? candidates : candidates.where(geolocation: @geolocation)
-      candidates = (@location == "all") ? candidates : candidates.where("location LIKE ?", "%#{@location}%").all
+      candidates = (@location == "all") ? candidates : candidates.where("location LIKE ?", "%#{@location}%")
       candidates = (@language == "all") ? candidates : candidates.joins(:skills).where(skills: { name: @language })
 
-      candidates
-    end
-
-    def sorted_by_skills
-      candidates = self.all
       if (@language == "all")
-        candidates = candidates.joins('left join developer_skills on developers.id = developer_skills.developer_id').select("developers.*, count(developer_skills.id) as skill_count").group('developers.id').order('skill_count desc')
+        candidates = candidates.joins(:skills).order(developer_skills_count: :desc)
       else
         candidates = candidates.joins(:skills).where(skills: { name: @language }).order('developer_skills.strength DESC')
       end
 
-      candidates
+      candidates.distinct
     end
   end
 end
