@@ -4,7 +4,7 @@ namespace :skills do
     devs = Developer.all.to_a
 
     devs.each do |dev|
-      next if dev.languages.nil?
+      next if dev.languages.nil? || dev.developer_skills.any?
       dev.languages.each do |lang, count|
         skill = Skill.find_or_create_by(name: lang)
         dev_skill = DeveloperSkill.create(developer: dev, skill: skill, strength: count)
