@@ -6,12 +6,14 @@
     var mapOptions = {
       center: { lat: current_lat, lng: current_lng},
       zoom: 8,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
       styles: [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]}]
     };
     var map = new google.maps.Map(document.getElementById('map'),
         mapOptions);
 
     var data = <%= @map_data.to_json.html_safe %>
+    var markers = []
     for(i = 0; i < data.length; i++) {
       var info = data[i];
       var content = 'Devs found: ' + info.language_count + '<br /><a target="_blank" href="/map/' + info.position[0] + '/' + info.position[1] + '/<%= @language %>">Listing</a>';
@@ -32,7 +34,12 @@
               infoWindow.open(map,marker);
           };
       })(marker,content,infoWindow));
+
+      markers.push(marker)
     }
+
+
+    var markerCluster = new MarkerClusterer(map, markers, {gridSize: 80, maxZoom: 15});
   }
 
   function loadScript() {
