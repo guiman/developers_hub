@@ -1,7 +1,7 @@
 <div id="chart"></div>
 <script type="text/javascript">
   $(function() {
-    var data = [<%= user.sorted_languages.map { |(lang, count)| "['#{lang}', #{count}]" }.join(', ').html_safe %>];
+    var data = [<%= user.developer_skills.map { |dev_skill| "['#{dev_skill.skill.name}', #{dev_skill.strength}]" }.join(', ').html_safe %>];
     c3.generate({
       data: {
         columns: data,

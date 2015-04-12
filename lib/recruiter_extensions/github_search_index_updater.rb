@@ -15,8 +15,7 @@ module RecruiterExtensions
                                           location: candidate.location,
                                           gravatar_url: candidate.avatar_url,
                                           geolocation: ::Geokit::Geocoders::MapboxGeocoder.geocode(candidate.location).ll,
-                                          email: candidate.email,
-                                          languages: candidate.languages)
+                                          email: candidate.email)
         user = existing_indexed_candidate
       else
         user = Developer.create(name: candidate.name,
@@ -25,8 +24,14 @@ module RecruiterExtensions
                          location: candidate.location,
                          gravatar_url: candidate.avatar_url,
                          geolocation: ::Geokit::Geocoders::MapboxGeocoder.geocode(candidate.location).ll,
-                         email: candidate.email,
-                         languages: candidate.languages)
+                         email: candidate.email)
+      end
+
+      candidate.languages.each do |language, strength|
+        skill = Skill.find_or_create_by(name: language.to_s)
+        dev_skill = DeveloperSkill.find_or_initialize_by(skill_id: skill.id, developer_id: user.id)
+        dev_skill.strength = strength
+        dev_skill.save
       end
 
       user
