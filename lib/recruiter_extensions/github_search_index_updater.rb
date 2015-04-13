@@ -27,10 +27,12 @@ module RecruiterExtensions
                          email: candidate.email)
       end
 
-      candidate.languages.each do |language, strength|
+      candidate.languages.each do |language, repos|
         skill = Skill.find_or_create_by(name: language.to_s)
+        top_skill_repo = repos.sort{ |a,b| b[:popularity] <=> a[:popularity] }.first.fetch(:name)
         dev_skill = DeveloperSkill.find_or_initialize_by(skill_id: skill.id, developer_id: user.id)
-        dev_skill.strength = strength
+        dev_skill.code_example = top_skill_repo
+        dev_skill.strength = repos.count
         dev_skill.save
       end
 

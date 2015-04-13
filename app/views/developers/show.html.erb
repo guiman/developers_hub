@@ -26,5 +26,19 @@
   </div>
   <div class="col-md-4">
     <%= render partial: 'shared/languages_chart', locals: { user: @developer } %>
+
+    <% if (can_contact_developer && @developer.can_be_contacted?) || ( current_user.is_a_developer? && current_user.can_see_developer?(@developer))  %>
+      <h5>Code Examples</h5>
+      <table class="table table-condensed">
+      <% @developer.developer_skills.each do |developer_skill| %>
+        <% if developer_skill.code_example.present? %>
+          <tr>
+            <th><%= developer_skill.skill.name %></th>
+            <td><a href="http://github.com/<%= @developer.login%>/<%= developer_skill.code_example %>"><%= developer_skill.code_example %></a></td>
+          </tr>
+        <% end %>
+      <% end %>
+      </table>
+    <% end %>
   </div>
 </div>

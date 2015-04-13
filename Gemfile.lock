@@ -1,6 +1,6 @@
 GIT
   remote: git@github.com:guiman/recruiter.git
-  revision: f07dea32ba1a1372792f3758a29a897634a82e11
+  revision: c0ba92be4ad7d21bb64e9d6469b5cc16211f893c
   specs:
     recruiter (0.0.1)
       octokit
@@ -44,7 +44,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    addressable (2.3.7)
+    addressable (2.3.8)
     arel (6.0.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
