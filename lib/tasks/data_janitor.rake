@@ -29,6 +29,38 @@ namespace :data_janitor do
     end
   end
 
+  desc "update code_examples from github"
+  task :update_users_skills => :environment do |t, args|
+    require 'logger'
+    require 'recruiter'
+    require 'recruiter/cached_search_strategy'
+
+    logger = Logger.new(Rails.root.join('log', 'migrator.log'))
+    logger.level = Logger::DEBUG
+
+    developers = Developer.joins(:developer_skills).where(hireable: true, developer_skills: { code_example: "" }).distinct
+
+    logger.info("Processing #{developers.count} developers to update code examples")
+
+    developers.each do |developer|
+      byebug
+      github_user = ::Recruiter::API.build_client.user(developer.login)
+      candidate = Recruiter::GithubCandidate.new(github_user)
+
+      candidate.languages.each do |language, repos|
+        skill = Skill.find_or_create_by(name: language.to_s)
+        top_skill_repo = repos.sort{ |a,b| b[:popularity] <=> a[:popularity] }.first.fetch(:name)
+        dev_skill = DeveloperSkill.find_or_initialize_by(skill_id: skill.id, developer_id: developer.id)
+        dev_skill.code_example = top_skill_repo
+        dev_skill.strength = repos.count
+        dev_skill.save
+      end
+
+      logger.info("#{developer.login} updated!")
+    end
+  end
+
+
   desc "migrate users from github"
   task :migrate_from_github, [:search_term] => :environment do |t, args|
     require 'logger'

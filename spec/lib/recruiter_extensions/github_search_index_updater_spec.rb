@@ -12,7 +12,13 @@ describe RecruiterExtensions::GithubSearchIndexUpdater do
       location: "Southampton",
       email: "my@email.com",
       avatar_url: "/my/avatar/url",
-      languages: { :Ruby => 4 })
+      languages: {
+        :Ruby => [
+          { name: "repo_a", popularity: 2},
+          { name: "repo_b", popularity: 10},
+          { name: "repo_b", popularity: 1}
+        ]
+      })
 
     candidates = [ candidate ]
 
@@ -22,7 +28,8 @@ describe RecruiterExtensions::GithubSearchIndexUpdater do
 
     expect(Developer.count).to eq(1)
     expect(developer.hireable).to be_truthy
-    expect(developer.developer_skills.first.strength).to eq(4)
+    expect(developer.developer_skills.first.strength).to eq(3)
+    expect(developer.developer_skills.first.code_example).to eq("repo_b")
   end
 
   it "adds users to the index" do
@@ -32,7 +39,7 @@ describe RecruiterExtensions::GithubSearchIndexUpdater do
       location: "Southampton",
       email: "my@email.com",
       avatar_url: "/my/avatar/url",
-      languages: { :Java => 1 })
+      languages: { :Java => [{ name: "repo_a", popularity: 2 }] })
 
     candidates = [ candidate ]
 
