@@ -38,8 +38,7 @@ namespace :data_janitor do
     logger = Logger.new(Rails.root.join('log', 'migrator.log'))
     logger.level = Logger::DEBUG
 
-    #developers = Developer.joins(:developer_skills).where(hireable: true, developer_skills: { code_example: "" }).distinct
-    developers = Developer.joins(:developer_skills).where("token is not null").distinct
+    developers = Developer.joins(:developer_skills).where(hireable: true).distinct
 
     logger.info("Processing #{developers.count} developers to update code examples")
 

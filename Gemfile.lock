@@ -1,6 +1,6 @@
 GIT
   remote: git@github.com:guiman/recruiter.git
-  revision: c0ba92be4ad7d21bb64e9d6469b5cc16211f893c
+  revision: a5fa39d59c60fd28578fb4f599c19d8a2cc7ba3d
   specs:
     recruiter (0.0.1)
       octokit

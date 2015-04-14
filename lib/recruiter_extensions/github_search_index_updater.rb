@@ -29,9 +29,15 @@ module RecruiterExtensions
 
       candidate.languages.each do |language, repos|
         skill = Skill.find_or_create_by(name: language.to_s)
-        top_skill_repo = repos.sort{ |a,b| b[:popularity] <=> a[:popularity] }.first.fetch(:name)
+        sorted_repos = repos.sort { |a,b| b[:popularity] <=> a[:popularity] }
+        top_skill_repo = sorted_repos.detect { |repo| repo.fetch(:main_language).to_s == language.to_s }
+
+        if top_skill_repo.nil?
+          top_skill_repo = sorted_repos.first
+        end
+
         dev_skill = DeveloperSkill.find_or_initialize_by(skill_id: skill.id, developer_id: user.id)
-        dev_skill.code_example = top_skill_repo
+        dev_skill.code_example = top_skill_repo.fetch(:name)
         dev_skill.strength = repos.count
         dev_skill.save
       end
