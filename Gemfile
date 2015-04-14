@@ -4,6 +4,7 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'dragonfly', '~> 1.0.0'
 gem 'faraday-http-cache'
 gem 'faraday_middleware'
+gem 'foundation-rails'
 gem 'geokit'
 gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
@@ -17,7 +18,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'turbolinks'
 gem 'uglifier', '>= 1.3.0'
 gem 'will_paginate', '~> 3.0.0'
-gem 'will_paginate-bootstrap'
+gem 'will_paginate-foundation'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

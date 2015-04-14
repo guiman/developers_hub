@@ -1,7 +1,10 @@
-<h2><%= @developer.name %></h2>
+<div class="row">
+  <h2><%= @developer.name %></h2>
+</div>
+
 
 <div class="row">
-  <div class="col-md-4">
+  <div class="medium-4 columns a">
     <%= image_tag @developer.avatar, class: "img-responsive img-rounded" %>
     <p> Location: <%= @developer.location %> </p>
     <% if @developer.hireable %>
@@ -33,21 +36,20 @@
       <a href="/subscribers/new" class="btn btn-success">Contact Me</a>
     <% end %>
   </div>
-  <div class="col-md-4">
+  <div class="medium-6 medium-offset-1 columns end">
     <%= render partial: 'shared/languages_chart', locals: { user: @developer } %>
 
     <% if (can_contact_developer && @developer.can_be_contacted?) || ( current_user.is_a_developer? && current_user.can_see_developer?(@developer))  %>
-      <h5>Code Examples</h5>
-      <table class="table table-condensed">
-      <% @developer.developer_skills.each do |developer_skill| %>
-        <% if developer_skill.code_example.present? %>
-          <tr>
-            <th><%= developer_skill.skill.name %></th>
-            <td><a href="http://github.com/<%= @developer.login%>/<%= developer_skill.code_example %>"><%= developer_skill.code_example %></a></td>
-          </tr>
+      <ul class="code-samples-list">
+        <li><h4>Code samples</h4></li>
+        <% @developer.developer_skills.each do |developer_skill| %>
+          <% if developer_skill.code_example.present? %>
+              <li>
+                <%= developer_skill.skill.name %>
+                <a href="http://github.com/<%= @developer.login%>/<%= developer_skill.code_example %>"><%= developer_skill.code_example %></a></li>
+          <% end %>
         <% end %>
-      <% end %>
-      </table>
+      </ul>
     <% end %>
   </div>
 </div>

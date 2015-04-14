@@ -1,25 +1,29 @@
-<table class="table">
-  <thead>
-    <tr>
-      <th>Profile</th>
-      <th>Location</th>
-      <th>Skills</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% DeveloperListingPresenter.cast(candidates, viewer: current_user).each do |candidate| %>
-      <tr>
-        <td>
-          <%= link_to candidate.name , developer_profile_path(candidate.secure_reference) %>
-          <a href="/user/<%= candidate.id %>">
-            <%=  %>
-          </a>
-        </td>
-        <td><%= candidate.location %></td>
-        <td><%= render partial: "developers/user_skills", locals: { candidate: candidate, language: language } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<%= will_paginate candidates, renderer: BootstrapPagination::Rails %>
+<div class="row developers-table">
+  <div class="developers-table-header">
+    <div class="medium-4 columns">
+      Profile
+    </div>
+    <div class="medium-4 columns">
+      Location
+    </div>
+    <div class="medium-4 columns">
+      Skills
+    </div>
+  </div>
+  <% DeveloperListingPresenter.cast(candidates, viewer: current_user).each do |candidate| %>
+    <div class="developers-table-row">
+      <div class="medium-4 columns">
+        <%= link_to candidate.name, developer_profile_path(candidate.secure_reference) %>
+      </div>
+      <div class="medium-4 columns">
+        <%= candidate.location %>
+      </div>
+      <div class="medium-4 columns">
+        <%= render partial: "developers/user_skills", locals: { candidate: candidate, language: language } %>
+      </div>
+    </div>
+  <% end %>
+</div>
+<div class="developers-pagination pagination-centered row">
+  <%= will_paginate candidates, renderer: FoundationPagination::Rails %>
+</div>

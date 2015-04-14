@@ -12,5 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require foundation
 //= require ./vendor/markerclusterer_compiled
 //= require turbolinks
+
+$(function(){ $(document).foundation(); });

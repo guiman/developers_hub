@@ -1,0 +1,31 @@
+.developers-table {
+  .developers-table-row {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    overflow: hidden;
+  }
+
+  .developers-table-row:nth-of-type(odd) {
+    background-color: #F4F4F4;
+  }
+
+  .developers-table-header {
+    overflow: hidden;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #F4F4F4;
+    div {
+      font-weight: bold;
+    }
+  }
+}
+
+.developers-pagination {
+  ul.pagination {
+    margin-top: 20px;
+  }
+}
+
+ul.code-samples-list {
+  list-style: none;
+}
