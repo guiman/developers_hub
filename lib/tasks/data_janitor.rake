@@ -65,6 +65,37 @@ namespace :data_janitor do
     end
   end
 
+  desc "update activity from github"
+  task :update_activity => :environment do |t, args|
+    require 'logger'
+    require 'recruiter'
+    require 'recruiter/cached_search_strategy'
+
+    logger = Logger.new(Rails.root.join('log', 'migrator.log'))
+    logger.level = Logger::DEBUG
+
+    developers = Developer.joins(:developer_skills).where(hireable: true, pull_request_events: nil, push_events: nil).distinct
+
+    logger.info("Processing #{developers.count} developers to set activity")
+
+    developers.each do |developer|
+      Proc.new do
+        begin
+          github_user = ::Recruiter::API.build_client.user(developer.login)
+          candidate = Recruiter::GithubCandidate.new(github_user)
+
+          developer.pull_request_events = candidate.activity.pull_request_events
+          developer.push_events = candidate.activity.push_events
+          developer.save
+
+          logger.info("#{developer.login} updated!")
+        rescue Octokit::NotFound
+          logger.fatal("#{developer.login} cannot be updated!")
+        end
+      end.call
+    end
+  end
+
 
   desc "migrate users from github"
   task :migrate_from_github, [:search_term] => :environment do |t, args|

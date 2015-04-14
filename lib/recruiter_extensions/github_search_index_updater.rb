@@ -15,6 +15,8 @@ module RecruiterExtensions
                                           location: candidate.location,
                                           gravatar_url: candidate.avatar_url,
                                           geolocation: ::Geokit::Geocoders::MapboxGeocoder.geocode(candidate.location).ll,
+                                          pull_request_events: candidate.activity.pull_request_events,
+                                          push_events: candidate.activity.push_events,
                                           email: candidate.email)
         user = existing_indexed_candidate
       else
@@ -24,6 +26,8 @@ module RecruiterExtensions
                          location: candidate.location,
                          gravatar_url: candidate.avatar_url,
                          geolocation: ::Geokit::Geocoders::MapboxGeocoder.geocode(candidate.location).ll,
+                         pull_request_events: candidate.activity.pull_request_events,
+                         push_events: candidate.activity.push_events,
                          email: candidate.email)
       end
 

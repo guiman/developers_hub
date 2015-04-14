@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150413195557) do
+ActiveRecord::Schema.define(version: 20150414214605) do
 
   create_table "dev_recruiters", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -48,6 +48,8 @@ ActiveRecord::Schema.define(version: 20150413195557) do
     t.string  "uid",                    limit: 255
     t.string  "token",                  limit: 255
     t.integer "developer_skills_count", limit: 4,     default: 0
+    t.text    "pull_request_events",    limit: 65535
+    t.text    "push_events",            limit: 65535
   end
 
   create_table "indexed_users", force: :cascade do |t|

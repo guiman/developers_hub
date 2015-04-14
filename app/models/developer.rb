@@ -1,5 +1,8 @@
 class Developer < ActiveRecord::Base
   serialize :languages
+  serialize :pull_request_events, Array
+  serialize :push_events, Array
+
   has_many :developer_skills
   has_many :skills, through: :developer_skills
 
@@ -32,5 +35,25 @@ class Developer < ActiveRecord::Base
 
   def email_is_valid?
     !email.nil? && email =~ /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
+  end
+
+  def commits_pushed
+    push_events.map { |event| event.fetch(:commits) }.inject(&:+)
+  end
+
+  def pull_requests_opened
+    pull_request_events.select { |event| event.fetch(:action) == "opened" && event.fetch(:sender) == login }.count
+  end
+
+  def pull_requests_merged
+    pull_request_events.select { |event| event.fetch(:action) == "closed" && event.fetch(:merged) && event.fetch(:sender) == login }.count
+  end
+
+  def sorted_pull_request_events
+    pull_request_events.sort { |a,b| a[:created_at] <=> b[:created_at] }
+  end
+
+  def sorted_push_events
+    pull_request_events.sort { |a,b| a[:created_at] <=> b[:created_at] }
   end
 end
