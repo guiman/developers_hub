@@ -10,9 +10,10 @@
     <% if @developer.push_events.any? && @developer.pull_request_events.any? %>
       <h5>Latest activity</h5>
       <ul>
-        <li>Commits pushed: <%= @developer.commits_pushed %> (from: <%= @developer.sorted_push_events.first.fetch(:created_at).strftime("%m-%Y") %> to: <%= @developer.sorted_push_events.last.fetch(:created_at).strftime("%m-%Y") %>)</li>
-        <li>PR opened: <%= @developer.pull_requests_opened %> (from: <%= @developer.sorted_pull_request_events.first.fetch(:created_at).strftime("%m-%Y") %> to: <%= @developer.sorted_pull_request_events.last.fetch(:created_at).strftime("%m-%Y") %>)</li>
-        <li>PR merged: <%= @developer.pull_requests_merged %> (from: <%= @developer.sorted_pull_request_events.first.fetch(:created_at).strftime("%m-%Y") %> to: <%= @developer.sorted_pull_request_events.last.fetch(:created_at).strftime("%m-%Y") %>)</li>
+        <li><strong>Latest activity <%= @developer.latest_activity_date.strftime("%F") %></strong></li>
+        <li>Commits pushed: <%= @developer.commits_pushed %></li>
+        <li>PR opened: <%= @developer.pull_requests_opened %></li>
+        <li>PR merged: <%= @developer.pull_requests_merged %></li>
       </ul>
     <% end %>
     <% can_contact_developer = current_user.is_a_recruiter? && current_user.can_see_developer?(@developer) %>
