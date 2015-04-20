@@ -3,6 +3,7 @@ require 'recruiter_extensions/language_statistics_by_location'
 require 'recruiter_extensions/filter_developers'
 require 'recruiter_extensions/build_developer_profile'
 require 'recruiter_extensions/build_dev_recruiter_profile'
+require 'recruiter_extensions/search_developers'
 
 module RecruiterExtensions
 

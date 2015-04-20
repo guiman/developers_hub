@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root 'developers#index'
 
+  get '/search' => "developers#search"
+
   get '/lang/:language' => "developers#filter"
   get '/location/:location' => "developers#filter"
   get '/map/:lat/:lng/:language' => "developers#filter", as: "map_filter", :constraints => {:lat => /\-*\d+.\d+/ , :lng => /\-*\d+.\d+/ , :range => /\d+/}

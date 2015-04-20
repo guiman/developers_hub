@@ -34,7 +34,7 @@ module RecruiterExtensions
       candidate.languages.each do |language, repos|
         skill = Skill.find_or_create_by(name: language.to_s)
         sorted_repos = repos.sort { |a,b| b[:popularity] <=> a[:popularity] }
-        top_skill_repo = sorted_repos.detect { |repo| repo.fetch(:main_language).to_s == language.to_s }
+        top_skill_repo = sorted_repos.detect { |repo| repo.fetch(:main_language, nil).to_s == language.to_s }
 
         if top_skill_repo.nil?
           top_skill_repo = sorted_repos.first

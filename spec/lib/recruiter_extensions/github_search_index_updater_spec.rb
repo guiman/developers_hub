@@ -11,6 +11,7 @@ describe RecruiterExtensions::GithubSearchIndexUpdater do
       hireable: true,
       location: "Southampton",
       email: "my@email.com",
+      activity: double(pull_request_events: [], push_events: []),
       avatar_url: "/my/avatar/url",
       languages: {
         :Ruby => [
@@ -37,6 +38,7 @@ describe RecruiterExtensions::GithubSearchIndexUpdater do
       name: "name",
       hireable: false,
       location: "Southampton",
+      activity: double(pull_request_events: [], push_events: []),
       email: "my@email.com",
       avatar_url: "/my/avatar/url",
       languages: { :Java => [{ name: "repo_a", popularity: 2 }] })

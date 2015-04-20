@@ -1,0 +1,18 @@
+<div class="row">
+  <%= form_for("/filter", method: :get) do |f| %>
+
+    <%= label_tag(:location, "Location:") %>
+    <%= text_field_tag(:location, @location) %>
+
+    <%= label_tag(:languages, "Languages:") %>
+    <%= text_field_tag(:languages, @languages)  %>
+
+    <%= submit_tag("Search", class: "button radius tiny") %>
+  <% end %>
+</div>
+
+<% if @candidates.any? %>
+  <%= render partial: "shared/users_data", locals: { candidates: @candidates, language: @language } %>
+<% else %>
+    No Results
+<% end %>
