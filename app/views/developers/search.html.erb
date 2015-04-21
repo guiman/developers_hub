@@ -1,13 +1,21 @@
 <div class="row">
   <%= form_for("/filter", method: :get) do |f| %>
+    <div class="row">
+      <div class="medium-6 columns">
+        <%= label_tag(:location, "Location:") %>
+        <%= text_field_tag(:location, @location) %>
+      </div>
+      <div class="medium-6 columns">
+        <%= label_tag(:languages, "Languages:") %>
+        <%= text_field_tag(:languages, @languages)  %>
+      </div>
+    </div>
 
-    <%= label_tag(:location, "Location:") %>
-    <%= text_field_tag(:location, @location) %>
-
-    <%= label_tag(:languages, "Languages:") %>
-    <%= text_field_tag(:languages, @languages)  %>
-
-    <%= submit_tag("Search", class: "button radius tiny") %>
+    <div class="row">
+      <div class="small-12 columns">
+        <%= submit_tag("Search", class: "button radius small") %>
+      </div>
+    </div>
   <% end %>
 </div>
 
