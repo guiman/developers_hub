@@ -21,8 +21,11 @@
     <% end %>
     <% can_contact_developer = current_user.is_a_recruiter? && current_user.can_see_developer?(@developer) %>
 
-    <% if can_contact_developer && @developer.can_be_contacted? %>
+    <% if can_contact_developer %>
       <p><a href="http://github.com/<%= @developer.login %>" class="btn btn-info" target="blank">Github Profile</a></p>
+    <% end %>
+
+    <% if can_contact_developer && @developer.can_be_contacted? %>
       <%= form_for(@developer.developer, as: :developer_contact, url: developer_contact_url(@developer.developer.secure_reference), method: :post) do %>
         <div class="form-group">
           <label for="body-input">Message</label>
