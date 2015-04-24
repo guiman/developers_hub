@@ -13,7 +13,10 @@ class DeveloperListingPresenter
   end
 
   def self.cast(candidates, viewer:)
-    candidates.select { |candidate| !candidate.languages.empty? }.map { |candidate|  DeveloperListingPresenter.new(
-      subject: candidate, viewer: viewer.user) }
+    candidates.select do |candidate|
+      !candidate.skills.empty?
+    end.map do |candidate|
+      DeveloperListingPresenter.new(subject: candidate, viewer: viewer.user)
+    end
   end
 end

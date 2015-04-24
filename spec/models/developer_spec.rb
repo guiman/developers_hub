@@ -8,15 +8,6 @@ RSpec.describe Developer, :type => :model do
     expect(described_class.find_by_login(developer.login)).to eq(developer)
   end
 
-  it "can handle languages structure" do
-    developer = described_class.new
-    languages = { ruby: 1, javascript: 2 }
-    developer.languages = languages
-    developer.save
-
-    expect(developer.languages).to eq(languages)
-  end
-
   it "can be compared to another object" do
     developer_a = described_class.new
     developer_b = described_class.new
