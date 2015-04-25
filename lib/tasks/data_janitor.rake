@@ -118,4 +118,23 @@ namespace :data_janitor do
     RecruiterExtensions::GithubSearchIndexUpdater.new(candidates).perform
   end
 
+
+  desc "migrate users from crawler"
+  task :migrate_from_crawler => :environment do |t, args|
+    require 'logger'
+    require 'ostruct'
+
+    logger = Logger.new(Rails.root.join('log', 'crawler_migrator.log'))
+    logger.level = Logger::DEBUG
+
+    Dir["#{Rails.root}/crawler/**/*.json"].each do |file_path|
+      logger.info("Now processing #{file_path}")
+      File.open(file_path) do |file|
+        data = JSON.parse(file.read)
+        logger.info("Users count: #{data.count}")
+        candidates = data.map { |d| OpenStruct.new(d) }
+        RecruiterExtensions::GithubSearchIndexUpdater.new(candidates).perform
+      end
+    end
+  end
 end

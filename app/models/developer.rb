@@ -54,13 +54,13 @@ class Developer < ActiveRecord::Base
   end
 
   def sorted_push_events
-    pull_request_events.sort { |a,b| a[:created_at] <=> b[:created_at] }
+    push_events.sort { |a,b| a[:created_at] <=> b[:created_at] }
   end
 
 
   def latest_activity_date
-    last_push_date = sorted_push_events.last.fetch(:created_at)
-    last_pr_date = sorted_pull_request_events.last.fetch(:created_at)
+    last_push_date = sorted_push_events.last.fetch(:created_at).to_date
+    last_pr_date = sorted_pull_request_events.last.fetch(:created_at).to_date
 
     if last_push_date > last_pr_date
       last_push_date
