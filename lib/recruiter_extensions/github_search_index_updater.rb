@@ -43,16 +43,14 @@ module RecruiterExtensions
         repos = repos.map(&:symbolize_keys)
         skill = Skill.find_or_create_by(name: language.to_s)
         sorted_repos = repos.sort { |a,b| b[:popularity] <=> a[:popularity] }
-        top_skill_repo = sorted_repos.detect { |repo| repo.fetch(:main_language, nil).to_s == language.to_s }
+        top_skill_repo = sorted_repos.detect { |repo| repo.fetch(:main_language).to_s == language.to_s }
 
-        if top_skill_repo.nil?
-          top_skill_repo = sorted_repos.first
+        unless top_skill_repo.nil?
+          dev_skill = DeveloperSkill.find_or_initialize_by(skill_id: skill.id, developer_id: user.id)
+          dev_skill.code_example = top_skill_repo.fetch(:name)
+          dev_skill.strength = repos.count
+          dev_skill.save
         end
-
-        dev_skill = DeveloperSkill.find_or_initialize_by(skill_id: skill.id, developer_id: user.id)
-        dev_skill.code_example = top_skill_repo.fetch(:name)
-        dev_skill.strength = repos.count
-        dev_skill.save
       end
 
       user

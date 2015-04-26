@@ -42,7 +42,7 @@
   <div class="medium-6 medium-offset-1 columns end">
     <%= render partial: 'shared/languages_chart', locals: { user: @developer } %>
 
-    <% if (can_contact_developer && @developer.can_be_contacted?) || ( current_user.is_a_developer? && current_user.can_see_developer?(@developer))  %>
+    <% if (can_contact_developer && @developer.can_be_contacted?) || current_user.can_see_developer?(@developer)  %>
       <ul class="code-samples-list">
         <li><h4>Code samples</h4></li>
         <% @developer.developer_skills.each do |developer_skill| %>
