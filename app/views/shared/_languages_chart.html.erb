@@ -1,7 +1,7 @@
 <div id="chart"></div>
 <script type="text/javascript">
   $(function() {
-    var data = [<%= user.developer_skills.map { |dev_skill| "['#{dev_skill.skill.name}', #{dev_skill.strength}]" }.join(', ').html_safe %>];
+    var data = [<%= skills %>];
     c3.generate({
       data: {
         columns: data,
@@ -9,7 +9,7 @@
         type : 'donut'
       },
       donut: {
-        title: "Projects by language",
+        title: "<%= title %>",
         label: {
           show: false
         }

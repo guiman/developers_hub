@@ -19,6 +19,7 @@ gem 'turbolinks'
 gem 'uglifier', '>= 1.3.0'
 gem 'will_paginate', '~> 3.0.0'
 gem 'will_paginate-foundation'
+gem 'open_uri_redirections'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
