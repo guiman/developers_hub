@@ -4,6 +4,7 @@ require 'recruiter_extensions/filter_developers'
 require 'recruiter_extensions/build_developer_profile'
 require 'recruiter_extensions/build_dev_recruiter_profile'
 require 'recruiter_extensions/search_developers'
+require 'recruiter_extensions/linkedin_profile'
 
 module RecruiterExtensions
 

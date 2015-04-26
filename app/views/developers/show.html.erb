@@ -2,6 +2,7 @@
   <h2><%= @developer.name %></h2>
 </div>
 
+<% can_contact_developer = current_user.is_a_recruiter? && current_user.can_see_developer?(@developer) %>
 
 <div class="row">
   <div class="medium-4 columns a">
@@ -19,10 +20,12 @@
         <li>PR merged: <%= @developer.pull_requests_merged %></li>
       </ul>
     <% end %>
-    <% can_contact_developer = current_user.is_a_recruiter? && current_user.can_see_developer?(@developer) %>
 
     <% if can_contact_developer %>
       <p><a href="http://github.com/<%= @developer.login %>" class="btn btn-info" target="blank">Github Profile</a></p>
+      <% if linkedin_profile = @developer.find_linkedin_profile %>
+        <p><a href="<%= linkedin_profile %>" class="btn btn-info" target="blank">LinkedIn Profile</a></p>
+      <% end %>
     <% end %>
 
     <% if can_contact_developer && @developer.can_be_contacted? %>
@@ -39,8 +42,9 @@
       <a href="/subscribers/new" class="btn btn-success">Contact Me</a>
     <% end %>
   </div>
+
   <div class="medium-6 medium-offset-1 columns end">
-    <%= render partial: 'shared/languages_chart', locals: { user: @developer } %>
+    <%= render partial: 'shared/languages_chart', locals: { title: "Projects by language", skills: @developer.developer_skills.map { |dev_skill| "['#{dev_skill.skill.name}', #{dev_skill.strength}]" }.join(', ').html_safe } %>
 
     <% if (can_contact_developer && @developer.can_be_contacted?) || current_user.can_see_developer?(@developer)  %>
       <ul class="code-samples-list">
@@ -56,3 +60,43 @@
     <% end %>
   </div>
 </div>
+
+<% if can_contact_developer && @developer.find_linkedin_profile %>
+  <div class="row">
+    <div class="medium-10 columns a">
+
+      <% if @developer.education.any? %>
+      <div class="row">
+        <h4>Education</h4>
+        <p><%= @developer.education.fetch(:degree) %><%= (uni = @developer.education.fetch(:university)) ? " at #{uni}" : nil %></p>
+      </div>
+      <% end %>
+
+      <% if @developer.experience.any? %>
+      <div class="row">
+        <h4>Experience</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Position</th>
+              <th>Company</th>
+              <th>Period</th>
+              <th>Current?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @developer.experience.each do |exp| %>
+              <tr>
+                <td><%= exp.fetch(:position) %></td>
+                <td><%= exp.fetch(:company) %></td>
+                <td><%= exp.fetch(:period) %></td>
+                <td><%= exp.fetch(:current) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+    </div>
+  </div>
+<% end %>

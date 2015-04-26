@@ -15,9 +15,9 @@ describe RecruiterExtensions::GithubSearchIndexUpdater do
       avatar_url: "/my/avatar/url",
       languages: {
         :Ruby => [
-          { name: "repo_a", popularity: 2},
-          { name: "repo_b", popularity: 10},
-          { name: "repo_b", popularity: 1}
+          { name: "repo_a", popularity: 2, main_language: :Ruby},
+          { name: "repo_b", popularity: 10, main_language: :Ruby},
+          { name: "repo_b", popularity: 1, main_language: :Ruby}
         ]
       })
 
@@ -41,7 +41,7 @@ describe RecruiterExtensions::GithubSearchIndexUpdater do
       activity: double(pull_request_events: [], push_events: []),
       email: "my@email.com",
       avatar_url: "/my/avatar/url",
-      languages: { :Java => [{ name: "repo_a", popularity: 2 }] })
+      languages: { :Java => [{ name: "repo_a", popularity: 2, main_language: :Java }] })
 
     candidates = [ candidate ]
 

@@ -57,7 +57,6 @@ class Developer < ActiveRecord::Base
     push_events.sort { |a,b| a[:created_at] <=> b[:created_at] }
   end
 
-
   def latest_activity_date
     last_push_date = sorted_push_events.last.fetch(:created_at).to_date
     last_pr_date = sorted_pull_request_events.last.fetch(:created_at).to_date
@@ -67,5 +66,27 @@ class Developer < ActiveRecord::Base
     else
       last_pr_date
     end
+  end
+
+  def linkedin_profile
+    @linkedin_profile ||= RecruiterExtensions::LinkedinProfile.new(login)
+  end
+
+  def find_linkedin_profile
+    return unless linkedin_profile.verify_link
+
+    linkedin_profile.link
+  end
+
+  def linkedin_skills
+    linkedin_profile.skills
+  end
+
+  def education
+    linkedin_profile.education
+  end
+
+  def experience
+    linkedin_profile.experience
   end
 end
