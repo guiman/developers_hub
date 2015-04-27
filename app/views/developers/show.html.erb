@@ -44,7 +44,7 @@
   </div>
 
   <div class="medium-6 medium-offset-1 columns end">
-    <%= render partial: 'shared/languages_chart', locals: { title: "Projects by language", skills: @developer.developer_skills.map { |dev_skill| "['#{dev_skill.skill.name}', #{dev_skill.strength}]" }.join(', ').html_safe } %>
+    <%= render partial: 'shared/languages_chart', locals: { title: "Projects by language", skills: @developer.developer_skills.where(origin: 'github').map { |dev_skill| "['#{dev_skill.skill.name}', #{dev_skill.strength}]" }.join(', ').html_safe } %>
 
     <% if (can_contact_developer && @developer.can_be_contacted?) || current_user.can_see_developer?(@developer)  %>
       <ul class="code-samples-list">

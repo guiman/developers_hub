@@ -17,7 +17,7 @@ class Developer < ActiveRecord::Base
 
   def obfuscated_name
     adjectives = ["ninja", "guru", "samurai", "hacker", "master"]
-    "#{developer_skills.order(strength: :desc).first.skill.name.to_s} #{adjectives.sample}"
+    "#{developer_skills.where(origin: "github").order(strength: :desc).first.skill.name.to_s} #{adjectives.sample}"
   end
 
   def ==(another_object)
