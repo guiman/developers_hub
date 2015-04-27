@@ -14,21 +14,21 @@ module RecruiterExtensions
     def link
       return @linkedin_link if @processed
 
-      # First we search their GH profile page
-      github_page = Nokogiri::HTML(open("https://github.com/#{login}", allow_redirections: :safe))
-      links = github_page.xpath('//a[@href]').map {|link| link["href"] }
-      where_is_the_personal_site = links[9].include?("mailto") ? 10 : 9
-      personal_site = links[where_is_the_personal_site]
-
-      is_a_github_url = /(http|https):\/\/github.com.*/
-      is_a_url =  /(http|https):\/\/.*/
-
-      return if (personal_site =~ is_a_github_url)
-      return unless (personal_site =~ is_a_url)
-
       begin
+        # First we search their GH profile page
+        github_page = Nokogiri::HTML(open("https://github.com/#{login}", allow_redirections: :safe, read_timeout: 1, open_timeout: 1))
+        links = github_page.xpath('//a[@href]').map {|link| link["href"] }
+        where_is_the_personal_site = links[9].include?("mailto") ? 10 : 9
+        personal_site = links[where_is_the_personal_site]
+
+        is_a_github_url = /(http|https):\/\/github.com.*/
+        is_a_url =  /(http|https):\/\/.*/
+
+        return if (personal_site =~ is_a_github_url)
+        return unless (personal_site =~ is_a_url)
+
         # And then we search in their personal site
-        doc = Nokogiri::HTML(open(personal_site, allow_redirections: :safe))
+        doc = Nokogiri::HTML(open(personal_site, allow_redirections: :safe, read_timeout: 1, open_timeout: 1))
         links = doc.xpath('//a[@href]').map {|link| link["href"] }
         linkedin_link = links.detect { |a| a.include?('linkedin') }
 

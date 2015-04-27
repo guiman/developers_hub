@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150414214605) do
+ActiveRecord::Schema.define(version: 20150426204845) do
 
   create_table "dev_recruiters", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20150414214605) do
     t.integer "skill_id",     limit: 4
     t.integer "strength",     limit: 4
     t.string  "code_example", limit: 255, default: ""
+    t.string  "origin",       limit: 255, default: "github"
   end
 
   add_index "developer_skills", ["developer_id"], name: "index_developer_skills_on_developer_id", using: :btree
