@@ -34,7 +34,8 @@ module RecruiterExtensions
 
         @processed = true
         @linkedin_link = linkedin_link
-      rescue Exception
+      rescue Exception => e
+        Rails.logger.error("Found an error while processing linkedin profile for #{@login} -> #{e.to_s}")
       end
     end
 
@@ -44,7 +45,8 @@ module RecruiterExtensions
       begin
         @page ||= Nokogiri::HTML(open(link, allow_redirections: :safe))
         !@page.css('div.public-profile').empty?
-      rescue Exception
+      rescue Exception => e
+        Rails.logger.error("Found an error while processing linkedin profile for #{@login} -> #{e.to_s}")
         return false
       end
     end
@@ -55,7 +57,8 @@ module RecruiterExtensions
       begin
         @page ||= Nokogiri::HTML(open(link, allow_redirections: :safe))
         @page.css('div#headline').text
-      rescue OpenURI::HTTPError
+      rescue OpenURI::HTTPError => e
+        Rails.logger.error("Found an error while processing linkedin profile for #{@login} -> #{e.to_s}")
         return ""
       end
     end
@@ -66,7 +69,8 @@ module RecruiterExtensions
       begin
         @page ||= Nokogiri::HTML(open(link, allow_redirections: :safe))
         @page.css('span.endorse-item-name').map { |e| e.text }
-      rescue OpenURI::HTTPError
+      rescue OpenURI::HTTPError => e
+        Rails.logger.error("Found an error while processing linkedin profile for #{@login} -> #{e.to_s}")
         return []
       end
     end
@@ -82,7 +86,8 @@ module RecruiterExtensions
         university = education_element.css('div.education.first header h4').text
         degree = education_element.css('div.education.first header h5 span').map(&:text).join('')
         { university: university, degree: degree }
-      rescue OpenURI::HTTPError
+      rescue OpenURI::HTTPError => e
+        Rails.logger.error("Found an error while processing linkedin profile for #{@login} -> #{e.to_s}")
         return {}
       end
     end
@@ -114,7 +119,8 @@ module RecruiterExtensions
         end
 
         experience
-      rescue OpenURI::HTTPError
+      rescue OpenURI::HTTPError => e
+        Rails.logger.error("Found an error while processing linkedin profile for #{@login} -> #{e.to_s}")
         return []
       end
     end
