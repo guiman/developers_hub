@@ -41,14 +41,7 @@ module RecruiterExtensions
 
     def verify_link
       return false unless link
-
-      begin
-        @page ||= Nokogiri::HTML(open(link, allow_redirections: :safe))
-        !@page.css('div.public-profile').empty?
-      rescue Exception => e
-        Rails.logger.error("Found an error while processing linkedin profile for #{@login} -> #{e.to_s}")
-        return false
-      end
+      !(link =~ /(http|https):\/\/.*linkedin\.com/).nil?
     end
 
     def headline

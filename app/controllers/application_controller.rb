@@ -15,6 +15,9 @@ class ApplicationController < ActionController::Base
 
   # This should never ever happen!
   def prevent_multi_profiles
-    redirect_to "/sessions/logout" if session[:developer_id] && session[:recruiter_id]
+    if session[:developer_id] && session[:recruiter_id]
+      session[:developer_id] = session[:recruiter_id] = nil
+      redirect_to "/sessions/logout"
+    end
   end
 end

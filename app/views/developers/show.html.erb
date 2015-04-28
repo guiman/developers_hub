@@ -38,8 +38,26 @@
       <% end %>
     <% elsif can_contact_developer && !@developer.can_be_contacted? %>
       <p>Sorry this person can't be contacted.</p>
-    <% else %>
-      <a href="/subscribers/new" class="btn btn-success">Contact Me</a>
+    <% elsif current_user.is_a_recruiter? && !current_user.recruiter.beta_user %>
+      <p>
+        We are currently building the plataform and looking for beta users,
+        contact me at <a href="mailto:alvaro@dev-hub.io">alvaro at dev-hub.io</a>
+        if interested in becoming part of it.</br>
+        Beta users will be able to:
+        <ul>
+          <li>Get access to full profiles for 3000 (and counting) developers world wide</li>
+          <li>See code samples for languages</li>
+          <li>Follow progress on candidates (profiles are continuously updating)</li>
+        </ul>
+      </p>
+    <% elsif !current_user.is_a_developer? && !current_user.is_a_recruiter? %>
+      <p>
+        Interested in contacting this developer?</br>
+        <ul>
+          <li><%= link_to "Sign in as a recruiter via Linkedin", "/auth/linkedin" %></li>
+          <li><a href="/subscribers/new" class="btn btn-success">Subscribe for news</a></li>
+        </ul>
+      </p>
     <% end %>
   </div>
 
@@ -60,43 +78,3 @@
     <% end %>
   </div>
 </div>
-
-<% if false #disabling it for now %>
-  <div class="row">
-    <div class="medium-10 columns a">
-
-      <% if @developer.education.any? %>
-      <div class="row">
-        <h4>Education</h4>
-        <p><%= @developer.education.fetch(:degree) %><%= (uni = @developer.education.fetch(:university)) ? " at #{uni}" : nil %></p>
-      </div>
-      <% end %>
-
-      <% if @developer.experience.any? %>
-      <div class="row">
-        <h4>Experience</h4>
-        <table>
-          <thead>
-            <tr>
-              <th>Position</th>
-              <th>Company</th>
-              <th>Period</th>
-              <th>Current?</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @developer.experience.each do |exp| %>
-              <tr>
-                <td><%= exp.fetch(:position) %></td>
-                <td><%= exp.fetch(:company) %></td>
-                <td><%= exp.fetch(:period) %></td>
-                <td><%= exp.fetch(:current) %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-    <% end %>
-    </div>
-  </div>
-<% end %>
