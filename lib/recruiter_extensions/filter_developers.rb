@@ -15,9 +15,9 @@ module RecruiterExtensions
       candidates = (@language == "all") ? candidates : candidates.joins(:skills).where(skills: { name: @language })
 
       if (@language == "all")
-        candidates = candidates.joins(:skills).order(developer_skills_count: :desc)
+        candidates = candidates.joins(:skills).where(developer_skills: { origin: 'github' }).order(developer_skills_count: :desc)
       else
-        candidates = candidates.joins(:skills).where(skills: { name: @language }).order('developer_skills.strength DESC')
+        candidates = candidates.joins(:skills).where(skills: { name: @language }).where(developer_skills: { origin: 'github' }).order('developer_skills.strength DESC')
       end
 
       candidates.distinct

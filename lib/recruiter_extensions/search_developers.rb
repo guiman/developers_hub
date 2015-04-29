@@ -18,7 +18,7 @@ module RecruiterExtensions
         skill_names = skills.map(&:name)
       end
 
-      devs = devs.joins(:skills).order(developer_skills_count: :desc)
+      devs = devs.joins(:skills).where(developer_skills: { origin: 'github' }).order(developer_skills_count: :desc)
       devs = devs.distinct
 
       if @languages.any?

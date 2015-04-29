@@ -18,8 +18,16 @@ class DevelopersController < ApplicationController
     @geolocation = (lat && lng) ? "#{lat},#{lng}" : 'all'
 
     # Only for map rendering purposes
-    @current_lat = lat || 50.9167536
-    @current_lng = lng || -1.4004929
+    if @location != "all"
+      location = Geokit::Geocoders::MapboxGeocoder.geocode(@location).ll
+      default_lat, default_lng = location.split(',')
+    else
+      default_lat = 50.9167536
+      default_lng = -1.4004929
+    end
+
+    @current_lat = lat || default_lat
+    @current_lng = lng || default_lng
 
     @map_data = RecruiterExtensions::LanguageStatisticsByLocation.new(
       @language).perform

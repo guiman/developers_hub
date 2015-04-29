@@ -85,9 +85,6 @@ ActiveRecord::Schema.define(version: 20150426204845) do
     t.string "email", limit: 255
   end
 
-  add_foreign_key "offers", "dev_recruiters"
-  add_foreign_key "offers", "developers"
-
   add_foreign_key "developer_skills", "developers"
   add_foreign_key "developer_skills", "skills"
   add_foreign_key "offers", "dev_recruiters"
