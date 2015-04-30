@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150426204845) do
+ActiveRecord::Schema.define(version: 20150430075029) do
 
   create_table "dev_recruiters", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -37,20 +37,22 @@ ActiveRecord::Schema.define(version: 20150426204845) do
   add_index "developer_skills", ["skill_id"], name: "index_developer_skills_on_skill_id", using: :btree
 
   create_table "developers", force: :cascade do |t|
-    t.string  "email",                  limit: 255
-    t.string  "location",               limit: 255
-    t.string  "geolocation",            limit: 255
-    t.string  "login",                  limit: 255
-    t.string  "name",                   limit: 255
-    t.boolean "hireable",               limit: 1
-    t.text    "languages",              limit: 65535
-    t.string  "gravatar_url",           limit: 255
-    t.string  "secure_reference",       limit: 255,               null: false
-    t.string  "uid",                    limit: 255
-    t.string  "token",                  limit: 255
-    t.integer "developer_skills_count", limit: 4,     default: 0
-    t.text    "pull_request_events",    limit: 65535
-    t.text    "push_events",            limit: 65535
+    t.string   "email",                  limit: 255
+    t.string   "location",               limit: 255
+    t.string   "geolocation",            limit: 255
+    t.string   "login",                  limit: 255
+    t.string   "name",                   limit: 255
+    t.boolean  "hireable",               limit: 1
+    t.text     "languages",              limit: 65535
+    t.string   "gravatar_url",           limit: 255
+    t.string   "secure_reference",       limit: 255,               null: false
+    t.string   "uid",                    limit: 255
+    t.string   "token",                  limit: 255
+    t.integer  "developer_skills_count", limit: 4,     default: 0
+    t.text     "pull_request_events",    limit: 65535
+    t.text     "push_events",            limit: 65535
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "indexed_users", force: :cascade do |t|

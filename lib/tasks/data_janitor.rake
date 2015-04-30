@@ -128,9 +128,8 @@ namespace :data_janitor do
         p "Skills #{skills}"
         skills.each do |skill|
           skill = Skill.find_or_create_by(name: skill.to_s)
-          dev_skill = DeveloperSkill.find_or_initialize_by(skill_id: skill.id, developer_id: dev.id)
+          dev_skill = DeveloperSkill.find_or_initialize_by(skill_id: skill.id, developer_id: dev.id, origin: 'linkedin')
           dev_skill.strength = 1
-          dev_skill.origin = 'linkedin'
           dev_skill.save
         end
       end
@@ -153,6 +152,31 @@ namespace :data_janitor do
         candidates = data.map { |d| OpenStruct.new(d) }
         RecruiterExtensions::GithubSearchIndexUpdater.new(candidates).perform
       end
+    end
+  end
+
+  desc "update users from crawler"
+  task :update_from_crawler => :environment do |t, args|
+    require 'logger'
+    require 'ostruct'
+
+    logger = Logger.new(Rails.root.join('log', 'user_updater.log'))
+    logger.level = Logger::DEBUG
+
+    FileUtils.mkdir_p "/tmp/updated_users/to_be_updated"
+    FileUtils.mkdir_p "/tmp/updated_users/already_updated"
+
+    Dir["/tmp/updated_users/to_be_updated/*.json"].each do |file_path|
+      logger.info("Now processing #{file_path}")
+
+      File.open(file_path) do |file|
+        data = JSON.parse(file.read)
+        candidate = OpenStruct.new(data)
+        logger.info("User #{candidate.name}")
+        RecruiterExtensions::GithubSearchIndexUpdater.new.perform_one(candidate)
+      end
+
+      FileUtils.mv(file_path, "/tmp/updated_users/already_updated/")
     end
   end
 end
