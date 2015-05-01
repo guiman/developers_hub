@@ -36,6 +36,15 @@ class DevelopersController < ApplicationController
       geolocation: @geolocation, location: @location).paginate(page: params[:page], per_page: 20)
   end
 
+  def example
+    me = Developer.find_by_login("guiman")
+    me.hireable = true
+    @developer = DeveloperProfilePresenter.new(
+      subject: me,
+      viewer: RecruiterUser.new(DevRecruiter.find_by_name('Alvaro Fernando Lara')))
+    render :show
+  end
+
   def show
     @developer = DeveloperProfilePresenter.new(
       subject: Developer.find_by_secure_reference(params[:secure_reference]),

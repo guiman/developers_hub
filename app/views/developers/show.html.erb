@@ -2,7 +2,7 @@
   <h2><%= @developer.name %></h2>
 </div>
 
-<% can_contact_developer = current_user.is_a_recruiter? && current_user.can_see_developer?(@developer) %>
+<% can_contact_developer = @developer.can_contact_developer? %>
 
 <div class="row">
   <div class="medium-4 columns a">
@@ -38,7 +38,7 @@
       <% end %>
     <% elsif can_contact_developer && !@developer.can_be_contacted? %>
       <p>Sorry this person can't be contacted.</p>
-    <% elsif current_user.is_a_recruiter? && !current_user.recruiter.beta_user %>
+    <% elsif @developer.viewer.is_a_recruiter? && !@developer.viewer.recruiter.beta_user %>
       <p>
         We are currently building the plataform and looking for beta users,
         contact me at <a href="mailto:alvaro@dev-hub.io">alvaro at dev-hub.io</a>
@@ -50,7 +50,7 @@
           <li>Follow progress on candidates (profiles are continuously updating)</li>
         </ul>
       </p>
-    <% elsif !current_user.is_a_developer? && !current_user.is_a_recruiter? %>
+    <% elsif !@developer.viewer.is_a_developer? && !@developer.viewer.is_a_recruiter? %>
       <p>
         Interested in contacting this developer?</br>
         <ul>

@@ -30,6 +30,10 @@ class DeveloperProfilePresenter
     can_be_displayed? && @developer.email_is_valid?
   end
 
+  def can_contact_developer?
+    @viewer.is_a_recruiter? && @viewer.can_see_developer?(@developer)
+  end
+
   def method_missing(method, *args, &block)
     @developer.public_send(method)
   end

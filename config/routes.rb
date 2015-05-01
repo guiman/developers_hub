@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root 'developers#index'
 
+  get '/example' => "developers#example"
   get '/search' => "developers#search"
 
   get '/lang/:language' => "developers#filter"
