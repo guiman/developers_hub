@@ -6,8 +6,8 @@ class DevelopersController < ApplicationController
   def search
     @location = params.fetch("location", nil)
     @languages = params.fetch("languages", "")
-
-    @candidates = RecruiterExtensions::SearchDevelopers.new(location: @location, languages: @languages.split(",")).search.paginate(page: params[:page], per_page: 20)
+    developers = current_user.developer_listings
+    @candidates = RecruiterExtensions::SearchDevelopers.new(location: @location, languages: @languages.split(","), developers: developers).search.paginate(page: params[:page], per_page: 20)
   end
 
   def filter

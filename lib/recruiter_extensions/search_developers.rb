@@ -1,12 +1,13 @@
 module RecruiterExtensions
   class SearchDevelopers
-    def initialize(languages: [], location: nil)
+    def initialize(languages: [], location: nil, developers: nil)
       @languages = languages.map(&:strip)
       @location = location
+      @developers = developers.nil? ? Developer.where(hireable: true) : developers
     end
 
     def search
-      devs = Developer.where(hireable: true)
+      devs = @developers
 
       if @location.present?
         devs = devs.where("location LIKE ?", "%#{@location}%")
