@@ -2,14 +2,13 @@ require 'geokit'
 
 module RecruiterExtensions
   class LanguageStatisticsByLocation
-    def initialize(lang)
+    def initialize(lang, developers=nil)
       @lang = lang
+      @developers = developers.nil? ? Developer.where(hireable: true) : developers
     end
 
     def perform
-      users = Developer.where(hireable: true)
-
-      users_with_language = (@lang == "all") ? users : users.select do |candidate|
+      users_with_language = (@lang == "all") ? @developers : @developers.select do |candidate|
         candidate.skills
         .map(&:name)
         .map(&:to_s)

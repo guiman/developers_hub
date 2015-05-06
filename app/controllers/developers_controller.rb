@@ -28,12 +28,12 @@ class DevelopersController < ApplicationController
 
     @current_lat = lat || default_lat
     @current_lng = lng || default_lng
-
-    @map_data = RecruiterExtensions::LanguageStatisticsByLocation.new(
-      @language).perform
-
     @candidates = current_user.developer_listings(language: @language,
       geolocation: @geolocation, location: @location).paginate(page: params[:page], per_page: 20)
+
+    @map_data = RecruiterExtensions::LanguageStatisticsByLocation.new(
+      @language, current_user.developer_listings(language: @language,
+        geolocation: @geolocation, location: @location)).perform
   end
 
   def example

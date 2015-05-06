@@ -21,7 +21,7 @@ describe RecruiterExtensions::LinkedinProfile do
     expect(linkedin_profile.experience).to include({
       :position=>"Lead Developer",
       :company=>"Alliants Limited",
-      :period=>"August 2013 – Present (1 year 9 months)Southampton, United Kingdom",
+      :period=>"August 2013 – Present (1 year 10 months)Southampton, United Kingdom",
       :current=>true})
   end
 
