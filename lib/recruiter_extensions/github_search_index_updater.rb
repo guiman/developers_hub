@@ -49,7 +49,7 @@ module RecruiterExtensions
           dev_skill = DeveloperSkill.find_or_initialize_by(skill_id: skill.id, developer_id: user.id)
           dev_skill.code_example = top_skill_repo.fetch(:name)
           dev_skill.strength = repos.count
-          dev_skill.save
+          dev_skill.save if repos.count > 3 # Only take in consideration relevant skills
         end
       end
 

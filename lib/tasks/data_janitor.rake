@@ -155,6 +155,16 @@ namespace :data_janitor do
     end
   end
 
+  desc "remove linkedin skills"
+  task :remove_linkedin_skills => :environment do |t, args|
+    DeveloperSkill.where(origin: "linkedin").delete_all
+  end
+
+  desc "only consider skills with values greater than 3"
+  task :remove_poor_skills => :environment do |t, args|
+    DeveloperSkill.where("strength < 3").delete_all
+  end
+
   desc "update users from crawler"
   task :update_from_crawler => :environment do |t, args|
     require 'logger'
