@@ -37,17 +37,7 @@ class DevelopersController < ApplicationController
       geolocation: @geolocation, location: @location).paginate(page: params[:page], per_page: 20)
 
     @map_data = RecruiterExtensions::LanguageStatisticsByLocation.new(
-      @language, current_user.developer_listings(language: @language,
-        geolocation: @geolocation, location: @location)).perform
-  end
-
-  def example
-    me = Developer.find_by_login("guiman")
-    me.hireable = true
-    @developer = DeveloperProfilePresenter.new(
-      subject: me,
-      viewer: RecruiterUser.new(DevRecruiter.find_by_name('Alvaro Fernando Lara')))
-    render :show
+      @language, current_user.developer_listings(language: @language)).perform
   end
 
   def create

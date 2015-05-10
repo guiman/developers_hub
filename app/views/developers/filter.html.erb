@@ -16,7 +16,7 @@
     var markers = []
     for(i = 0; i < data.length; i++) {
       var info = data[i];
-      var content = 'Devs found: ' + info.language_count + '<br /><a target="_blank" href="/map/' + info.position[0] + '/' + info.position[1] + '/<%= @language %>">Listing</a>';
+      var content = 'Devs found: ' + info.language_count + '<br /><a target="_blank" href="/location/'+ info.location +'/lang/<%= @language %>">Listing</a>';
       var position = new google.maps.LatLng(info.position[0], info.position[1]);
       var infoWindow = new google.maps.InfoWindow({
         disableAutoPan : true

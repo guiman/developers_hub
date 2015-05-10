@@ -19,6 +19,7 @@ module RecruiterExtensions
       users_with_language.group_by(&:geolocation).map do |k,v|
         {
           position: k.split(','),
+          location: v.first.location,
           language: @lang.capitalize,
           language_count: v.count
         }
