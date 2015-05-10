@@ -41,7 +41,11 @@ describe RecruiterExtensions::GithubSearchIndexUpdater do
       activity: double(pull_request_events: [], push_events: []),
       email: "my@email.com",
       avatar_url: "/my/avatar/url",
-      languages: { :Java => [{ name: "repo_a", popularity: 2, main_language: :Java }] })
+      languages: {
+        :Java => [
+          { name: "repo_a", popularity: 3, main_language: :Java },
+        ]
+      })
 
     candidates = [ candidate ]
 

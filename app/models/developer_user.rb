@@ -21,10 +21,13 @@ class DeveloperUser
     false
   end
 
-  def can_see_developer?(other_developer)
-    @developer == other_developer
+  def can_make_public?(developer)
+    @developer == developer
   end
 
+  def can_see_developer?(other_developer)
+    other_developer.public? || @developer == other_developer
+  end
 
   def contact_developer(developer_profile_presenter, message:)
     nil # Developer can't contact other developers

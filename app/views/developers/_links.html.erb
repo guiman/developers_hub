@@ -1,0 +1,13 @@
+<% if @developer_presenter.can_contact_developer? %>
+  <p>
+    <a href="http://github.com/<%= @developer_presenter.login %>" class="button" target="blank">Github Profile</a>
+    <% if (linkedin_profile = @developer_presenter.find_linkedin_profile) && current_user.is_a_recruiter? && current_user.recruiter.beta_user? %>
+      <a href="<%= linkedin_profile %>" class="button" target="blank">LinkedIn Profile</a>
+    <% end %>
+  </p>
+<% end %>
+
+<% if @developer_presenter.can_show_toggle_public_link? %>
+  <% toggle_public_label = @developer_presenter.public? ? "Make profile private" : "Make profile public" %>
+  <%= link_to toggle_public_label, developer_public_path(@developer_presenter.secure_reference), class: "button", method: :put  %>
+<% end %>

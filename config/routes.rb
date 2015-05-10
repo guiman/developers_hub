@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   get '/developer/:secure_reference' => "developers#show", as: "developer_profile"
   post '/developer/:secure_reference/contact' => "developers#contact", as: "developer_contact"
+  put '/developer/:secure_reference/toggle_public' => "developers#toggle_public", as: "developer_public"
 
   get '/recruiter/:id' => "recruiters#show", as: "recruiter_profile"
 

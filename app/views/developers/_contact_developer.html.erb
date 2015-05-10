@@ -1,0 +1,9 @@
+<% if current_user.is_a_recruiter? && current_user.recruiter.beta_user? %>
+  <%= form_for(@developer_presenter.developer, as: :developer_contact, url: developer_contact_url(@developer_presenter.developer.secure_reference), method: :post) do %>
+    <div class="form-group">
+      <label for="body-input">Message</label>
+      <textarea  class="form-control" rows="3" id="body-input" name="body"></textarea>
+    </div>
+    <button type="submit" class="btn btn-success">Contact Me</button>
+  <% end %>
+<% end %>

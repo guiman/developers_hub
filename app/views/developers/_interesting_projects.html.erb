@@ -1,0 +1,12 @@
+<% if (@developer_presenter.can_contact_developer? && @developer_presenter.can_be_contacted?) || current_user.can_see_developer?(@developer_presenter)  %>
+  <ul class="code-samples-list">
+    <li><h4>Interesting projects</h4></li>
+    <% @developer_presenter.developer_skills.each do |developer_skill| %>
+      <% if developer_skill.code_example.present? %>
+          <li>
+            <%= developer_skill.skill.name %>
+            <a href="http://github.com/<%= @developer_presenter.login%>/<%= developer_skill.code_example %>"><%= developer_skill.code_example %></a></li>
+      <% end %>
+    <% end %>
+  </ul>
+<% end %>

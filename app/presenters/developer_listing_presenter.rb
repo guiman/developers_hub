@@ -5,7 +5,11 @@ class DeveloperListingPresenter
   end
 
   def name
-    @subject.obfuscated_name
+    if @subject.public?
+      @subject.name
+    else
+      @subject.obfuscated_name
+    end
   end
 
   def method_missing(method, *args, &block)

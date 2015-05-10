@@ -1,4 +1,6 @@
 class DevelopersController < ApplicationController
+  before_action :build_presenter, only: [:show, :toggle_public, :contact]
+
   def index
     @candidates = current_user.developer_listings.paginate(page: params[:page], per_page: 20)
   end
@@ -7,7 +9,10 @@ class DevelopersController < ApplicationController
     @location = params.fetch("location", nil)
     @languages = params.fetch("languages", "")
     developers = current_user.developer_listings
-    @candidates = RecruiterExtensions::SearchDevelopers.new(location: @location, languages: @languages.split(","), developers: developers).search.paginate(page: params[:page], per_page: 20)
+    @candidates = RecruiterExtensions::SearchDevelopers.new(
+      location: @location,
+      languages: @languages.split(","),
+      developers: developers).search.paginate(page: params[:page], per_page: 20)
   end
 
   def filter
@@ -45,13 +50,6 @@ class DevelopersController < ApplicationController
     render :show
   end
 
-  def show
-    @developer = DeveloperProfilePresenter.new(
-      subject: Developer.find_by_secure_reference(params[:secure_reference]),
-      viewer: current_user.user)
-    redirect_to root_path unless @developer.can_be_displayed?
-  end
-
   def create
     developer = RecruiterExtensions::BuildDeveloperProfile.new(request.env['omniauth.auth']).perform
     session[:developer_id] = developer.id
@@ -59,13 +57,27 @@ class DevelopersController < ApplicationController
     redirect_to developer_profile_path(developer.secure_reference)
   end
 
-  def contact
-    developer = DeveloperProfilePresenter.new(
-      subject: Developer.find_by_secure_reference(params[:secure_reference]),
-      viewer: current_user.user)
+  def show
+    redirect_to root_path unless @developer_presenter.can_be_displayed?
+  end
 
-    current_user.contact_developer(developer, message: params.fetch(:body))
+  def toggle_public
+    @developer_presenter.toggle_public
+
+    redirect_to developer_profile_path(@developer_presenter.secure_reference)
+  end
+
+  def contact
+    current_user.contact_developer(@developer_presenter, message: params.fetch(:body))
 
     redirect_to root_path
+  end
+
+  private
+
+  def build_presenter
+    @developer_presenter = DeveloperProfilePresenter.new(
+      subject: Developer.find_by_secure_reference(params[:secure_reference]),
+      viewer: current_user.user)
   end
 end

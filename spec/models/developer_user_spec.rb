@@ -8,16 +8,36 @@ describe DeveloperUser do
   end
 
   describe "#can_see_developer?" do
-    it "return true when is the same developer" do
-      dev = Developer.create(login: "test1", hireable: true)
-      Developer.create(login: "test2", hireable: true)
-      expect(described_class.new(dev).can_see_developer?(dev)).to eq(true)
+    context "developer is public" do
+      it "return true" do
+        dev = Developer.create(login: "test1")
+        dev_2 = Developer.create(login: "test2", public: true)
+        expect(described_class.new(dev).can_see_developer?(dev_2)).to eq(true)
+      end
     end
 
-    it "return false for other developers" do
-      dev = Developer.create(login: "test1", hireable: true)
-      dev_2 = Developer.create(login: "test2", hireable: true)
-      expect(described_class.new(dev).can_see_developer?(dev_2)).to eq(false)
+    context "developer is not public" do
+      it "return false" do
+        dev = Developer.create(login: "test1")
+        dev_2 = Developer.create(login: "test2", public: false)
+        expect(described_class.new(dev).can_see_developer?(dev_2)).to eq(false)
+      end
+    end
+
+    context "is the same developer" do
+      it "returns true" do
+        dev = Developer.create(login: "test1", hireable: true)
+        Developer.create(login: "test2", hireable: true)
+        expect(described_class.new(dev).can_see_developer?(dev)).to eq(true)
+      end
+    end
+
+    context "is another developer" do
+      it "return false" do
+        dev = Developer.create(login: "test1", hireable: true)
+        dev_2 = Developer.create(login: "test2", hireable: true)
+        expect(described_class.new(dev).can_see_developer?(dev_2)).to eq(false)
+      end
     end
   end
 

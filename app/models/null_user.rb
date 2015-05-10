@@ -4,7 +4,7 @@ class NullUser
   end
 
   def can_see_developer?(developer)
-    false
+    developer.public?
   end
 
 
@@ -18,6 +18,10 @@ class NullUser
 
   def method_missing(*args, &block)
     self
+  end
+
+  def can_make_public?(developer)
+    false
   end
 
   def developer_listings(language: 'all', location: 'all', geolocation: 'all')

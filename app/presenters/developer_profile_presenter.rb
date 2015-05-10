@@ -22,8 +22,16 @@ class DeveloperProfilePresenter
     end
   end
 
+  def toggle_public
+    @developer.update_attribute(:public, !@developer.public) if @viewer.can_make_public?(@developer)
+  end
+
+  def can_show_toggle_public_link?
+    @viewer.can_make_public?(@developer)
+  end
+
   def can_be_displayed?
-    @developer.hireable? || @viewer.can_see_developer?(@developer)
+    @developer.public? || @developer.hireable? || @viewer.can_see_developer?(@developer)
   end
 
   def can_be_contacted?

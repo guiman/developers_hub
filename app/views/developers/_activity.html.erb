@@ -1,0 +1,9 @@
+<% if @developer_presenter.push_events.any? && @developer_presenter.pull_request_events.any? %>
+  <h5>Latest activity</h5>
+  <ul>
+    <li><strong>Latest activity on <%= @developer_presenter.latest_activity_date.strftime("%F") %></strong></li>
+    <li>Commits pushed: <%= @developer_presenter.commits_pushed %></li>
+    <li>PR opened: <%= @developer_presenter.pull_requests_opened %></li>
+    <li>PR merged: <%= @developer_presenter.pull_requests_merged %></li>
+  </ul>
+<% end %>

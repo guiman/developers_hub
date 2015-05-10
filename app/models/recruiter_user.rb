@@ -6,7 +6,7 @@ class RecruiterUser
   end
 
   def can_see_developer?(developer)
-    @recruiter.beta_user?
+    developer.public? || @recruiter.beta_user?
   end
 
   def logged_in?
@@ -32,6 +32,11 @@ class RecruiterUser
   def is_a_developer?
     false
   end
+
+  def can_make_public?(developer)
+    false
+  end
+
 
   def ==(recruiter)
     @recruiter == recruiter

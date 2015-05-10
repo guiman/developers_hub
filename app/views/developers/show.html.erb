@@ -1,80 +1,29 @@
 <div class="row">
-  <h2><%= @developer.name %></h2>
+  <h2><%= @developer_presenter.name %></h2>
 </div>
-
-<% can_contact_developer = @developer.can_contact_developer? %>
 
 <div class="row">
   <div class="medium-4 columns a">
-    <%= image_tag @developer.avatar, class: "img-responsive img-rounded" %>
-    <p> Location: <%= @developer.location %> </p>
-    <% if @developer.hireable %>
+    <%= image_tag @developer_presenter.avatar, class: "img-responsive img-rounded" %>
+    <p> Location: <%= @developer_presenter.location %> </p>
+
+    <% if @developer_presenter.hireable %>
       <p><mark>Available for hire!</mark></p>
     <% end %>
-    <% if @developer.push_events.any? && @developer.pull_request_events.any? %>
-      <h5>Latest activity</h5>
-      <ul>
-        <li><strong>Latest activity <%= @developer.latest_activity_date.strftime("%F") %></strong></li>
-        <li>Commits pushed: <%= @developer.commits_pushed %></li>
-        <li>PR opened: <%= @developer.pull_requests_opened %></li>
-        <li>PR merged: <%= @developer.pull_requests_merged %></li>
-      </ul>
-    <% end %>
 
-    <% if can_contact_developer %>
-      <p><a href="http://github.com/<%= @developer.login %>" class="btn btn-info" target="blank">Github Profile</a></p>
-      <% if linkedin_profile = @developer.find_linkedin_profile %>
-        <p><a href="<%= linkedin_profile %>" class="btn btn-info" target="blank">LinkedIn Profile</a></p>
-      <% end %>
-    <% end %>
+    <%= render "activity" %>
 
-    <% if can_contact_developer && @developer.can_be_contacted? %>
-      <%= form_for(@developer.developer, as: :developer_contact, url: developer_contact_url(@developer.developer.secure_reference), method: :post) do %>
-        <div class="form-group">
-          <label for="body-input">Message</label>
-          <textarea  class="form-control" rows="3" id="body-input" name="body"></textarea>
-        </div>
-        <button type="submit" class="btn btn-success">Contact Me</button>
-      <% end %>
-    <% elsif can_contact_developer && !@developer.can_be_contacted? %>
-      <p>Sorry this person can't be contacted.</p>
-    <% elsif @developer.viewer.is_a_recruiter? && !@developer.viewer.recruiter.beta_user %>
-      <p>
-        We are currently building the plataform and looking for beta users,
-        contact me at <a href="mailto:alvaro@dev-hub.io">alvaro at dev-hub.io</a>
-        if interested in becoming part of it.</br>
-        Beta users will be able to:
-        <ul>
-          <li>Get access to full profiles for 3000 (and counting) developers world wide</li>
-          <li>See code samples for languages</li>
-          <li>Follow progress on candidates (profiles are continuously updating)</li>
-        </ul>
-      </p>
-    <% elsif !@developer.viewer.is_a_developer? && !@developer.viewer.is_a_recruiter? %>
-      <p>
-        Interested in contacting this developer?</br>
-        <ul>
-          <li><%= link_to "Sign in as a recruiter via Linkedin", "/auth/linkedin" %></li>
-          <li><a href="/subscribers/new" class="btn btn-success">Subscribe for news</a></li>
-        </ul>
-      </p>
-    <% end %>
+    <%= render "links" %>
+
+    <%= render "contact_developer"%>
   </div>
 
   <div class="medium-6 medium-offset-1 columns end">
-    <%= render partial: 'shared/languages_chart', locals: { title: "Projects by language", skills: @developer.developer_skills.where(origin: 'github').map { |dev_skill| "['#{dev_skill.skill.name}', #{dev_skill.strength}]" }.join(', ').html_safe } %>
-
-    <% if (can_contact_developer && @developer.can_be_contacted?) || current_user.can_see_developer?(@developer)  %>
-      <ul class="code-samples-list">
-        <li><h4>Code samples</h4></li>
-        <% @developer.developer_skills.each do |developer_skill| %>
-          <% if developer_skill.code_example.present? %>
-              <li>
-                <%= developer_skill.skill.name %>
-                <a href="http://github.com/<%= @developer.login%>/<%= developer_skill.code_example %>"><%= developer_skill.code_example %></a></li>
-          <% end %>
-        <% end %>
-      </ul>
-    <% end %>
+    <%= render partial: 'shared/languages_chart', locals: {
+      title: "Projects by language",
+      skills: @developer_presenter.developer_skills.where(origin: 'github').map {
+        |dev_skill| "['#{dev_skill.skill.name}', #{dev_skill.strength}]" }
+      .join(', ').html_safe } %>
+    <%= render "interesting_projects" %>
   </div>
 </div>
