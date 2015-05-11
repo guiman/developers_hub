@@ -15,6 +15,12 @@ class Developer < ActiveRecord::Base
     user
   end
 
+  def update_from_auth_hash(auth)
+    self.update_attributes(uid: auth.uid,
+      token: auth.credentials.token,
+      login: auth.extra.raw_info.login)
+  end
+
   def obfuscated_name
     skill = developer_skills.order(strength: :desc).first.skill
     "#{skill.name.to_s} dev"

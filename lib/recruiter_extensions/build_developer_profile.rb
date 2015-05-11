@@ -8,7 +8,12 @@ module RecruiterExtensions
 
     def perform
       developer = Developer.find_by_uid(@auth_info.uid)
-      developer = Developer.create_from_auth_hash(@auth_info) if developer.nil?
+
+      if developer.nil?
+        developer = Developer.create_from_auth_hash(@auth_info)
+      else
+        developer.update_from_auth_hash(@auth_info)
+      end
 
       github_data = Octokit::Client.new(access_token: developer.token).user(developer.login)
       github_candidate = Recruiter::GithubCandidate.new(github_data)
