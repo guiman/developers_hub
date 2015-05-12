@@ -53,29 +53,45 @@ class Developer < ActiveRecord::Base
   end
 
   def activity_for_chart
-    result = {}
+    overall_activity = []
+    activity_per_skill = {}
+    skills.pluck(:name).each { |skill| activity_per_skill[skill] = [] }
+
     from = Date.today - 3.month
     to = Date.today
+    period = (from..to).step(7)
 
-    (from..to).step(7) do |week|
+    period.each do |week|
       current_range = ((week - 1.week)..week)
 
-      activity_found = activity.select do |act|
+      # overall activity
+      overall_activity << activity.select do |act|
         current_range.include?(act.fetch(:updated_at).to_date)
       end.count
 
-      result[week] = activity_found
+      # per skills activity
+      skills.pluck(:name).each do |skill|
+        activity_per_skill[skill] << activity.select do |act|
+          current_range.include?(act.fetch(:updated_at).to_date) && act.fetch(:language, nil).to_s == skill.to_s
+        end.count
+      end
     end
 
     # We need to group activity by date
-    real_dates = result.keys
+    real_dates = period.to_a
     real_dates.map! { |d| "'#{d.strftime('%Y-%m-%d')}'".html_safe }
     real_dates.prepend('\'x\''.html_safe)
 
-    activity_data = result.values
-
+    activity_data = overall_activity
     activity_data.prepend('\'activity\''.html_safe)
 
-    "[#{real_dates.join(',')}], [#{activity_data.join(',')}]"
+    all_the_languages = activity_per_skill.keys.map do |lang|
+      lang_activity = activity_per_skill[lang]
+      lang_activity.prepend("'#{lang}'".html_safe)
+      "[#{lang_activity.join(',')}]"
+    end.join(',')
+
+
+    "[#{real_dates.join(',')}], [#{activity_data.join(',')}], #{all_the_languages}"
   end
 end
