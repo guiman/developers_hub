@@ -1,7 +1,6 @@
 class Developer < ActiveRecord::Base
   serialize :languages
-  serialize :pull_request_events, Array
-  serialize :push_events, Array
+  serialize :activity, Array
 
   has_many :developer_skills
   has_many :skills, through: :developer_skills
@@ -43,37 +42,6 @@ class Developer < ActiveRecord::Base
     !email.nil? && email =~ /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
   end
 
-  def commits_pushed
-    push_events.map { |event| event.fetch(:commits) }.inject(&:+)
-  end
-
-  def pull_requests_opened
-    pull_request_events.select { |event| event.fetch(:action) == "opened" && event.fetch(:sender) == login }.count
-  end
-
-  def pull_requests_merged
-    pull_request_events.select { |event| event.fetch(:action) == "closed" && event.fetch(:merged) && event.fetch(:sender) == login }.count
-  end
-
-  def sorted_pull_request_events
-    pull_request_events.sort { |a,b| a[:created_at] <=> b[:created_at] }
-  end
-
-  def sorted_push_events
-    push_events.sort { |a,b| a[:created_at] <=> b[:created_at] }
-  end
-
-  def latest_activity_date
-    last_push_date = sorted_push_events.last.fetch(:created_at).to_date
-    last_pr_date = sorted_pull_request_events.last.fetch(:created_at).to_date
-
-    if last_push_date > last_pr_date
-      last_push_date
-    else
-      last_pr_date
-    end
-  end
-
   def linkedin_profile
     @linkedin_profile ||= RecruiterExtensions::LinkedinProfile.new(login)
   end
@@ -84,15 +52,30 @@ class Developer < ActiveRecord::Base
     linkedin_profile.link
   end
 
-  def linkedin_skills
-    linkedin_profile.skills
-  end
+  def activity_for_chart
+    result = {}
+    from = Date.today - 3.month
+    to = Date.today
 
-  def education
-    linkedin_profile.education
-  end
+    (from..to).step(7) do |week|
+      current_range = ((week - 1.week)..week)
 
-  def experience
-    linkedin_profile.experience
+      activity_found = activity.select do |act|
+        current_range.include?(act.fetch(:updated_at).to_date)
+      end.count
+
+      result[week] = activity_found
+    end
+
+    # We need to group activity by date
+    real_dates = result.keys
+    real_dates.map! { |d| "'#{d.strftime('%Y-%m-%d')}'".html_safe }
+    real_dates.prepend('\'x\''.html_safe)
+
+    activity_data = result.values
+
+    activity_data.prepend('\'activity\''.html_safe)
+
+    "[#{real_dates.join(',')}], [#{activity_data.join(',')}]"
   end
 end

@@ -9,23 +9,16 @@ module RecruiterExtensions
     end
 
     def perform_one(candidate)
-      if candidate.respond_to?(:activity)
-        pull_request_events = candidate.activity.pull_request_events
-        push_events = candidate.activity.push_events
-      else
-        pull_request_events = candidate.pull_request_events.map(&:symbolize_keys)
-        push_events = candidate.push_events.map(&:symbolize_keys)
-      end
-
       if existing_indexed_candidate = Developer.find_by_login(candidate.login)
         existing_indexed_candidate.update(name: candidate.name,
                                           hireable: candidate.hireable,
                                           location: candidate.location,
                                           gravatar_url: candidate.avatar_url,
                                           geolocation: ::Geokit::Geocoders::MapboxGeocoder.geocode(candidate.location).ll,
-                                          pull_request_events: pull_request_events,
-                                          push_events: push_events,
                                           email: candidate.email)
+
+        # we will only do it once, since this is awful slow
+        existing_indexed_candidate.update_attribute(:activity, candidate.activity.parse_activity) unless existing_indexed_candidate.activity.any?
         user = existing_indexed_candidate
       else
         user = Developer.create(name: candidate.name,
@@ -34,8 +27,7 @@ module RecruiterExtensions
                          location: candidate.location,
                          gravatar_url: candidate.avatar_url,
                          geolocation: ::Geokit::Geocoders::MapboxGeocoder.geocode(candidate.location).ll,
-                         pull_request_events: pull_request_events,
-                         push_events: push_events,
+                         activity: candidate.activity.parse_activity,
                          email: candidate.email)
       end
 
