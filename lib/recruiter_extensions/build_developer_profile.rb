@@ -12,6 +12,7 @@ module RecruiterExtensions
       if developer.nil?
         developer = Developer.create_from_auth_hash(@auth_info)
         DeveloperUpdaterWorker.new.perform(user.id, false)
+        DeveloperUpdaterWorker.new.perform(user.id, true)
       else
         developer.update_from_auth_hash(@auth_info)
         DeveloperUpdaterWorker.perform_async(developer.login, true)
