@@ -37,14 +37,9 @@
       <section class="top-bar-section">
         <ul class="left">
           <li><a href="/lang/all">All Devs</a></li>
-          <li><a href="/location/london">London devs</a></li>
-          <li><a href="/lang/ruby">Ruby Devs</a></li>
-          <li><a href="/lang/javascript">Javascript Devs</a></li>
-          <li><a href="/search">Search</a></li>
         </ul>
 
         <ul class="right">
-          <li><%= link_to "About the site", "/about" %></li>
           <% if current_user.logged_in? %>
             <% if current_user.is_a_developer? %>
               <li><%= link_to "Profile", developer_profile_path(current_user.secure_reference) %></li>
@@ -53,9 +48,6 @@
             <% end %>
 
             <li><%= link_to "Logout", "/sessions/logout" %></li>
-          <% else %>
-            <li><%= link_to "Recruiter signin Linkedin", "/auth/linkedin" %></li>
-            <li><%= link_to "Developer signin Github", "/auth/github" %></li>
           <% end %>
         </ul>
       </section>

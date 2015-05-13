@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
-  root 'developers#index'
+  root 'information#welcome'
 
   get '/example' => "developers#example"
   get '/search' => "developers#search"
 
   get '/lang/:language' => "developers#filter"
   get '/location/:location' => "developers#filter"
+  get '/location/:location/lang/:language' => "developers#filter"
   get '/map/:lat/:lng/:language' => "developers#filter", as: "map_filter", :constraints => {:lat => /\-*\d+.\d+/ , :lng => /\-*\d+.\d+/ , :range => /\d+/}
 
   get '/developer/:secure_reference' => "developers#show", as: "developer_profile"

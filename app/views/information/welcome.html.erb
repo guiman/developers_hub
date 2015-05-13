@@ -1,0 +1,57 @@
+<div class="row">
+  <h4 class="subheader text-center">Gathering developers and companies based on open source contributions.</h4>
+</div>
+
+<div class="row">
+  <div>
+    <h4>How does it work?</h4>
+    <p>
+      Developers can login with Github and we will take care of build your profiles based on your open source respositories.</br>
+      Not only that, we will keep it up to date, finding your latest contributions and activity.</br>
+      You decide if your open source contributions are publicly available or not.</br>
+      Developers that belong to organizations wll be able to promote them by requiring to build an organization profile.</br>
+      Both developers and companies will be able to find each other by the code we love writing.
+    </p>
+  </div>
+</div>
+
+<div class="row">
+  <div>
+    <h4>I'm a recruiter, can I take part as well?</h4>
+    <p>
+      We welcome recruiters, and we want you to get involved. We hope that by showing dev skills and activity, it will lead to more accurate job proposals.</br>
+      Devs will display when their are available for hire or not, please respect their decision to not be available.</br>
+    </p>
+  </div>
+</div>
+
+
+<%= form_for(@user) do |f| %>
+  <div class="row">
+    <div class="large-5 large-centered columns">
+      <div class="row collapse">
+        <div class="small-10 columns">
+          <%= f.email_field "email", placeholder: "Your email here" %>
+        </div>
+        <div class="small-2 columns">
+          <%= f.submit "Subscribe", class: "button postfix" %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+
+<div class="row" style="margin-top: 3em">
+  <div class="large-12 columns">
+    <div class="large-4 columns">
+      <a href="https://twitter.com/developers_hub" target="blank" class="button round">Follow us on twitter</a>
+    </div>
+    <div class="large-4 columns">
+      <%= link_to "Recruiter signin Linkedin", "/auth/linkedin", class: "button round" %>
+    </div>
+    <div class="large-4 columns">
+      <%= link_to "Developers signin Github", "/auth/github", class: "button round" %>
+    </div>
+  </div>
+</div>
