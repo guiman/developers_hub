@@ -8,7 +8,7 @@ module RecruiterExtensions
       @candidates.each { |candidate| perform_one(candidate) }
     end
 
-    def perform_one(candidate)
+    def perform_one(candidate, client)
       if existing_indexed_candidate = Developer.find_by_login(candidate.login)
         existing_indexed_candidate.update(name: candidate.name,
                                           hireable: candidate.hireable,
@@ -18,7 +18,7 @@ module RecruiterExtensions
                                           email: candidate.email)
 
         # we will only do it once, since this is awful slow
-        existing_indexed_candidate.update_attribute(:activity, candidate.activity.parse_activity) unless existing_indexed_candidate.activity.any?
+        existing_indexed_candidate.update_attribute(:activity, candidate.activity(client).parse_activity) unless existing_indexed_candidate.activity.any?
         user = existing_indexed_candidate
       else
         user = Developer.create(name: candidate.name,

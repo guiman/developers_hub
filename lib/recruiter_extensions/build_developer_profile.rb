@@ -15,10 +15,11 @@ module RecruiterExtensions
         developer.update_from_auth_hash(@auth_info)
       end
 
-      github_data = Octokit::Client.new(access_token: developer.token).user(developer.login)
+      client = Octokit::Client.new(access_token: developer.token)
+      github_data = client.user(developer.login)
       github_candidate = Recruiter::GithubCandidate.new(github_data)
 
-      GithubSearchIndexUpdater.new.perform_one(github_candidate)
+      GithubSearchIndexUpdater.new.perform_one(github_candidate, client)
     end
   end
 end
