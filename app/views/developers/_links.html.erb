@@ -1,4 +1,4 @@
-<% if @developer_presenter.can_be_displayed? %>
+<% if @developer_presenter.public? || @developer_presenter.can_contact_developer? %>
   <p>
     <a href="http://github.com/<%= @developer_presenter.login %>" class="button" target="blank">Github Profile</a>
     <% if (linkedin_profile = @developer_presenter.find_linkedin_profile) && current_user.is_a_recruiter? && current_user.recruiter.beta_user? %>
