@@ -18,7 +18,9 @@ module RecruiterExtensions
                                           email: candidate.email)
 
         # we will only do it once, since this is awful slow
-        existing_indexed_candidate.update_attribute(:activity, candidate.activity(client).parse_activity) unless existing_indexed_candidate.activity.any?
+        # FIXME: This takes just to long, we need to move it into background
+        # worker ASAP.
+        # existing_indexed_candidate.update_attribute(:activity, candidate.activity(client).parse_activity) unless existing_indexed_candidate.activity.any?
         user = existing_indexed_candidate
       else
         user = Developer.create(name: candidate.name,
