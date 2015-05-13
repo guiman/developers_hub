@@ -17,10 +17,6 @@ module RecruiterExtensions
                                           geolocation: ::Geokit::Geocoders::MapboxGeocoder.geocode(candidate.location).ll,
                                           email: candidate.email)
 
-        # we will only do it once, since this is awful slow
-        # FIXME: This takes just to long, we need to move it into background
-        # worker ASAP.
-        # existing_indexed_candidate.update_attribute(:activity, candidate.activity(client).parse_activity) unless existing_indexed_candidate.activity.any?
         user = existing_indexed_candidate
       else
         user = Developer.create(name: candidate.name,
@@ -29,7 +25,6 @@ module RecruiterExtensions
                          location: candidate.location,
                          gravatar_url: candidate.avatar_url,
                          geolocation: ::Geokit::Geocoders::MapboxGeocoder.geocode(candidate.location).ll,
-                         activity: candidate.activity.parse_activity,
                          email: candidate.email)
       end
 

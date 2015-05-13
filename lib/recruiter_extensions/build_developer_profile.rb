@@ -11,15 +11,13 @@ module RecruiterExtensions
 
       if developer.nil?
         developer = Developer.create_from_auth_hash(@auth_info)
+        DeveloperUpdaterWorker.new.perform(user.id, false)
       else
         developer.update_from_auth_hash(@auth_info)
+        DeveloperUpdaterWorker.perform_async(developer.login, true)
       end
 
-      client = Octokit::Client.new(access_token: developer.token)
-      github_data = client.user(developer.login)
-      github_candidate = Recruiter::GithubCandidate.new(github_data)
-
-      GithubSearchIndexUpdater.new.perform_one(github_candidate, client)
+      developer
     end
   end
 end
