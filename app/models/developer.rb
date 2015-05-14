@@ -21,8 +21,9 @@ class Developer < ActiveRecord::Base
   end
 
   def obfuscated_name
-    skill = developer_skills.order(strength: :desc).first.skill
-    "#{skill.name.to_s} dev"
+    dev_skill = developer_skills.order(strength: :desc).first
+    skill = (dev_skill) ? dev_skill.skill.name.to_s : 'OpenSource'
+    "#{skill} dev"
   end
 
   def ==(another_object)
