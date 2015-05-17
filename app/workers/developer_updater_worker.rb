@@ -1,6 +1,6 @@
 class DeveloperUpdaterWorker
   include Sidekiq::Worker
-  def perform(login, parse_activity=false)
-    RecruiterExtensions::UpdateDeveloperFromGithub.perform(login, parse_activity)
+  def perform(login, options={parse_activity: false, parse_contributions: false})
+    RecruiterExtensions::UpdateDeveloperFromGithub.perform(login, options.symbolize_keys)
   end
 end

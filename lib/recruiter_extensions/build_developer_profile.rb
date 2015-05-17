@@ -11,12 +11,16 @@ module RecruiterExtensions
 
       if developer.nil?
         developer = Developer.create_from_auth_hash(@auth_info)
-        DeveloperUpdaterWorker.new.perform(developer.login, false)
+        DeveloperUpdaterWorker.new.perform(developer.login, {
+          parse_activity: false, parse_contributions: false })
+        DeveloperUpdaterWorker.perform_async(developer.login, {
+          parse_activity: true, parse_contributions: true })
       else
         developer.update_from_auth_hash(@auth_info)
+        DeveloperUpdaterWorker.perform_async(developer.login,{
+          parse_activity: developer.needs_update_activity?,
+          parse_contributions: developer.needs_update_contributions? })
       end
-
-      DeveloperUpdaterWorker.perform_async(developer.login, true)
 
       developer
     end
