@@ -45,8 +45,9 @@ namespace :data_janitor do
     developers.each do |developer|
       Proc.new do
         begin
-          github_user = ::Recruiter::API.build_client.user(developer.login)
-          candidate = Recruiter::GithubCandidate.new(github_user)
+          client = ::Recruiter::API.build_client
+          github_user = client.user(developer.login)
+          candidate = Recruiter::GithubCandidate.new(github_user, client)
 
           candidate.languages.each do |language, repos|
             skill = Skill.find_or_create_by(name: language.to_s)
@@ -81,8 +82,9 @@ namespace :data_janitor do
     developers.each do |developer|
       Proc.new do
         begin
-          github_user = ::Recruiter::API.build_client.user(developer.login)
-          candidate = Recruiter::GithubCandidate.new(github_user)
+          client = ::Recruiter::API.build_client
+          github_user = client.user(developer.login)
+          candidate = Recruiter::GithubCandidate.new(github_user, client)
 
           developer.pull_request_events = candidate.activity.pull_request_events
           developer.push_events = candidate.activity.push_events
