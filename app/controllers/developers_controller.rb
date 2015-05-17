@@ -77,8 +77,11 @@ class DevelopersController < ApplicationController
   private
 
   def build_presenter
+    developer = Developer.find_by_secure_reference(params[:secure_reference])
+
+    redirect_to root_path unless developer.present?
     @developer_presenter = DeveloperProfilePresenter.new(
-      subject: Developer.find_by_secure_reference(params[:secure_reference]),
+      subject: developer,
       viewer: current_user.user)
   end
 end
