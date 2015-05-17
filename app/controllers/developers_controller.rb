@@ -53,6 +53,7 @@ class DevelopersController < ApplicationController
   def create
     developer = RecruiterExtensions::BuildDeveloperProfile.new(request.env['omniauth.auth']).perform
     session[:developer_id] = developer.id
+    flash[:welcome] = "Welcome! We will make sure your profile is up to date. It should be finish in a couple minutes!"
 
     redirect_to developer_profile_path(developer.secure_reference)
   end
