@@ -12,7 +12,7 @@ describe RecruiterExtensions::BuildDeveloperProfile do
 
       allow(Geokit::Geocoders::MapboxGeocoder).to receive(:geocode).and_return(double("location", ll: ""))
       allow(Octokit::Client).to receive_message_chain(:new, :user)
-      expect(RecruiterExtensions::GithubSearchIndexUpdater).to receive_message_chain(:new, :perform_one)
+      expect(DeveloperUpdaterWorker).to receive(:perform_async)
 
       RecruiterExtensions::BuildDeveloperProfile.new(auth).perform
 
@@ -27,7 +27,7 @@ describe RecruiterExtensions::BuildDeveloperProfile do
 
       allow(Geokit::Geocoders::MapboxGeocoder).to receive(:geocode).and_return(double("location", ll: ""))
       allow(Octokit::Client).to receive_message_chain(:new, :user)
-      expect(RecruiterExtensions::GithubSearchIndexUpdater).to receive_message_chain(:new, :perform_one)
+      expect(DeveloperUpdaterWorker).to receive(:perform_async)
 
       RecruiterExtensions::BuildDeveloperProfile.new(auth).perform
 

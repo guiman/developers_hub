@@ -56,7 +56,9 @@ class Developer < ActiveRecord::Base
   def activity_for_chart
     overall_activity = []
     activity_per_skill = {}
-    skills.pluck(:name).each { |skill| activity_per_skill[skill] = [] }
+
+    activity_languages = activity.map { |act| act[:language] }.compact.uniq
+    activity_languages.each { |skill| activity_per_skill[skill] = [] }
 
     from = Date.today - 3.month
     to = Date.today
@@ -70,8 +72,9 @@ class Developer < ActiveRecord::Base
         current_range.include?(act.fetch(:updated_at).to_date)
       end.count
 
-      # per skills activity
-      skills.pluck(:name).each do |skill|
+      # per language activity
+      activity_languages = activity.map { |act| act[:language] }.compact.uniq
+      activity_languages.each do |skill|
         activity_per_skill[skill] << activity.select do |act|
           current_range.include?(act.fetch(:updated_at).to_date) && act.fetch(:language, nil).to_s == skill.to_s
         end.count

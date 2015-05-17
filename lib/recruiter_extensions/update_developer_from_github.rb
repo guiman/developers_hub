@@ -43,7 +43,8 @@ module RecruiterExtensions
             contribution_count = contrib.last
             skill = Skill.find_or_create_by(name: language.to_s)
             dev_skill = DeveloperSkill.find_or_initialize_by(skill_id: skill.id, developer_id: developer.id)
-            dev_skill.strength = dev_skill.strength + contribution_count
+            current_strength = dev_skill.strength.nil? ? 0 : dev_skill.strength
+            dev_skill.strength = current_strength + contribution_count
             dev_skill.save
           end
         end
