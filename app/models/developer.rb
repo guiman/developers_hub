@@ -60,7 +60,7 @@ class Developer < ActiveRecord::Base
     activity_languages = activity.map { |act| act[:language] }.compact.uniq
     activity_languages.each { |skill| activity_per_skill[skill] = [] }
 
-    from = Date.today - 3.month
+    from = (Date.today + 14.day) - 3.month
     to = Date.today
     period = (from..to).step(7)
 
