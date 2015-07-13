@@ -2,7 +2,9 @@ module RecruiterExtensions
   class UpdateDeveloperFromGithub
     def self.perform(login, parse_options)
       developer = Developer.find_by_login(login)
-      client = Octokit::Client.new(access_token: developer.token)
+      token = developer.token
+      token = ENV["GITHUB_ACCESS_TOKEN"] if developer.token.nil?
+      client = Octokit::Client.new(access_token: token)
       github_data = client.user(developer.login)
       candidate = Recruiter::GithubCandidate.new(github_data, client)
 

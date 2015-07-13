@@ -34,7 +34,9 @@ namespace :data_janitor do
         data = JSON.parse(file.read)
         logger.info("Users count: #{data.count}")
         candidates = data.map { |d| OpenStruct.new(d) }
-        RecruiterExtensions::GithubSearchIndexUpdater.new(candidates).perform
+        candidates.each do |candidate|
+          RecruiterExtensions::GithubSearchIndexUpdater.new.perform_one(candidate)
+        end
       end
     end
   end
