@@ -43,16 +43,6 @@ class Developer < ActiveRecord::Base
     !email.nil? && email =~ /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
   end
 
-  def linkedin_profile
-    @linkedin_profile ||= RecruiterExtensions::LinkedinProfile.new(login)
-  end
-
-  def find_linkedin_profile
-    return unless linkedin_profile.verify_link
-
-    linkedin_profile.link
-  end
-
   def activity_for_chart
     overall_activity = []
     activity_per_skill = {}

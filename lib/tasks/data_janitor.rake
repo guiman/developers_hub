@@ -120,24 +120,6 @@ namespace :data_janitor do
     RecruiterExtensions::GithubSearchIndexUpdater.new(candidates).perform
   end
 
-  desc "add skills from linkedin"
-  task :add_skills_from_linkedin => :environment do |t, args|
-    Developer.where("hireable = 1 and email is not null").each do |dev|
-      p "Processing #{dev.login}"
-      if dev.find_linkedin_profile
-        p "Found #{dev.login}"
-        skills = dev.linkedin_skills
-        p "Skills #{skills}"
-        skills.each do |skill|
-          skill = Skill.find_or_create_by(name: skill.to_s)
-          dev_skill = DeveloperSkill.find_or_initialize_by(skill_id: skill.id, developer_id: dev.id, origin: 'linkedin')
-          dev_skill.strength = 1
-          dev_skill.save
-        end
-      end
-    end
-  end
-
   desc "migrate users from crawler"
   task :migrate_from_crawler => :environment do |t, args|
     require 'logger'
@@ -155,11 +137,6 @@ namespace :data_janitor do
         RecruiterExtensions::GithubSearchIndexUpdater.new(candidates).perform
       end
     end
-  end
-
-  desc "remove linkedin skills"
-  task :remove_linkedin_skills => :environment do |t, args|
-    DeveloperSkill.where(origin: "linkedin").delete_all
   end
 
   desc "only consider skills with values greater than 3"
