@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe RecruiterExtensions::GithubSearchIndexUpdater do
-
   it "updates users that already exist" do
     DeveloperSkill.create(developer: Developer.create(login: "test", hireable: false),
       skill: Skill.create(name: "Ruby"), strength: 3)
@@ -21,9 +20,7 @@ describe RecruiterExtensions::GithubSearchIndexUpdater do
         ]
       })
 
-    candidates = [ candidate ]
-
-    described_class.new(candidates).perform
+    described_class.new.perform_one(candidate, double)
 
     developer = Developer.first
 
@@ -47,9 +44,7 @@ describe RecruiterExtensions::GithubSearchIndexUpdater do
         ]
       })
 
-    candidates = [ candidate ]
-
-    described_class.new(candidates).perform
+    described_class.new.perform_one(candidate, double)
 
     expect(Developer.count).to eq(1)
     expect(Skill.count).to eq(1)

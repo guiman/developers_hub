@@ -1,13 +1,5 @@
 module RecruiterExtensions
   class GithubSearchIndexUpdater
-    def initialize(candidates=[])
-      @candidates = candidates
-    end
-
-    def perform
-      @candidates.each { |candidate| perform_one(candidate) }
-    end
-
     def perform_one(candidate, client)
       if existing_indexed_candidate = Developer.find_by_login(candidate.login)
         existing_indexed_candidate.update(name: candidate.name,
