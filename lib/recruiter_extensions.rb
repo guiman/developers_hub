@@ -2,9 +2,11 @@ require 'recruiter_extensions/github_search_index_updater'
 require 'recruiter_extensions/language_statistics_by_location'
 require 'recruiter_extensions/filter_developers'
 require 'recruiter_extensions/build_developer_profile'
+require 'recruiter_extensions/build_organization_profile'
 require 'recruiter_extensions/build_dev_recruiter_profile'
 require 'recruiter_extensions/search_developers'
 require 'recruiter_extensions/update_developer_from_github'
+require 'recruiter_extensions/update_organization_from_github'
 
 module RecruiterExtensions
 

@@ -1,0 +1,24 @@
+<div class="row">
+  <div class="medium-4 columns a">
+    <%= image_tag @organization.gravatar_url, class: "img-responsive img-rounded" %>
+    <p> Location: <%= @organization.location %> </p>
+
+    <%= render "links" %>
+  </div>
+
+  <div class="medium-6 medium-offset-1 columns end">
+    <%= render partial: 'shared/languages_chart', locals: {
+      title: "Projects by language",
+      skills: @organization.organization_skills.map {
+        |org_skill| "['#{org_skill.skill.name}', #{org_skill.strength}]" }
+      .join(', ').html_safe } %>
+  </div>
+</div>
+
+<% if @organization.activity.any? %>
+  <div class="row">
+    <h4>Latest Activity</h4>
+    <%= render partial: 'shared/activity_chart', locals: {
+      activity: @organization.activity_for_chart.html_safe } %>
+  </div>
+<% end %>

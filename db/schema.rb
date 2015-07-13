@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150517181631) do
+ActiveRecord::Schema.define(version: 20150519203932) do
 
   create_table "dev_recruiters", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -79,6 +79,29 @@ ActiveRecord::Schema.define(version: 20150517181631) do
   add_index "offers", ["dev_recruiter_id"], name: "index_offers_on_dev_recruiter_id", using: :btree
   add_index "offers", ["developer_id"], name: "index_offers_on_developer_id", using: :btree
 
+  create_table "organization_skills", force: :cascade do |t|
+    t.integer "organization_id", limit: 4
+    t.integer "skill_id",        limit: 4
+    t.integer "strength",        limit: 4
+  end
+
+  add_index "organization_skills", ["organization_id"], name: "index_organization_skills_on_organization_id", using: :btree
+  add_index "organization_skills", ["skill_id"], name: "index_organization_skills_on_skill_id", using: :btree
+
+  create_table "organizations", force: :cascade do |t|
+    t.string   "email",                     limit: 255
+    t.string   "location",                  limit: 255
+    t.string   "geolocation",               limit: 255
+    t.string   "login",                     limit: 255
+    t.string   "name",                      limit: 255
+    t.string   "gravatar_url",              limit: 255
+    t.text     "activity",                  limit: 65535
+    t.text     "members",                   limit: 65535
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "organization_skills_count", limit: 4,     default: 0
+  end
+
   create_table "skills", force: :cascade do |t|
     t.string "name", limit: 255, null: false
   end
@@ -93,4 +116,6 @@ ActiveRecord::Schema.define(version: 20150517181631) do
   add_foreign_key "developer_skills", "skills"
   add_foreign_key "offers", "dev_recruiters"
   add_foreign_key "offers", "developers"
+  add_foreign_key "organization_skills", "organizations"
+  add_foreign_key "organization_skills", "skills"
 end
