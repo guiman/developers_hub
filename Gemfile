@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+eval_gemfile File.join(File.dirname(__FILE__), "lib", "experiments", "comparator", "Gemfile")
+
 gem 'coffee-rails', '~> 4.1.0'
 gem 'dragonfly', '~> 1.0.0'
 gem 'faraday-http-cache'

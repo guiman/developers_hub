@@ -1,0 +1,64 @@
+<h2 class="text-center"> Skill Reduction </h2>
+<p class="text-center">
+Values representing presence of skill overall authored commits (in percentage).<br/>
+Eg.: 30.0 in Ruby, means a 3 out of 10 commits have Ruby as a skill.
+</p>
+
+<div style="width: 45%; margin: auto">
+  <ul class="language_comparison-legend" style="list-style: none;">
+    <% @raw_dataset_information.each do |info|  %>
+      <li style="display: inline">
+        <span style="margin-right: 5px; padding: 1px 5px; background-color:<%= info.fetch(:strokeColor) %>">
+        </span>
+        <a href="http://github.com/<%= info.fetch(:label) %>"><%= info.fetch(:label) %></a>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+<h4 class="text-center">Users Overlapped Skill</h4>
+<canvas id="language_comparison" width="400" height="400" style="display: block; width: 0 auto; margin: 0 auto"></canvas>
+
+<h4 class="text-center">User's Mean Combined Skill</h4>
+<canvas id="language_reduction" width="400" height="400" style="display: block; width: 0 auto; margin: 0 auto"></canvas>
+
+<script type="text/javascript">
+var language_comparison = {
+  ctx: document.getElementById("language_comparison").getContext("2d"),
+  graph_data: {
+    datasets: JSON.parse('<%= @dataset_information %>'),
+    labels: JSON.parse('<%= @languages_labels %>')
+  },
+  options: {
+    scaleShowLine : true,
+    angleShowLineOut : true,
+    scaleShowLabels : false,
+    scaleBeginAtZero : true,
+    angleLineColor : "rgba(0,0,0,.1)",
+    angleLineWidth : 1,
+    pointLabelFontFamily : "'Arial'",
+    pointLabelFontStyle : "normal",
+    pointLabelFontSize : 10,
+    pointLabelFontColor : "#666",
+    pointDot : true,
+    pointDotRadius : 3,
+    pointDotStrokeWidth : 1,
+    pointHitDetectionRadius : 20,
+    datasetStroke : true,
+    datasetStrokeWidth : 2,
+    datasetFill : true
+  }
+};
+
+var language_reduction = {
+  ctx: document.getElementById("language_reduction").getContext("2d"),
+  graph_data: {
+    datasets: JSON.parse('<%= @language_reduction_datasets %>'),
+    labels: JSON.parse('<%= @languages_labels %>')
+  },
+  options: {}
+};
+
+var myRadarChart = new Chart(language_comparison.ctx).Radar(language_comparison.graph_data, language_comparison.options);
+var myBarChart = new Chart(language_reduction.ctx).Bar(language_reduction.graph_data, language_reduction.options);
+</script>

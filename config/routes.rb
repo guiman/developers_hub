@@ -27,4 +27,6 @@ Rails.application.routes.draw do
 
   get '/sessions/logout' => "sessions#logout", :constraints => {:format => /json/}
   resources :subscribers, only: [:new, :create]
+
+  mount ComparisonApp, at: "/experiments/comparator/"
 end

@@ -1,0 +1,4 @@
+gem 'descriptive_statistics'
+gem 'thin'
+gem 'ohm'
+gem 'ohm-contrib'
