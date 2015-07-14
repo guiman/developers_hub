@@ -35,7 +35,7 @@ class UserProfiler
     user_organizations = user.organization_list || []
 
     moar_repos = user_organizations.inject([]) do |acc, org|
-      repository_type = (target_organization && org.login == target_organization.login) ? 'all' : 'public'
+      repository_type = 'public'
       repositories = org.repositories(repository_type).select do |repository|
         repository.commits(user.login).any?
       end
