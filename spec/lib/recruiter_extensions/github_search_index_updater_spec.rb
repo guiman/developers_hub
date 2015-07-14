@@ -20,7 +20,7 @@ describe RecruiterExtensions::GithubSearchIndexUpdater do
         ]
       })
 
-    described_class.new.perform_one(candidate, double)
+    described_class.new.perform_one(candidate)
 
     developer = Developer.first
 
@@ -44,7 +44,7 @@ describe RecruiterExtensions::GithubSearchIndexUpdater do
         ]
       })
 
-    described_class.new.perform_one(candidate, double)
+    described_class.new.perform_one(candidate)
 
     expect(Developer.count).to eq(1)
     expect(Skill.count).to eq(1)
