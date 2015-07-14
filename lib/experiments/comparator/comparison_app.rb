@@ -9,8 +9,10 @@ class ComparisonApp < Sinatra::Base
   configure do
     set :root, ComparisonApp.root
     set :public_folder, File.dirname(__FILE__) + '/static'
-    set :server, :thin
-    set :show_exceptions, false
+    set :server, :unicorn
+    set :show_exceptions, true
+    set :logging, true
+    set :dump_errors, true
     set :bind, '0.0.0.0'
     set :recruiter_client, Recruiter::API.build_client(configuration: {
       access_token: ENV.fetch('GITHUB_ACCESS_TOKEN') })
