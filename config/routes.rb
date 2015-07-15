@@ -28,7 +28,5 @@ Rails.application.routes.draw do
   get '/sessions/logout' => "sessions#logout", :constraints => {:format => /json/}
   resources :subscribers, only: [:new, :create]
 
-  namespace :experiments do
-    get '/reduce_skills' => "comparator#reduce_skills"
-  end
+  mount ComparisonApp, at: "/experiments/comparator/"
 end

@@ -1,7 +1,7 @@
 APP_ROOT=File.join(File.dirname(__FILE__), '../')
 
 worker_processes (ENV["UNICORN_WORKERS"] || 3).to_i
-timeout (ENV["UNICORN_TIMEOUT"] || 15).to_i
+timeout (ENV["UNICORN_TIMEOUT"] || 60).to_i
 
 preload_app true
 
