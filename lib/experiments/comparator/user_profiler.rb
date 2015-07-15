@@ -30,21 +30,20 @@ class UserProfiler
 
   def self.calculate_profile(user, target_organization=nil, language_whitelist=[], language_blacklist=[])
     # First build a list of repositories to analize
-    repos = user.repositories
+    repos = user.repositories.first(5)
 
-    user_organizations = user.organization_list || []
+    # TODO: Uncomment when we sort out the long processing times
+    # user_organizations = user.organization_list || []
+    # moar_repos = user_organizations.inject([]) do |acc, org|
+    #   repository_type = 'public'
+    #   repositories = org.repositories(repository_type).select do |repository|
+    #     repository.commits(user.login).any?
+    #   end
 
-    moar_repos = user_organizations.inject([]) do |acc, org|
-      repository_type = 'public'
-      repositories = org.repositories(repository_type).select do |repository|
-        repository.commits(user.login).any?
-      end
-
-      acc.concat repositories
-      acc
-    end
-
-    repos.concat moar_repos
+    #   acc.concat repositories
+    #   acc
+    # end
+    # repos.concat moar_repos
 
     # Now ask for the language analysis to Recruiter
     overall_language_data = user.languages_2(repos)
