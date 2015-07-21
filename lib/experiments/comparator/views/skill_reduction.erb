@@ -1,9 +1,16 @@
 <h2 class="text-center"> Skill Reduction </h2>
 <p class="text-center">
-Values representing presence of skill overall authored commits (in percentage).<br/>
-Eg.: 30.0 in Ruby, means a 3 out of 10 commits have Ruby as a skill.<br/>
-<strong>NOTE: For technical limitations we are currently only using 5 of your public repositories to calculate this data</strong>
+The goal of this experiment is to show the combined skills of a group of developers.<br/>
+The more skills users have in common, the more edges the radar graph will have.<br/>
+If you are not able to display any skills try removing some of the users and see how that changes<br/>
 </p>
+
+<p class="text-center">
+Follow us on Twitter for more information
+<a href="https://twitter.com/developers_hub" class="twitter-follow-button" data-show-count="false">Follow @developers_hub</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+</p>
+
 
 <div style="width: 45%; margin: auto">
   <ul class="language_comparison-legend" style="list-style: none;">
@@ -19,6 +26,14 @@ Eg.: 30.0 in Ruby, means a 3 out of 10 commits have Ruby as a skill.<br/>
 
 <h4 class="text-center">Users Overlapped Skill</h4>
 <canvas id="language_comparison" width="400" height="400" style="display: block; width: 0 auto; margin: 0 auto"></canvas>
+
+<p class="text-center">
+Values representing presence of skill overall authored commits (in percentage).<br/>
+Eg.: 30.0 in Ruby, means a 3 out of 10 commits have Ruby as a skill.<br/>
+<strong>NOTE: For technical limitations we are currently only using 5 of your public repositories to calculate this data</strong>
+</p>
+
+
 
 <h4 class="text-center">User's Mean Combined Skill</h4>
 <canvas id="language_reduction" width="400" height="400" style="display: block; width: 0 auto; margin: 0 auto"></canvas>
