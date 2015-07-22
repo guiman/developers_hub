@@ -1,6 +1,6 @@
 GIT
   remote: git@github.com:guiman/recruiter.git
-  revision: 39527249b41d97db12a8ed4ee7eb915816091774
+  revision: 2ffb773c95d81fdea41602a138b3a820bae57f63
   specs:
     recruiter (0.0.1)
       github-linguist
