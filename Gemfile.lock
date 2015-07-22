@@ -1,6 +1,6 @@
 GIT
   remote: git@github.com:guiman/recruiter.git
-  revision: 8ed99615eddc22aede2440f90da5a6ab43da3161
+  revision: 39527249b41d97db12a8ed4ee7eb915816091774
   specs:
     recruiter (0.0.1)
       github-linguist
@@ -116,7 +116,7 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
-    mime-types (2.4.3)
+    mime-types (2.6.1)
     mini_portile (0.6.2)
     minitest (5.5.1)
     msgpack (0.5.12)

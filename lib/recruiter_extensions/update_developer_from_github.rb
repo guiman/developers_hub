@@ -24,7 +24,7 @@ module RecruiterExtensions
 
       if parse_options.fetch(:parse_contributions)
         candidate.contributions.each do |org_contributions|
-          contributions_by_language = org_contributions.values.first.group_by { |contrib| contrib[:main_language] }.
+          contributions_by_language = org_contributions.last.group_by { |contrib| contrib[:main_language] }.
             map { |lang, contrib| [ lang, contrib.count ] }
 
           contributions_by_language.each do |contrib|
