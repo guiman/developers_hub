@@ -10,7 +10,7 @@ class ComparisonApp < Sinatra::Base
     set :root, ComparisonApp.root
     set :public_folder, File.dirname(__FILE__) + '/static'
     set :server, :unicorn
-    set :show_exceptions, true
+    set :show_exceptions, false
     set :logging, true
     set :dump_errors, true
     set :bind, '0.0.0.0'
