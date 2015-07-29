@@ -7,6 +7,12 @@ require_relative 'operations/compare_against_user'
 
 class ComparisonApp < Sinatra::Base
   configure do
+    stack = Faraday::RackBuilder.new do |builder|
+      builder.use Faraday::HttpCache
+      builder.use Octokit::Response::RaiseError
+      builder.adapter Faraday.default_adapter
+    end
+    Octokit.middleware = stack
     set :root, ComparisonApp.root
     set :public_folder, File.dirname(__FILE__) + '/static'
     set :server, :unicorn
