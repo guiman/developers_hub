@@ -13,6 +13,7 @@ class ComparisonApp < Sinatra::Base
       builder.adapter Faraday.default_adapter
     end
     Octokit.middleware = stack
+
     set :root, ComparisonApp.root
     set :public_folder, File.dirname(__FILE__) + '/static'
     set :server, :unicorn
@@ -20,8 +21,7 @@ class ComparisonApp < Sinatra::Base
     set :logging, true
     set :dump_errors, true
     set :bind, '0.0.0.0'
-    set :recruiter_client, Recruiter::API.build_client(configuration: {
-      access_token: ENV.fetch('GITHUB_ACCESS_TOKEN') })
+    set :recruiter_client, Recruiter::API.build_client(configuration: { access_token: ENV.fetch('GITHUB_ACCESS_TOKEN') })
     set :redis_client, Redis.new
   end
 
@@ -52,17 +52,21 @@ class ComparisonApp < Sinatra::Base
   get '/reduce_skills' do
     @user_list = params[:users].split(',')
 
-    @results = @user_list.map do |user|
-      begin
-        caching_method = Recruiter::RedisCache.new(settings.redis_client)
-        candidate = Recruiter::GithubCandidate.new(settings.recruiter_client.user(user),
-          settings.recruiter_client)
-        cached_candidate = Recruiter::CachedGithubCandidate.new(candidate, caching_method)
+    @results_pool = @user_list.map do |user|
+      Thread.new do
+        begin
+          caching_method = Recruiter::RedisCache.new(settings.redis_client)
+          candidate = Recruiter::GithubCandidate.new(settings.recruiter_client.user(user),
+            settings.recruiter_client)
+          cached_candidate = Recruiter::CachedGithubCandidate.new(candidate, caching_method)
 
-        UserProfiler.build(cached_candidate)
-      rescue Octokit::NotFound
+         Thread.current[:output] = UserProfiler.build(cached_candidate)
+        rescue Octokit::NotFound
+        end
       end
-    end.compact
+    end
+
+    @results = @results_pool.map { |thread| thread.join; thread[:output] }.compact
 
     languages = @results.map { |res| res.information.keys }.inject(:&)
 
