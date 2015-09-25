@@ -9,7 +9,7 @@ development:
   <<: *default
   database: developers_hub_development
 
-test:
+test: &test
   <<: *default
   database: developers_hub_test
 
@@ -17,3 +17,6 @@ production:
   <<: *default
   database: <%= ENV['DATABASE_NAME'] %>
   password: <%= ENV['DATABASE_PASSWORD'] %>
+
+cucumber:
+  <<: *test

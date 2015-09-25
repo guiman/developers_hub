@@ -28,7 +28,8 @@ gem 'unicorn'
 
 group :development, :test do
   gem 'byebug'
-  gem 'web-console', '~> 2.0'
+  gem 'cucumber-rails', require: false
+  gem 'database_cleaner'
   gem 'rspec-rails'
+  gem 'web-console', '~> 2.0'
 end
-
