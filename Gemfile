@@ -1,7 +1,5 @@
 source 'https://rubygems.org'
 
-eval_gemfile File.join(File.dirname(__FILE__), "lib", "experiments", "comparator", "Gemfile")
-
 gem 'coffee-rails', '~> 4.1.0'
 gem 'dragonfly', '~> 1.0.0'
 gem 'faraday-http-cache'
@@ -25,9 +23,6 @@ gem 'open_uri_redirections'
 gem 'sidekiq'
 gem 'sinatra'
 gem 'raygun4ruby'
-
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
 
 gem 'unicorn'
 
