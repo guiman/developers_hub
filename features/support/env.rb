@@ -36,3 +36,18 @@ end
 After('@omniauth_test') do
   OmniAuth.config.test_mode = false
 end
+
+Before('@hireable_js_dev') do
+  dev_1 = Developer.create(login: "hireable dev", hireable: true)
+  dev_1.skills << Skill.find_or_create_by(name: "JavaScript")
+end
+
+Before('@non_hireable_js_dev') do
+  dev_1 = Developer.create(login: "non hireable dev", hireable: false)
+  dev_1.skills << Skill.find_or_create_by(name: "JavaScript")
+end
+
+Before('@hireable_ruby_dev') do
+  dev_1 = Developer.create(login: "hireable dev", hireable: true)
+  dev_1.skills << Skill.find_or_create_by(name: "Ruby")
+end
