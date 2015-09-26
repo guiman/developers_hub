@@ -45,4 +45,14 @@ class Developer < ActiveRecord::Base
   def activity_for_chart
     DeveloperChartActivity.new(self).to_s
   end
+
+  def linkedin_profile
+    @linkedin_profile ||= RecruiterExtensions::LinkedinProfile.new(login)
+  end
+
+  def find_linkedin_profile
+    return unless linkedin_profile.verify_link
+
+    linkedin_profile.link
+  end
 end
