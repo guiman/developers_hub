@@ -1,4 +1,4 @@
-@omniauth_test
+@omniauth @recruiter
 Feature: Recruiters sign in with Linkedin
   Scenario: Alvaro signs in with his Linkedin account for the first time
     Given Alvaro is new to the site

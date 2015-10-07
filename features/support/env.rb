@@ -1,4 +1,5 @@
 require 'cucumber/rails'
+require 'cucumber/rspec/doubles'
 
 ActionController::Base.allow_rescue = false
 
@@ -10,10 +11,12 @@ end
 
 Cucumber::Rails::Database.javascript_strategy = :truncation
 
-Before('@omniauth_test') do
+Before('@omniauth') do
   OmniAuth.config.test_mode = true
   Capybara.default_host = 'http://example.com'
+end
 
+Before('@recruiter') do
   OmniAuth.config.add_mock(:linkedin, {
     uid: '9999',
     extra: {
@@ -33,7 +36,26 @@ Before('@omniauth_test') do
   })
 end
 
-After('@omniauth_test') do
+Before('@developer') do
+  OmniAuth.config.add_mock(:github, {
+    uid: '9999',
+    extra: {
+      raw_info: {
+        login: 'test_user'
+      }
+    },
+    info: {
+      first_name: 'Example',
+      last_name: 'User',
+      location: 'Somewhere in a Galaxy far away',
+      email: 'test@example.com'
+    },
+    credentials: { token: '123' }
+  })
+end
+
+
+After('@omniauth') do
   OmniAuth.config.test_mode = false
 end
 
