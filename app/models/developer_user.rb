@@ -29,10 +29,6 @@ class DeveloperUser
     other_developer.public? || @developer == other_developer
   end
 
-  def contact_developer(developer_profile_presenter, message:)
-    nil # Developer can't contact other developers
-  end
-
   def developer_listings(language: 'all', location: 'all', geolocation: 'all')
     developers = Developer.where(hireable: true)
     RecruiterExtensions::FilterDevelopers.new(developers: developers,

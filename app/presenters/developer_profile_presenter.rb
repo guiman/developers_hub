@@ -34,11 +34,7 @@ class DeveloperProfilePresenter
     @developer.public? || @developer.hireable? || @viewer.can_see_developer?(@developer)
   end
 
-  def can_be_contacted?
-    can_be_displayed? && @developer.email_is_valid?
-  end
-
-  def can_contact_developer?
+  def can_see_developer?
     @viewer.is_a_recruiter? && @viewer.can_see_developer?(@developer)
   end
 

@@ -15,7 +15,6 @@ Rails.application.routes.draw do
   get '/map/:lat/:lng/:language' => "developers#filter", as: "map_filter", :constraints => {:lat => /\-*\d+.\d+/ , :lng => /\-*\d+.\d+/ , :range => /\d+/}
 
   get '/developer/:secure_reference' => "developers#show", as: "developer_profile"
-  post '/developer/:secure_reference/contact' => "developers#contact", as: "developer_contact"
   put '/developer/:secure_reference/toggle_public' => "developers#toggle_public", as: "developer_public"
 
   get '/recruiter/:id' => "recruiters#show", as: "recruiter_profile"

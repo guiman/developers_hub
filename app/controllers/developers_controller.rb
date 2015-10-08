@@ -68,12 +68,6 @@ class DevelopersController < ApplicationController
     redirect_to developer_profile_path(@developer_presenter.secure_reference)
   end
 
-  def contact
-    current_user.contact_developer(@developer_presenter, message: params.fetch(:body))
-
-    redirect_to root_path
-  end
-
   private
 
   def build_presenter

@@ -42,13 +42,6 @@ class RecruiterUser
     @recruiter == recruiter
   end
 
-  def contact_developer(developer_profile_presenter, message:)
-    if developer_profile_presenter.can_be_contacted?
-      Offer.create(developer: developer_profile_presenter.developer, dev_recruiter: developer_profile_presenter.viewer.recruiter)
-      OfferMailer.new_offer(developer_profile_presenter, message).deliver_now
-    end
-  end
-
   def developer_listings(language: 'all', location: 'all', geolocation: 'all')
     developers = @recruiter.beta_user? ? Developer.all  : Developer.where(hireable: true)
     RecruiterExtensions::FilterDevelopers.new(developers: developers,

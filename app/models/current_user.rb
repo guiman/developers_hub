@@ -25,10 +25,6 @@ class CurrentUser
     @user.is_a_recruiter?
   end
 
-  def contact_developer(developer_profile_presenter, message:)
-    @user.contact_developer(developer_profile_presenter, message: message)
-  end
-
   def method_missing(name, *args, &block)
     @user.public_send(name, *args)
   end
