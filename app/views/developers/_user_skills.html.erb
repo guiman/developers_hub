@@ -1,5 +1,1 @@
-<% if language && language != 'all' %>
-  <%= candidate.developer_skills.where(origin: 'github').joins(:skill).where(skills: { name: language }).first.strength %> projects
-<% else %>
-  <%= candidate.developer_skills.where(origin: 'github').count %> languages
-<% end %>
+<%= candidate_top_skills(candidate: candidate, top: 3) %>
