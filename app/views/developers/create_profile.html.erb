@@ -1,0 +1,23 @@
+<div class="row">
+  <h3>How does it work?</h3>
+  <p>
+  Pretty simple just fill in the form bellow and what will happen next is that we will create a basic report of the user, present you with it and also will queue a worker to do the
+  heavy lifting of getting actvity updates (this task could take a couple minutes).<br/>
+  <br/>
+  In the profile page you will be given the option of adding this user into your watchlist.
+  </p>
+  <%= form_for("/add_github_developer", method: :post) do |f| %>
+    <div class="row">
+      <div class="medium-6 columns">
+        <%= label_tag(:github_login, "Github Username:") %>
+        <%= text_field_tag(:github_login, @github_login) %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="small-12 columns">
+        <%= submit_tag("Create", class: "button radius small") %>
+      </div>
+    </div>
+  <% end %>
+</div>

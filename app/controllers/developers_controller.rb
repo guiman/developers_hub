@@ -41,6 +41,12 @@ class DevelopersController < ApplicationController
         geolocation: @geolocation, location: @location)).perform
   end
 
+  def create_profile
+    if @developer = RecruiterExtensions::DeveloperProfile.create(github_login: params[:github_login])
+      redirect_to developer_profile_path(@developer.secure_reference)
+    end
+  end
+
   def example
     me = Developer.find_by_login("guiman")
     me.hireable = true

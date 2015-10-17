@@ -41,6 +41,9 @@
           <li><a href="/lang/ruby">Ruby Devs</a></li>
           <li><a href="/lang/javascript">Javascript Devs</a></li>
           <li><a href="/search">Search</a></li>
+          <% if current_user.logged_in? && current_user.is_a_recruiter? && current_user.recruiter.beta_user? %>
+            <li id="add_github_developer"><a href="/add_github_developer">Add Github Developer</a></li>
+          <% end %>
         </ul>
 
         <ul class="right">

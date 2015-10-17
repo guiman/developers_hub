@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   get '/developer/:secure_reference' => "developers#show", as: "developer_profile"
   put '/developer/:secure_reference/toggle_public' => "developers#toggle_public", as: "developer_public"
 
+  match '/add_github_developer' => "developers#create_profile", as: "create_github_dev_profile", via: [:get, :post]
+
   get '/recruiter/:id' => "recruiters#show", as: "recruiter_profile"
 
   match "/auth/github/callback" => "developers#create", via: [:get, :post]
