@@ -38,7 +38,7 @@
         <ul class="left">
           <li><a href="/lang/all">All Devs</a></li>
           <li><a href="/search">Search</a></li>
-          <% if current_user.logged_in? && current_user.is_a_recruiter? && current_user.recruiter.beta_user? %>
+          <% if current_user.logged_in? && current_user.is_a_beta_recruiter? %>
             <li id="add_github_developer"><a href="/add_github_developer">Add Github Developer</a></li>
           <% end %>
         </ul>

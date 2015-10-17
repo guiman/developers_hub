@@ -6,6 +6,13 @@
   </div>
   <% end %>
 
+  <% if flash[:watched] %>
+  <div data-alert class="alert-box success radius">
+    <%= flash[:watched] %> <%=link_to "here", recruiter_developers_path(current_user.recruiter.id) %>
+    <a href="#" class="close">&times;</a>
+  </div>
+  <% end %>
+
   <% if flash[:missing_skills] %>
   <div data-alert class="alert-box alert radius">
     <%= flash[:missing_skills] %>

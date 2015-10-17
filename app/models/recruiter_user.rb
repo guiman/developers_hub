@@ -29,6 +29,10 @@ class RecruiterUser
     true
   end
 
+  def is_a_beta_recruiter?
+    @recruiter.beta_user?
+  end
+
   def is_a_developer?
     false
   end
@@ -37,9 +41,16 @@ class RecruiterUser
     false
   end
 
+  def developers
+    @recruiter.developers
+  end
 
   def ==(recruiter)
     @recruiter == recruiter
+  end
+
+  def watching?(developer)
+    @recruiter.developers.include? developer
   end
 
   def developer_listings(language: 'all', location: 'all', geolocation: 'all')

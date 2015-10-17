@@ -11,9 +11,7 @@ And(/now Alvaro can see (.+) profile/) do |github_login|
   expect(page.body).to have_css("div#chart")
 end
 
-
 Given(/Frank is a visitor/) do
-
 end
 
 When(/he reaches the main page/) do

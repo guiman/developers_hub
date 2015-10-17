@@ -17,10 +17,12 @@ Rails.application.routes.draw do
 
   get '/developer/:secure_reference' => "developers#show", as: "developer_profile"
   put '/developer/:secure_reference/toggle_public' => "developers#toggle_public", as: "developer_public"
+  put '/developer/:secure_reference/watch' => "developers#watch", as: "developer_watch"
 
   match '/add_github_developer' => "developers#create_profile", as: "create_github_dev_profile", via: [:get, :post]
 
   get '/recruiter/:id' => "recruiters#show", as: "recruiter_profile"
+  get '/recruiter/:id/following' => "recruiters#following", as: "recruiter_developers"
 
   match "/auth/github/callback" => "developers#create", via: [:get, :post]
   match "/auth/linkedin/callback" => "recruiters#create", via: [:get, :post]

@@ -1,5 +1,5 @@
 class DevelopersController < ApplicationController
-  before_action :build_presenter, only: [:show, :toggle_public, :contact]
+  before_action :build_presenter, only: [:show, :toggle_public, :contact, :watch]
 
   def index
     @candidates = current_user.developer_listings.paginate(page: params[:page], per_page: 20)
@@ -42,6 +42,8 @@ class DevelopersController < ApplicationController
   end
 
   def create_profile
+    redirect_to root_path unless current_user.logged_in? && current_user.is_a_recruiter? && current_user.recruiter.beta_user?
+
     if @developer = RecruiterExtensions::DeveloperProfile.create(github_login: params[:github_login])
       redirect_to developer_profile_path(@developer.secure_reference)
     end
@@ -73,6 +75,19 @@ class DevelopersController < ApplicationController
 
   def toggle_public
     @developer_presenter.toggle_public
+
+    redirect_to developer_profile_path(@developer_presenter.secure_reference)
+  end
+
+  def watch
+    redirect_to root_path unless @developer_presenter.viewer.is_a_beta_recruiter?
+
+    if @developer_presenter.watching?
+      @developer_presenter.viewer.developers.delete(@developer_presenter.developer)
+    else
+      @developer_presenter.viewer.developers << @developer_presenter.developer
+      flash[:watched] = "Great! See all the developer you are watching"
+    end
 
     redirect_to developer_profile_path(@developer_presenter.secure_reference)
   end

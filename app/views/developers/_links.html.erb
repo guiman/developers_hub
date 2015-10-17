@@ -3,6 +3,11 @@
     <a href="http://github.com/<%= @developer_presenter.login %>" class="button" target="blank">Github Profile</a>
   </p>
 
+  <% if @developer_presenter.can_show_toggle_watch_link? %>
+    <% toggle_watch_label = !@developer_presenter.watching? ? "Watch developer" : "Stop watching developer" %>
+    <%= link_to toggle_watch_label, developer_watch_path(@developer_presenter.secure_reference), class: "button", method: :put  %>
+  <% end %>
+
   <% if (linkedin_profile = @developer_presenter.find_linkedin_profile) && current_user.is_a_recruiter? && current_user.recruiter.beta_user? %>
     <a href="<%= linkedin_profile %>" class="button" target="blank">LinkedIn Profile</a>
   <% end %>

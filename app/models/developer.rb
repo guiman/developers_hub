@@ -5,6 +5,9 @@ class Developer < ActiveRecord::Base
   has_many :developer_skills
   has_many :skills, through: :developer_skills
 
+  has_many :developer_wacther, dependent: :destroy
+  has_many :watching, through: :developer_watcher
+
   before_create :set_secure_reference
 
   def self.create_from_auth_hash(auth)

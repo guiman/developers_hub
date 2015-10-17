@@ -30,6 +30,15 @@ class DeveloperProfilePresenter
     @viewer.can_make_public?(@developer)
   end
 
+  def can_show_toggle_watch_link?
+    @viewer.is_a_beta_recruiter?
+  end
+
+  def watching?
+    @viewer.is_a_beta_recruiter? &&
+    @viewer.watching?(@developer)
+  end
+
   def can_be_displayed?
     @developer.public? || @developer.hireable? || @viewer.can_see_developer?(@developer)
   end

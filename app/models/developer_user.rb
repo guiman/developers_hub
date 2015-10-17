@@ -21,6 +21,10 @@ class DeveloperUser
     false
   end
 
+  def is_a_beta_recruiter?
+    false
+  end
+
   def can_make_public?(developer)
     @developer == developer
   end

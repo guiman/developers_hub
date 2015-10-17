@@ -6,6 +6,9 @@
   <div class="small-4 columns">
     <%= image_tag @recruiter.avatar, class: "img-responsive img-rounded" %>
     <p>Location: <%= @recruiter.location %></p>
+    <% if @recruiter.can_see_following? %>
+      <%= link_to "Developers following", recruiter_developers_path(@recruiter.id), class: "button" %>
+    <% end %>
   </div>
 
   <div class="small-4 columns end">

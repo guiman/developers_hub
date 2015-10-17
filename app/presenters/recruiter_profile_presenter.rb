@@ -20,7 +20,19 @@ class RecruiterProfilePresenter
     @recruiter.avatar_url
   end
 
+  def id
+    @recruiter.id
+  end
+
   def can_see_instructions?
     @viewer.is_a_recruiter? && @viewer.recruiter == @recruiter
+  end
+
+  def can_see_following?
+    @viewer.is_a_recruiter? && @viewer.recruiter == @recruiter
+  end
+
+  def following
+    @recruiter.developers
   end
 end

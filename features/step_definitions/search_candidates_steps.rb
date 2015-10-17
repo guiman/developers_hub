@@ -5,6 +5,7 @@ Given(/Alvaro is a recruiter/) do
     uid: 9999,
     token: '123',
     avatar_url: 'profile_picture',
+    beta_user: false,
     location: 'Somewhere in a Galaxy far away')
 end
 
