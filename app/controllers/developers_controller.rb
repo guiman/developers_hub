@@ -1,5 +1,5 @@
 class DevelopersController < ApplicationController
-  before_action :build_presenter, only: [:show, :toggle_public, :contact, :watch]
+  before_action :build_presenter, only: [:show, :toggle_public, :contact, :watch, :update_data]
 
   def index
     @candidates = current_user.developer_listings.paginate(page: params[:page], per_page: 20)
@@ -88,6 +88,15 @@ class DevelopersController < ApplicationController
       @developer_presenter.viewer.developers << @developer_presenter.developer
       flash[:watched] = "Great! See all the developer you are watching"
     end
+
+    redirect_to developer_profile_path(@developer_presenter.secure_reference)
+  end
+
+  def update_data
+    redirect_to root_path unless @developer_presenter.viewer.is_a_beta_recruiter?
+
+    DeveloperUpdaterWorker.perform_async(@developer_presenter.login, {
+      parse_activity: true, parse_contributions: true })
 
     redirect_to developer_profile_path(@developer_presenter.secure_reference)
   end
