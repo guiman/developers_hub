@@ -1,1 +1,4 @@
+<div class="row text-center">
+<p>ProTip: You can always find a link to this page in your <%= link_to "profile", recruiter_profile_path(@recruiter.id) %>!</p>
+</div>
 <%= render partial: "shared/users_data", locals: { candidates: @developers, language: @language } %>
