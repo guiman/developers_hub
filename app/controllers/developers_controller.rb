@@ -65,6 +65,9 @@ class DevelopersController < ApplicationController
   end
 
   def show
+    if @developer_presenter.developer_skills.count == 0
+      flash[:missing_skills] = "Oops, looks like we had trouble processing this Developer's skills. Please try again later, or contact me at alvaro at dev-hub.io"
+    end
     redirect_to root_path unless @developer_presenter.can_be_displayed?
   end
 
