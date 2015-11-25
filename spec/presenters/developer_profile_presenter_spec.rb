@@ -141,7 +141,7 @@ describe DeveloperProfilePresenter do
     context "developers has a non public profile" do
       it "shows blurred gravatar urls" do
         dev = Developer.create(login: "test", public: false)
-        recruiter = DevRecruiter.create(uid: "123")
+        recruiter = DevRecruiter.create(uid: "123", beta_user: false)
         recruiter_user = RecruiterUser.new(recruiter)
         presenter = described_class.new(subject: dev, viewer: recruiter_user)
         expect(dev).to receive(:blurred_gravatar_url)
@@ -150,7 +150,7 @@ describe DeveloperProfilePresenter do
 
       it "shows obfuscated name" do
         dev = Developer.create(login: "test", public: false)
-        recruiter = DevRecruiter.create(uid: "123")
+        recruiter = DevRecruiter.create(uid: "123", beta_user: false)
         recruiter_user = RecruiterUser.new(recruiter)
         presenter = described_class.new(subject: dev, viewer: recruiter_user)
         expect(dev).to receive(:obfuscated_name)

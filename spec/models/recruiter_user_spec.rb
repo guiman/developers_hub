@@ -4,7 +4,7 @@ describe RecruiterUser do
   describe "#can_see_developer?" do
     it "it can't see any developer" do
       developer = Developer.create
-      recruiter = DevRecruiter.create(uid: "123")
+      recruiter = DevRecruiter.create(uid: "123", beta_user: false)
       current_user = described_class.new(recruiter)
       expect(current_user.can_see_developer?(developer)).to eq(false)
     end
@@ -37,7 +37,7 @@ describe RecruiterUser do
       developer_2 = Developer.create(hireable: false)
       DeveloperSkill.create(developer: developer_2, skill: skill)
 
-      recruiter = DevRecruiter.create(uid: '123')
+      recruiter = DevRecruiter.create(uid: '123', beta_user: false)
       listing = described_class.new(recruiter).developer_listings
       expect(listing).to be_a(ActiveRecord::Relation)
       expect(listing.count).to eq(1)
