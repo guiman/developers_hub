@@ -2,21 +2,25 @@ default: &default
   adapter: mysql2
   encoding: utf8
   pool: 5
-  username: root
-  password:
 
 development:
   <<: *default
   database: developers_hub_development
+  username: root
+  password:
 
 test: &test
   <<: *default
   database: developers_hub_test
+  username: root
+  password:
 
 production:
   <<: *default
   database: <%= ENV['DATABASE_NAME'] %>
+  username: <%= ENV['DATABASE_USERNAME'] %>
   password: <%= ENV['DATABASE_PASSWORD'] %>
+  host: <%= ENV['DATABASE_HOST'] %>
 
 cucumber:
   <<: *test
