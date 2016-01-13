@@ -85,6 +85,8 @@ GEM
     database_cleaner (1.4.0)
     debug_inspector (0.0.2)
     diff-lcs (1.2.5)
+    domain_name (0.5.24)
+      unf (>= 0.0.5, < 1.0.0)
     dragonfly (1.0.7)
       addressable (~> 2.3)
       multi_json (~> 1.0)
@@ -115,6 +117,8 @@ GEM
     hashie (2.0.5)
     hike (1.2.3)
     hitimes (1.2.2)
+    http-cookie (1.0.2)
+      domain_name (~> 0.5)
     httparty (0.13.3)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
@@ -141,6 +145,7 @@ GEM
     multi_xml (0.5.5)
     multipart-post (2.0.0)
     mysql2 (0.3.18)
+    netrc (0.11.0)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
     oauth (0.4.7)
@@ -208,6 +213,10 @@ GEM
     redis (3.2.1)
     redis-namespace (1.5.2)
       redis (~> 3.0, >= 3.0.4)
+    rest-client (1.8.0)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 3.0)
+      netrc (~> 0.7)
     rspec-core (3.1.7)
       rspec-support (~> 3.1.0)
     rspec-expectations (3.1.2)
@@ -269,6 +278,9 @@ GEM
     uglifier (2.7.1)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.1)
     unicorn (4.8.3)
       kgio (~> 2.6)
       rack
@@ -306,6 +318,7 @@ DEPENDENCIES
   rails (= 4.2.1)
   raygun4ruby
   recruiter!
+  rest-client
   rspec-rails
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
@@ -317,3 +330,6 @@ DEPENDENCIES
   web-console (~> 2.0)
   will_paginate (~> 3.0.0)
   will_paginate-foundation
+
+BUNDLED WITH
+   1.10.6

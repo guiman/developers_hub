@@ -38,9 +38,7 @@
   <div class="medium-6 medium-offset-1 columns end">
     <%= render partial: 'shared/languages_chart', locals: {
       title: "Projects by language",
-      skills: @developer_presenter.developer_skills.where(origin: 'github').map {
-        |dev_skill| "['#{dev_skill.skill.name}', #{dev_skill.strength}]" }
-      .join(', ').html_safe } %>
+      skills: candidate_top_skills_chart(candidate: @developer_presenter, top_skill_count: 5).html_safe } %>
     <%= render "interesting_projects" %>
   </div>
 </div>

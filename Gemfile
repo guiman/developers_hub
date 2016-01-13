@@ -23,6 +23,7 @@ gem 'open_uri_redirections'
 gem 'sidekiq'
 gem 'sinatra'
 gem 'raygun4ruby'
+gem 'rest-client'
 
 gem 'unicorn'
 

@@ -24,7 +24,9 @@ module DevelopersHub
     config.active_record.raise_in_transactional_callbacks = true
 
     config.autoload_paths += Dir["#{config.root}/lib/recruiter_extensions/**/"]
+    config.autoload_paths += Dir["#{config.root}/lib/archive_client"]
 
     require_relative '../lib/recruiter_extensions'
+    require_relative '../lib/archive_client'
   end
 end
