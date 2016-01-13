@@ -5,7 +5,7 @@
       <% if developer_skill.code_example.present? %>
           <li>
             <%= developer_skill.skill.name %>
-            <a href="http://github.com/<%= developer_skill.code_example %>"><%= developer_skill.code_example %></a></li>
+            <%= link_to developer_skill.code_example, link_to_code_example(developer_skill) %>
       <% end %>
     <% end %>
   </ul>
