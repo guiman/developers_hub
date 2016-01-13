@@ -4,7 +4,7 @@ class CreateDevelopers < ActiveRecord::Migration
       t.string :email
       t.string :location
       t.string :geolocation
-      t.string :github_login
+      t.string :login
       t.string :name
       t.boolean :hireable
       t.text :languages
