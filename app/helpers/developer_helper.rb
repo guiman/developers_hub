@@ -19,4 +19,9 @@ module DeveloperHelper
 
     link_to "Back to search", search_path(location: location, languages: languages, page: page, highlight_developer: developer), class: "button"
   end
+
+  def show_back_to_search?
+    session.fetch("current_search", {}).fetch("location", nil).present? ||
+      session.fetch("current_search", {}).fetch("languages", nil).present?
+  end
 end

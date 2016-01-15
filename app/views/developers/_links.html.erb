@@ -1,4 +1,4 @@
-<% if session["current_search"] %>
+<% if show_back_to_search? %>
   <%= link_to_current_search(@developer_presenter.secure_reference) %>
 <% end %>
 
