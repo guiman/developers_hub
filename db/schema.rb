@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151017183825) do
+ActiveRecord::Schema.define(version: 20160113213400) do
 
   create_table "dev_recruiters", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -51,40 +51,18 @@ ActiveRecord::Schema.define(version: 20151017183825) do
     t.string   "name",                       limit: 255
     t.boolean  "hireable",                   limit: 1
     t.text     "languages",                  limit: 65535
-    t.string   "gravatar_url",               limit: 255
+    t.datetime "created_at",                                               null: false
+    t.datetime "updated_at",                                               null: false
     t.string   "secure_reference",           limit: 255,                   null: false
     t.string   "uid",                        limit: 255
     t.string   "token",                      limit: 255
     t.integer  "developer_skills_count",     limit: 4,     default: 0
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.boolean  "public",                     limit: 1,     default: false
     t.text     "activity",                   limit: 65535
     t.boolean  "needs_update_activity",      limit: 1,     default: true
     t.boolean  "needs_update_contributions", limit: 1,     default: true
+    t.string   "gravatar_url",               limit: 255
   end
-
-  create_table "indexed_users", force: :cascade do |t|
-    t.string  "email",        limit: 255
-    t.string  "location",     limit: 255
-    t.string  "geolocation",  limit: 255
-    t.string  "login",        limit: 255
-    t.string  "name",         limit: 255
-    t.boolean "hireable",     limit: 1
-    t.text    "languages",    limit: 65535
-    t.string  "gravatar_url", limit: 255
-  end
-
-  create_table "offers", force: :cascade do |t|
-    t.integer  "developer_id",     limit: 4
-    t.integer  "dev_recruiter_id", limit: 4
-    t.string   "status",           limit: 255, default: "pending", null: false
-    t.datetime "created_at",                                       null: false
-    t.datetime "updated_at",                                       null: false
-  end
-
-  add_index "offers", ["dev_recruiter_id"], name: "index_offers_on_dev_recruiter_id", using: :btree
-  add_index "offers", ["developer_id"], name: "index_offers_on_developer_id", using: :btree
 
   create_table "skills", force: :cascade do |t|
     t.string "name", limit: 255, null: false
@@ -93,11 +71,11 @@ ActiveRecord::Schema.define(version: 20151017183825) do
   add_index "skills", ["name"], name: "index_skills_on_name", unique: true, using: :btree
 
   create_table "subscribers", force: :cascade do |t|
-    t.string "email", limit: 255
+    t.string   "email",      limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   add_foreign_key "developer_skills", "developers"
   add_foreign_key "developer_skills", "skills"
-  add_foreign_key "offers", "dev_recruiters"
-  add_foreign_key "offers", "developers"
 end

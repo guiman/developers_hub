@@ -49,15 +49,6 @@ class DevelopersController < ApplicationController
     end
   end
 
-  def example
-    me = Developer.find_by_login("guiman")
-    me.hireable = true
-    @developer = DeveloperProfilePresenter.new(
-      subject: me,
-      viewer: RecruiterUser.new(DevRecruiter.find_by_name('Alvaro Fernando Lara')))
-    render :show
-  end
-
   def create
     developer = RecruiterExtensions::BuildDeveloperProfile.new(request.env['omniauth.auth']).perform
     session[:developer_id] = developer.id
