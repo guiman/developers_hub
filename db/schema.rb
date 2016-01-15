@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160113213400) do
+ActiveRecord::Schema.define(version: 20160113211935) do
 
   create_table "dev_recruiters", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -51,17 +51,17 @@ ActiveRecord::Schema.define(version: 20160113213400) do
     t.string   "name",                       limit: 255
     t.boolean  "hireable",                   limit: 1
     t.text     "languages",                  limit: 65535
-    t.datetime "created_at",                                               null: false
-    t.datetime "updated_at",                                               null: false
+    t.string   "gravatar_url",               limit: 255
     t.string   "secure_reference",           limit: 255,                   null: false
     t.string   "uid",                        limit: 255
     t.string   "token",                      limit: 255
     t.integer  "developer_skills_count",     limit: 4,     default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.boolean  "public",                     limit: 1,     default: false
     t.text     "activity",                   limit: 65535
     t.boolean  "needs_update_activity",      limit: 1,     default: true
     t.boolean  "needs_update_contributions", limit: 1,     default: true
-    t.string   "gravatar_url",               limit: 255
   end
 
   create_table "skills", force: :cascade do |t|
@@ -71,9 +71,7 @@ ActiveRecord::Schema.define(version: 20160113213400) do
   add_index "skills", ["name"], name: "index_skills_on_name", unique: true, using: :btree
 
   create_table "subscribers", force: :cascade do |t|
-    t.string   "email",      limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string "email", limit: 255
   end
 
   add_foreign_key "developer_skills", "developers"
