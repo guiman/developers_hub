@@ -5,7 +5,7 @@ class DeveloperListingPresenter
   end
 
   def name
-    if @subject.public?
+    if @subject.public? || (@viewer.is_a_recruiter? && @viewer.is_a_beta_recruiter?)
       @subject.name
     else
       @subject.obfuscated_name

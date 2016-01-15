@@ -47,10 +47,20 @@ describe DeveloperListingPresenter do
   context "user recruiter" do
     it "shows obfuscated_name" do
       dev = Developer.create
-      recruiter_user = RecruiterUser.new(DevRecruiter.create(uid: "123"))
+      recruiter_user = RecruiterUser.new(DevRecruiter.create(uid: "123", beta_user: false))
       presenter = described_class.new(subject: dev, viewer: recruiter_user)
       expect(dev).to receive(:obfuscated_name)
       presenter.name
+    end
+
+    context "with beta_user access" do
+      it "shows real name" do
+        dev = Developer.create
+        recruiter_user = RecruiterUser.new(DevRecruiter.create(uid: "123", beta_user: true))
+        presenter = described_class.new(subject: dev, viewer: recruiter_user)
+        expect(dev).to receive(:name)
+        presenter.name
+      end
     end
   end
 end
