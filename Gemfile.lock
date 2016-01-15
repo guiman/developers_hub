@@ -98,6 +98,9 @@ GEM
       faraday (~> 0.8)
     faraday_middleware (0.9.1)
       faraday (>= 0.7.4, < 0.10)
+    foundation-icons-sass-rails (3.0.0)
+      railties (>= 3.1.1)
+      sass-rails (>= 3.1.1)
     foundation-rails (5.5.1.2)
       railties (>= 3.1.0)
       sass (>= 3.3.0, < 3.5)
@@ -295,6 +298,7 @@ DEPENDENCIES
   dragonfly (~> 1.0.0)
   faraday-http-cache
   faraday_middleware
+  foundation-icons-sass-rails
   foundation-rails
   geokit
   jbuilder (~> 2.0)
@@ -317,3 +321,6 @@ DEPENDENCIES
   web-console (~> 2.0)
   will_paginate (~> 3.0.0)
   will_paginate-foundation
+
+BUNDLED WITH
+   1.10.6

@@ -8,7 +8,8 @@ Rails.application.routes.draw do
 
   root 'developers#search'
 
-  get '/search' => "developers#search"
+  get '/search' => "developers#search", as: "search"
+  get '/clear_search' => "developers#clear_search", as: "clear_search"
 
   get '/lang/:language' => "developers#filter"
   get '/location/:location' => "developers#filter"

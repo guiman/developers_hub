@@ -1,3 +1,7 @@
+<% if session["current_search"] %>
+  <%= link_to_current_search(@developer_presenter.secure_reference) %>
+<% end %>
+
 <% if @developer_presenter.public? || @developer_presenter.can_see_developer? %>
   <p>
     <a href="http://github.com/<%= @developer_presenter.login %>" class="button" target="blank">Github Profile</a>

@@ -10,4 +10,13 @@ module DeveloperHelper
     project_name = developer_skill.code_example.gsub(/\A#{github_login}\//, '')
     "https://github.com/#{github_login}/#{project_name}"
   end
+
+  def link_to_current_search(developer=nil)
+    current_search = session.fetch("current_search", {})
+    location = current_search.fetch("location", nil)
+    languages = current_search.fetch("languages", "")
+    page = current_search.fetch("page", nil)
+
+    link_to "Back to search", search_path(location: location, languages: languages, page: page, highlight_developer: developer), class: "button"
+  end
 end

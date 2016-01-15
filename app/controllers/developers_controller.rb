@@ -5,14 +5,25 @@ class DevelopersController < ApplicationController
     @candidates = current_user.developer_listings.paginate(page: params[:page], per_page: 20)
   end
 
+  def clear_search
+    session["current_search"] = {}
+    redirect_to search_path
+  end
+
   def search
-    @location = params.fetch("location", nil)
-    @languages = params.fetch("languages", "")
+    current_search = session.fetch("current_search", {})
+    @location = params.fetch("location", current_search.fetch("location", nil))
+    @languages = params.fetch("languages", current_search.fetch("languages", ""))
+    @page = params.fetch(:page, current_search.fetch("page", nil))
+    @highlighted_developer = params.fetch("highlight_developer", current_search.fetch("highlight_developer", nil))
+
     developers = current_user.developer_listings
+    session["current_search"] = { location: @location, languages: @languages, page: @page }
+
     @candidates = RecruiterExtensions::SearchDevelopers.new(
       location: @location,
       languages: @languages.split(","),
-      developers: developers).search.paginate(page: params[:page], per_page: 20)
+      developers: developers).search.paginate(page: @page, per_page: 20)
   end
 
   def filter

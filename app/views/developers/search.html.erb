@@ -14,13 +14,15 @@
     <div class="row">
       <div class="small-12 columns">
         <%= submit_tag("Search", class: "button radius small") %>
+        <%= link_to "Clear", clear_search_path, class: "button radius small" %>
       </div>
     </div>
   <% end %>
 </div>
 
+
 <% if @candidates.any? %>
-  <%= render partial: "shared/users_data", locals: { candidates: @candidates, language: @language } %>
+  <%= render partial: "shared/users_data", locals: { candidates: @candidates, language: @language, highlighted_developer: @highlighted_developer } %>
 <% else %>
     No Results
 <% end %>

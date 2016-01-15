@@ -13,6 +13,9 @@
   <% DeveloperListingPresenter.cast(candidates, viewer: current_user).each do |candidate| %>
     <div class="developers-table-row">
       <div class="medium-4 columns">
+        <% if highlighted_developer == candidate.secure_reference %>
+          <i class="fi-arrow-right"></i>
+        <% end %>
         <%= link_to candidate.name, developer_profile_path(candidate.secure_reference) %>
       </div>
       <div class="medium-4 columns">
