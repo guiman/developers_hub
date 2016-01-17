@@ -1,4 +1,4 @@
-@omniauth @developer
+@omniauth @developer @webmock
 Feature: Developer Sign up with Github
 
   Scenario: John signs in with Github for the first time

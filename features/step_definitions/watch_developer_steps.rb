@@ -1,5 +1,5 @@
 When(/he reaches Pete developer's page/) do
-  developer = Developer.find_by_login("hireable dev")
+  developer = Developer.find_by_login("hireable_dev")
   visit developer_profile_path(developer.secure_reference)
 end
 
@@ -9,7 +9,7 @@ end
 
 And(/he is already watching Pete/) do
   recruiter = DevRecruiter.find_by_uid('9999')
-  developer = Developer.find_by_login("hireable dev")
+  developer = Developer.find_by_login("hireable_dev")
   recruiter.developers << developer
 end
 

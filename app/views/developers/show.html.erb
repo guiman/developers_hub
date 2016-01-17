@@ -44,3 +44,12 @@
     <%= render "interesting_projects" %>
   </div>
 </div>
+
+<% if @developer_presenter.activity_chart.any_activity? %>
+  <div class="row">
+    <h4>Activity Breakdown for <%= @developer_presenter.activity_chart.year_to_display %></h4>
+    <p>Data presented based on PRs opened to public repositories</p>
+    <div id="activity_chart"></div>
+    <%= render_chart(@developer_presenter.activity_chart.chart, 'activity_chart') %>
+  </div>
+<% end %>

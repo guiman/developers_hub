@@ -22,6 +22,10 @@ class DeveloperProfilePresenter
     end
   end
 
+  def activity_chart
+    Chart::GithubUserActivity.new(@developer.login)
+  end
+
   def toggle_public
     @developer.update_attribute(:public, !@developer.public) if @viewer.can_make_public?(@developer)
   end

@@ -1,5 +1,7 @@
 require 'cucumber/rails'
 require 'cucumber/rspec/doubles'
+require 'webmock/cucumber'
+require 'webmock/rspec'
 
 ActionController::Base.allow_rescue = false
 
@@ -10,6 +12,11 @@ rescue NameError
 end
 
 Cucumber::Rails::Database.javascript_strategy = :truncation
+
+Before('@webmock') do
+  WebMock.stub_request(:get, /http:\/\/archive-observer\.herokuapp\.com\/.*/).to_return(:body => "",
+    :status => 400, :headers => { 'Content-Length' => 3 })
+end
 
 Before('@omniauth') do
   OmniAuth.config.test_mode = true
@@ -60,16 +67,16 @@ After('@omniauth') do
 end
 
 Before('@hireable_js_dev') do
-  dev_1 = Developer.create(login: "hireable dev", hireable: true)
+  dev_1 = Developer.create(login: "hireable_dev", hireable: true)
   dev_1.skills << Skill.find_or_create_by(name: "JavaScript")
 end
 
 Before('@non_hireable_js_dev') do
-  dev_1 = Developer.create(login: "non hireable dev", hireable: false)
+  dev_1 = Developer.create(login: "non_hireable_dev", hireable: false)
   dev_1.skills << Skill.find_or_create_by(name: "JavaScript")
 end
 
 Before('@hireable_ruby_dev') do
-  dev_1 = Developer.create(login: "hireable dev", hireable: true)
+  dev_1 = Developer.create(login: "hireable_dev", hireable: true)
   dev_1.skills << Skill.find_or_create_by(name: "Ruby")
 end

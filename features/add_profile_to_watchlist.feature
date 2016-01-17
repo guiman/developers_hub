@@ -1,4 +1,4 @@
-@hireable_ruby_dev
+@hireable_ruby_dev @webmock
 Feature: Add Developer to Watchlist
   Scenario: Frank viewer wants to watch developer
     Given Frank is a visitor

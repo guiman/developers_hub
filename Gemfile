@@ -24,6 +24,8 @@ gem 'open_uri_redirections'
 gem 'sidekiq'
 gem 'sinatra'
 gem 'raygun4ruby'
+gem 'google_visualr', '>= 2.5'
+gem 'rest-client'
 
 gem 'unicorn'
 
@@ -33,4 +35,5 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'rspec-rails'
   gem 'web-console', '~> 2.0'
+  gem 'webmock'
 end

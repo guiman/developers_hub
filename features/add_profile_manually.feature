@@ -1,3 +1,4 @@
+@webmock
 Feature: Add github Developer manually
   Scenario: Frank viewer wants to watch Github user guiman
     Given Frank is a visitor
