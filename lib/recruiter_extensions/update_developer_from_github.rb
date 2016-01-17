@@ -15,11 +15,6 @@ module RecruiterExtensions
         geolocation: ::Geokit::Geocoders::MapboxGeocoder.geocode(candidate.location).ll,
         email: candidate.email)
 
-      if parse_options.fetch(:parse_activity)
-        developer.update_attributes(activity: candidate.activity.parse_activity,
-                                   needs_update_activity: false)
-      end
-
       DeveloperSkill.create_from_candidate(developer: developer, candidate: candidate)
 
       if parse_options.fetch(:parse_contributions)

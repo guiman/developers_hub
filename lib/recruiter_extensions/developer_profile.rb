@@ -9,12 +9,10 @@ module RecruiterExtensions
 
       developer = Developer.create(login: github_login)
 
-      DeveloperUpdaterWorker.perform_async(developer.login, {
-        parse_activity: true, parse_contributions: true })
+      DeveloperUpdaterWorker.perform_async(developer.login, { parse_contributions: true })
 
       begin
-        DeveloperUpdaterWorker.new.perform(developer.login, {
-          parse_activity: false, parse_contributions: false })
+        DeveloperUpdaterWorker.new.perform(developer.login, { parse_contributions: false })
       rescue Exception
       end
 

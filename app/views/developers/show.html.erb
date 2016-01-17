@@ -44,11 +44,3 @@
     <%= render "interesting_projects" %>
   </div>
 </div>
-
-<% if @developer_presenter.activity.any? %>
-  <div class="row">
-    <h4>Latest Activity</h4>
-    <%= render partial: 'shared/activity_chart', locals: {
-      activity: @developer_presenter.activity_for_chart.html_safe } %>
-  </div>
-<% end %>

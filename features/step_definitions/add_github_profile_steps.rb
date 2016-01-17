@@ -1,6 +1,6 @@
 Then(/he adds (.+) Github user/) do |github_login|
   expect(RecruiterExtensions::UpdateDeveloperFromGithub).to receive(:perform).
-    with(github_login, {:parse_activity=>false, :parse_contributions=>false})
+    with(github_login, {:parse_contributions=>false})
   click_link 'Add Github Developer'
   fill_in 'github_login', with: github_login
   click_button 'Create'

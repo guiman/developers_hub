@@ -1,6 +1,5 @@
 class Developer < ActiveRecord::Base
   serialize :languages
-  serialize :activity, Array
 
   has_many :developer_skills
   has_many :skills, through: :developer_skills
@@ -43,10 +42,6 @@ class Developer < ActiveRecord::Base
 
   def email_is_valid?
     !email.nil? && email =~ /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
-  end
-
-  def activity_for_chart
-    DeveloperChartActivity.new(self).to_s
   end
 
   def linkedin_profile

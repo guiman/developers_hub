@@ -97,8 +97,8 @@ class DevelopersController < ApplicationController
   def update_data
     redirect_to root_path unless @developer_presenter.viewer.is_a_beta_recruiter?
 
-    DeveloperUpdaterWorker.perform_async(@developer_presenter.login, {
-      parse_activity: true, parse_contributions: true })
+    DeveloperUpdaterWorker.perform_async(@developer_presenter.login,
+      { parse_contributions: true })
 
     redirect_to developer_profile_path(@developer_presenter.secure_reference)
   end
