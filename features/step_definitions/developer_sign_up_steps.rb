@@ -13,11 +13,3 @@ And(/he wants to join as a developer/) do
   expect(DeveloperUpdaterWorker).to receive(:perform_async).
     with("test_user", {parse_contributions: true }).once
 end
-
-Given(/John already has an account as a developer/) do
-  Developer.create(uid: 9999, login: 'test_user',
-    needs_update_contributions: false)
-
-  expect(DeveloperUpdaterWorker).to receive(:perform_async).
-    with("test_user", { parse_contributions: false }).once
-end

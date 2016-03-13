@@ -10,14 +10,3 @@ And(/now Alvaro can see (.+) profile/) do |github_login|
   expect(Developer.find_by_login(github_login)).not_to be_nil
   expect(page.body).to have_css("div#chart")
 end
-
-Given(/Frank is a visitor/) do
-end
-
-When(/he reaches the main page/) do
- visit "/"
-end
-
-Then(/he should not see Add Github user feature/) do
-  expect(page.body).not_to have_css("ul li#add_github_developer")
-end
