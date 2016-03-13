@@ -27,5 +27,6 @@ module DevelopersHub
     config.autoload_paths << "#{config.root}/lib/chart/github_user_activity"
     config.autoload_paths << "#{config.root}/lib/recruiter_extensions"
     config.autoload_paths << "#{config.root}/lib/archive_client"
+    config.autoload_paths << "#{config.root}/lib/geolocation_adapter"
   end
 end

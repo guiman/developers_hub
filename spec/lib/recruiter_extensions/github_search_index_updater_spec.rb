@@ -2,8 +2,14 @@ require 'rails_helper'
 
 describe RecruiterExtensions::GithubSearchIndexUpdater do
   it "updates users that already exist" do
-    DeveloperSkill.create(developer: Developer.create(login: "test", hireable: false),
-      skill: Skill.create(name: "Ruby"), strength: 3)
+    expect(GeolocationAdapter).to receive(:coordinates_based_on_address).
+      with("Southampton").and_return("1234,1234")
+
+    DeveloperSkill.create(
+      developer: Developer.create(login: "test", hireable: false),
+      skill: Skill.create(name: "Ruby"),
+      strength: 3
+    )
 
     candidate = double(login: "test",
       name: "name",
@@ -30,6 +36,9 @@ describe RecruiterExtensions::GithubSearchIndexUpdater do
   end
 
   it "adds users to the index" do
+    expect(GeolocationAdapter).to receive(:coordinates_based_on_address).
+      with("Southampton").and_return("1234,1234")
+
     candidate = double(login: "test",
       name: "name",
       hireable: false,

@@ -1,3 +1,5 @@
+require 'geolocation_adapter'
+
 class DevelopersController < ApplicationController
   before_action :build_presenter, only: [:show, :toggle_public, :contact, :watch, :update_data]
 
@@ -35,7 +37,7 @@ class DevelopersController < ApplicationController
 
     # Only for map rendering purposes
     if @location != "all"
-      location = Geokit::Geocoders::MapboxGeocoder.geocode(@location).ll
+      location = GeolocationAdapter.coordinates_based_on_address(@location)
       default_lat, default_lng = location.split(',')
     else
       default_lat = 50.9167536

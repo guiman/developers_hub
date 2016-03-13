@@ -1,12 +1,16 @@
+require 'geolocation_adapter'
+
 module RecruiterExtensions
   class GithubSearchIndexUpdater
     def perform_one(candidate)
+      candidate_geolocation = GeolocationAdapter.coordinates_based_on_address(candidate.location)
+
       if existing_indexed_candidate = Developer.find_by_login(candidate.login)
         existing_indexed_candidate.update(name: candidate.name,
                                           hireable: candidate.hireable,
                                           location: candidate.location,
                                           gravatar_url: candidate.avatar_url,
-                                          geolocation: ::Geokit::Geocoders::MapboxGeocoder.geocode(candidate.location).ll,
+                                          geolocation: candidate_geolocation,
                                           email: candidate.email)
 
         user = existing_indexed_candidate
@@ -16,7 +20,7 @@ module RecruiterExtensions
                          login: candidate.login,
                          location: candidate.location,
                          gravatar_url: candidate.avatar_url,
-                         geolocation: ::Geokit::Geocoders::MapboxGeocoder.geocode(candidate.location).ll,
+                         geolocation: candidate_geolocation,
                          email: candidate.email)
       end
 

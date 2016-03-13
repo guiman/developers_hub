@@ -1,3 +1,5 @@
+require 'geolocation_adapter'
+
 module RecruiterExtensions
   class UpdateDeveloperFromGithub
     def self.perform(login, parse_options)
@@ -12,7 +14,7 @@ module RecruiterExtensions
         hireable: candidate.hireable,
         location: candidate.location,
         gravatar_url: candidate.avatar_url,
-        geolocation: ::Geokit::Geocoders::MapboxGeocoder.geocode(candidate.location).ll,
+        geolocation: GeolocationAdapter.coordinates_based_on_address(candidate.location),
         email: candidate.email)
 
       DeveloperSkill.create_from_candidate(developer: developer, candidate: candidate)
