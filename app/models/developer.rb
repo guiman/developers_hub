@@ -21,12 +21,6 @@ class Developer < ActiveRecord::Base
       login: auth.extra.raw_info.login)
   end
 
-  def obfuscated_name
-    dev_skill = developer_skills.order(strength: :desc).first
-    skill = (dev_skill) ? dev_skill.skill.name.to_s : 'OpenSource'
-    "#{skill} dev"
-  end
-
   def ==(another_object)
     login == another_object.login
   end
@@ -35,22 +29,15 @@ class Developer < ActiveRecord::Base
     self.secure_reference = SecureRandom.hex(10)
   end
 
+  # Obfuscation when showing to non allowed viewers
+  def obfuscated_name
+    dev_skill = developer_skills.order(strength: :desc).first
+    skill = (dev_skill) ? dev_skill.skill.name.to_s : 'OpenSource'
+    "#{skill} dev"
+  end
+
   def blurred_gravatar_url
     image = Dragonfly.app.fetch_url(self.gravatar_url)
     image.convert('-blur 15x15').url
-  end
-
-  def email_is_valid?
-    !email.nil? && email =~ /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
-  end
-
-  def linkedin_profile
-    @linkedin_profile ||= RecruiterExtensions::LinkedinProfile.new(login)
-  end
-
-  def find_linkedin_profile
-    return unless linkedin_profile.verify_link
-
-    linkedin_profile.link
   end
 end

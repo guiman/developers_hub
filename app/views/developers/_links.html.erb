@@ -12,7 +12,7 @@
     <%= link_to toggle_watch_label, developer_watch_path(@developer_presenter.secure_reference), class: "button", method: :put  %>
   <% end %>
 
-  <% if (linkedin_profile = @developer_presenter.find_linkedin_profile) && current_user.is_a_recruiter? && current_user.recruiter.beta_user? %>
+  <% if (linkedin_profile = linkedin_profile(@developer_presenter.login)) && current_user.is_a_recruiter? && current_user.recruiter.beta_user? %>
     <a href="<%= linkedin_profile %>" class="button" target="blank">LinkedIn Profile</a>
   <% end %>
 <% end %>

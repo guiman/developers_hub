@@ -11,6 +11,14 @@ module DeveloperHelper
     "https://github.com/#{github_login}/#{project_name}"
   end
 
+  def linkedin_profile(login)
+    linkedin_profile = RecruiterExtensions::LinkedinProfile.new(login)
+
+    if linkedin_profile.verify_link
+      linkedin_profile.link
+    end
+  end
+
   def link_to_current_search(developer=nil)
     current_search = session.fetch("current_search", {})
     location = current_search.fetch("location", nil)
